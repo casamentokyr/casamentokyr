@@ -9,10 +9,10 @@ button{cursor:pointer;font-weight:600;transition:0.3s;}
   background:rgb(255, 255, 255); /* fondo muy ligero */
   border-radius:50%;
   display:flex;justify-content:center;align-items:center;
-  cursor:pointer; z-index:1000;
+  cursor:pointer; z-index:1000; transition: transform none;
 }
 #music-icon:hover{
-  
+  transform: scale(1);
   background: rgb(255, 255, 255);
 }
 #music-icon img{width:24px;height:24px;}
