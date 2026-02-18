@@ -9,10 +9,10 @@ button{cursor:pointer;font-weight:600;transition:0.3s;}
   background:rgb(255, 255, 255); /* fondo muy ligero */
   border-radius:50%;
   display:flex;justify-content:center;align-items:center;
-  cursor:pointer; z-index:1000; transition: transform none;
+  cursor:pointer; z-index:1000;
 }
 #music-icon:hover{
-  transform: scale(1);
+  
   background: rgb(255, 255, 255);
 }
 #music-icon img{width:24px;height:24px;}
@@ -29,7 +29,7 @@ button{cursor:pointer;font-weight:600;transition:0.3s;}
   background-image: url('foto-fondo.jpg');
   background-size: cover;
   background-position: center;
-  animation: zoom-hero 10s ease-in-out infinite alternate;
+  animation: zoom-hero 15s ease-in-out infinite alternate;
 }
 
 @keyframes zoom-hero{
@@ -244,7 +244,7 @@ button.submit:hover{background:#333;}
 
 @keyframes pulse-text {
   0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+  50% { transform: scale(1); }
   100% { transform: scale(1); }
 }
 
