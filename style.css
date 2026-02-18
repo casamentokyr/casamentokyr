@@ -281,3 +281,34 @@ button.submit:hover{background:#333;}
   .date-container .linea{ width: 50px; }
   .date-container .date-below{ font-size:14px; }
 }
+
+
+
+/* FIX PARA MOVIL boton de music*/
+
+.music-btn{
+
+position: fixed !important;
+top: 20px;
+right: 20px;
+
+z-index: 9999;
+
+animation: none !important;
+transform: none !important;
+
+}
+
+
+.hero{
+
+overflow: hidden;
+
+}
+
+
+.hero-img{
+
+will-change: transform;
+
+}
