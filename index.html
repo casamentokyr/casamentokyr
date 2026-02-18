@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Katherine & Ricardo</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ICONO DE MUSICA -->
+<div id="music-icon">
+  <img src="play.png" alt="Reproducir música" id="music-img">
+</div>
+<audio id="music" loop>
+  <source src="musica.mp3" type="audio/mp3">
+</audio>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="overlay">
+    <h3 class="subtitle">Nuestra boda</h3>
+    <h1>Katherine & Ricardo</h1>
+
+    <!-- CUENTA REGRESIVA CIRCULAR -->
+    <div id="countdown" class="countdown">
+      <div class="circle"><span id="days">0</span><small>Días</small></div>
+      <div class="circle"><span id="hours">0</span><small>Horas</small></div>
+      <div class="circle"><span id="minutes">0</span><small>Minutos</small></div>
+      <div class="circle"><span id="seconds">0</span><small>Segundos</small></div>
+    </div>
+
+
+<div class="date-container">
+  <img src="linea.png" alt="linea" class="linea">
+ <p class="date-below">15.05.2027</p>
+  <img src="linea.png" alt="linea" class="linea">
+</div>
+
+   
+  </div>
+</section>
+
+
+
+<!-- HISTORIA -->
+<section class="section historia">
+  <h2>Nuestra historia</h2>
+  <p>Katherine y Ricardo se conocieron en 2020 y desde entonces comenzaron esta hermosa aventura juntos. Te invitamos a celebrar con nosotros nuestro gran día.</p>
+</section>
+
+<!-- EVENTO -->
+<section class="section evento">
+  <h2>Evento</h2>
+  <p>Ceremonia: 15:00 hrs</p>
+  <p>Recepción: 17:00 hrs</p>
+  <p>Lugar: Braga, Portugal</p>
+</section>
+
+<!-- RSVP DINÁMICO -->
+<section class="section rsvp">
+  <h2>Confirmación de asistencia</h2>
+  <form id="form">
+    <input type="hidden" id="codigo" value="">
+    <label>Nombre completo:</label>
+    <input type="text" name="nombre" required>
+
+    <div id="personas-container">
+      <label>Personas a confirmar:</label>
+      <select name="personas" id="personas"></select>
+    </div>
+
+    <div id="ninos-container">
+      <label>Niños:</label>
+      <select name="ninos" id="ninos">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+      </select>
+    </div>
+
+    <label>Mensaje (opcional):</label>
+    <textarea name="mensaje" placeholder="Mensaje"></textarea>
+    <button class="submit" type="submit">Enviar</button>
+  </form>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
+

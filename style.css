@@ -1,0 +1,283 @@
+/* GENERAL */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Montserrat',sans-serif;background:#fff;color:#333;text-align:center;}
+button{cursor:pointer;font-weight:600;transition:0.3s;}
+
+/* ICONO MUSICA */
+#music-icon{
+  position:fixed;top:20px;right:20px;width:50px;height:50px;
+  background:rgb(255, 255, 255); /* fondo muy ligero */
+  border-radius:50%;
+  display:flex;justify-content:center;align-items:center;
+  cursor:pointer; z-index:1000; transition: transform 0.3s ease, background 0.3s ease;
+}
+#music-icon:hover{
+  transform: scale(1.2);
+  background: rgb(255, 255, 255);
+}
+#music-icon img{width:24px;height:24px;}
+
+/* HERO */
+
+.hero{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+  overflow:hidden;
+  background-image: url('foto-fondo.jpg');
+  background-size: cover;
+  background-position: center;
+  animation: zoom-hero 10s ease-in-out infinite alternate;
+}
+
+@keyframes zoom-hero{
+  0%   { transform: scale(1); }
+  100% { transform: scale(1.2); }
+}
+
+/* OVERLAY */
+.overlay{
+  background: rgba(0,0,0,0.5);
+  width:100%; height:100%;
+  position:absolute; top:0; left:0;
+  display:flex; flex-direction:column;
+  justify-content:center; align-items:center;
+  text-align:center; color:white;
+  padding:20px;
+}
+
+/* SUBTITULO */
+.subtitle{
+  font-family:'Playfair Display', serif;
+  font-size:24px;
+  color:white;
+  margin-bottom:10px;
+  letter-spacing:2px;
+  opacity:0;
+  transform: scale(0.8);
+  animation: fade-scale 1.5s ease forwards;
+}
+
+/* NOMBRES */
+.hero h1{
+  font-family:'Playfair Display', serif;
+  font-size:50px;
+  margin-bottom:30px;
+  color:white;
+  opacity:0;
+  transform: scale(0.8);
+  animation: fade-scale 1.5s ease 0.5s forwards;
+}
+
+/* ANIMACION FADE + SCALE */
+@keyframes fade-scale{
+  0% { opacity:0; transform: scale(0.8); }
+  100% { opacity:1; transform: scale(1); }
+}
+
+/* CUENTA REGRESIVA CIRCULAR */
+.countdown{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.countdown .circle{
+  width:90px;
+  height:90px;
+  background: rgba(255,255,255,0.1);
+  border-radius:50%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-family:'Playfair Display', serif;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  opacity:0; /* importante para animar aparición */
+  animation: fade-up 1s ease forwards;
+}
+
+.circle span{
+  font-size:28px;
+  font-weight:700;
+  animation: flip 0.5s ease;
+}
+
+.circle small{
+  font-size:12px;
+  margin-top:5px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+/* ANIMACION DE CIRCULOS AL CARGAR */
+@keyframes fade-up{
+  0% { opacity:0; transform: translateY(30px); }
+  100% { opacity:1; transform: translateY(0); }
+}
+
+/* HOVER CIRCULOS */
+.circle:hover{
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+
+.countdown .circle {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgb(255, 255, 255); /* borde redondo marcado */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: 'Playfair Display', serif;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  opacity: 0; /* importante para animar aparición */
+  animation: fade-up 1s ease forwards;
+}
+
+
+.circle:hover{
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+
+/* FECHA DEBAJO */
+.date-below{
+  font-size:18px;
+  color:white;
+  margin-bottom:40px;
+}
+
+/* BOTON */
+button{
+  padding:12px 25px;
+  background:black;
+  color:white;
+  border:none;
+  border-radius:5px;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.3s;
+}
+button:hover{
+  background:#333;
+}
+
+/* SECCIONES */
+.section{
+  padding:80px 20px;
+  opacity:0;
+  transform:translateY(30px);
+  animation:fade-up 1s forwards;
+}
+.section h2{
+  font-family:'Playfair Display', serif;
+  font-size:36px;
+  margin-bottom:20px;
+}
+.section p{
+  font-size:18px;
+  line-height:1.5;
+  margin-bottom:10px;
+}
+
+/* INPUTS Y FORM */
+input, select, textarea{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border:1px solid #ddd;
+  border-radius:5px;
+}
+button.submit{
+  width:100%;
+  background:black;
+  color:white;
+  margin-top:10px;
+  transition:0.3s;
+}
+button.submit:hover{background:#333;}
+
+/* ANIMACIONES FLIP DE SEGUNDOS */
+@keyframes flip{
+  0%{transform:rotateX(90deg);opacity:0;}
+  50%{transform:rotateX(-20deg);opacity:1;}
+  100%{transform:rotateX(0deg);}
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .hero h1{font-size:36px;}
+  .circle span{font-size:22px;}
+  .subtitle{font-size:18px;}
+  .date-below{font-size:16px;}
+  button{font-size:14px;}
+}
+@media(max-width:400px){
+  .hero h1{font-size:28px;}
+  .circle span{font-size:18px;}
+  .subtitle{font-size:16px;}
+  .date-below{font-size:14px;}
+}
+
+/* Texto hero: fade al cargar + pulso constante */
+.subtitle, .hero h1 {
+  opacity: 0;
+  transform: scale(0.8);
+  animation: fade-scale 1.5s ease forwards, pulse-text 5s ease-in-out 1.5s infinite alternate;
+}
+
+@keyframes fade-scale {
+  0% { opacity:0; transform: scale(0.8); }
+  100% { opacity:1; transform: scale(1); }
+}
+
+@keyframes pulse-text {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+
+/* data*/
+.date-container{
+  display: flex;
+  align-items: center;       /* centra verticalmente el texto con las líneas */
+  justify-content: center;   /* centra horizontalmente el conjunto */
+  gap: 15px;                 /* espacio entre línea y texto */
+  margin-bottom: 40px;
+}
+
+.date-container .linea{
+  height: 1px;               /* altura de la línea */
+  width: 120px;               /* ancho inicial, se ajusta responsive */
+  object-fit: cover;          /* ajusta la imagen al contenedor */
+  transform:translateY(-20px); /*subo la linea*/
+}
+
+.date-container .date-below{
+  font-size: 20px;
+  color: white;
+  white-space: nowrap;       /* evita que el texto rompa línea */
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .date-container .linea{ width: 80px; }
+  .date-container .date-below{ font-size:16px; }
+}
+
+@media(max-width:400px){
+  .date-container .linea{ width: 50px; }
+  .date-container .date-below{ font-size:14px; }
+}
