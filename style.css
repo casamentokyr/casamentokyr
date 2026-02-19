@@ -29,6 +29,7 @@ button{cursor:pointer;font-weight:600;transition:0.0s;}
   position: relative;
   height: 100vh;
   overflow: hidden;
+  
 }
 
 @keyframes zoom-hero{
