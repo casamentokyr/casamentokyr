@@ -343,3 +343,92 @@ overflow: hidden;
 will-change: transform;
 
 }
+
+
+.confirmacion-section{
+
+display:flex;
+justify-content:center;
+align-items:center;
+padding:80px 20px;
+background:#f9f5f2;
+
+}
+
+.confirmacion-box{
+
+background:white;
+padding:40px;
+border-radius:20px;
+max-width:400px;
+width:100%;
+box-shadow:0 10px 30px rgba(0,0,0,0.1);
+
+}
+
+.confirmacion-box h2{
+
+font-family:'Playfair Display', serif;
+text-align:center;
+margin-bottom:20px;
+
+}
+
+.form-group{
+
+margin-bottom:20px;
+
+}
+
+label{
+
+display:block;
+margin-bottom:5px;
+font-weight:500;
+
+}
+
+select, textarea{
+
+width:100%;
+padding:12px;
+border-radius:10px;
+border:1px solid #ddd;
+font-family:'Montserrat';
+
+}
+
+textarea{
+
+resize:none;
+height:80px;
+
+}
+
+.btn-confirmar{
+
+width:100%;
+padding:15px;
+border:none;
+background:#c6a27e;
+color:white;
+font-size:16px;
+border-radius:10px;
+cursor:pointer;
+transition:0.3s;
+
+}
+
+.btn-confirmar:hover{
+
+background:#a67c52;
+
+}
+
+#mensaje{
+
+margin-top:15px;
+text-align:center;
+font-weight:500;
+
+}

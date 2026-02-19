@@ -62,39 +62,69 @@
   <p>Lugar: Braga, Portugal</p>
 </section>
 
-<section id="confirmacion">
+<section id="confirmacion" class="confirmacion-section">
+
+<div class="confirmacion-box">
 
 <h2>Confirmar asistencia</h2>
 
-<p id="nombreInvitado">Cargando invitado...</p>
+<p id="nombreInvitado"></p>
 
 <form id="form">
 
-<label>Adultos:</label>
+<div class="form-group">
+
+<label>Adultos</label>
+
 <select id="adultos" required>
+
 <option value="">Seleccionar</option>
+
 <option value="1">1</option>
+
 <option value="2">2</option>
+
 </select>
 
-<label>Niños:</label>
+</div>
+
+<div class="form-group">
+
+<label>Niños</label>
+
 <select id="ninos">
+
 <option value="0">0</option>
+
 <option value="1">1</option>
+
 <option value="2">2</option>
+
 </select>
 
-<label>Comentarios:</label>
-<textarea id="comentarios"></textarea>
+</div>
 
-<button type="submit">Confirmar</button>
+<div class="form-group">
+
+<label>Mensaje</label>
+
+<textarea id="comentarios" placeholder="Escribe un mensaje bonito..."></textarea>
+
+</div>
+
+<button type="submit" class="btn-confirmar">
+
+Confirmar asistencia
+
+</button>
 
 </form>
 
 <p id="mensaje"></p>
 
-</section>
+</div>
 
+</section>
 
 
 <script src="script.js"></script>
@@ -107,7 +137,8 @@ const params = new URLSearchParams(window.location.search);
 
 const codigo = params.get("codigo");
 
-document.getElementById("nombreInvitado").innerText = "Código: " + codigo;
+document.getElementById("nombreInvitado").innerText =
+codigo ? "Código invitación: " + codigo : "";
 
 document.getElementById("form").addEventListener("submit", function(e){
 
@@ -135,13 +166,15 @@ comentarios: document.getElementById("comentarios").value
 
 .then(data => {
 
-document.getElementById("mensaje").innerText = "Confirmado correctamente";
+document.getElementById("mensaje").innerText =
+"Confirmación enviada correctamente";
 
 });
 
 });
 
 </script>
+
 
 
 </body>
