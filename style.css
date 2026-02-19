@@ -5,36 +5,70 @@ button{cursor:pointer;font-weight:600;transition:0.0s;}
 
 /* ICONO MUSICA */
 #music-icon{
-  position:fixed;top:20px;right:20px;width:50px;height:50px;
+  position:fixed;
+  top:20px;
+  right:20px;
+  width:50px;
+  height:50px;
   background:rgb(255, 255, 255); /* fondo muy ligero */
   border-radius:50%;
-  display:flex;justify-content:center;align-items:center;
-  cursor:pointer; z-index:1000; transition: transform 0.3s ease, background 0.3s ease;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer; z-index:1000;
 }
 #music-icon:hover{
-  transform: scale(1.2);
+  
   background: rgb(255, 255, 255);
 }
 #music-icon img{width:24px;height:24px;}
 
 /* HERO */
 
-.hero{
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  position:relative;
-  overflow:hidden;
-  background-image: url('foto-fondo.jpg');
-  background-size: cover;
-  background-position: center;
-  animation: zoom-hero 10s ease-in-out infinite alternate;
+.hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
 }
 
 @keyframes zoom-hero{
   0%   { transform: scale(1); }
   100% { transform: scale(1.2); }
+}
+
+
+/* IMAGEN QUE HACE EL ZOOM */
+.hero-img{
+
+position: absolute;
+top: 0;
+left: 0;
+
+width: 100%;
+height: 100%;
+
+object-fit: cover;
+z-index: -1;
+animation: zoom-hero 10s ease-in-out infinite alternate;
+
+}
+
+.hero-content {
+  position: absolute; /* fijamos el contenido fuera del flujo */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  z-index: 2; /* encima del fondo */
+    width: 100%;             /* opcional, para que el texto no se corte en mobile */
+  max-width: 900px;
+}
+
+.subtitle, .hero-content h1 {
+  opacity:0;
+  animation: fade-scale 1.5s ease forwards;
+  transform: scale(0.8);   /* solo al iniciar */
 }
 
 /* OVERLAY */
@@ -49,16 +83,12 @@ button{cursor:pointer;font-weight:600;transition:0.0s;}
 }
 
 /* SUBTITULO */
-.subtitle{
-  font-family:'Playfair Display', serif;
-  font-size:24px;
-  color:white;
-  margin-bottom:10px;
-  letter-spacing:2px;
-  opacity:0;
+.subtitle, .hero h1 {
+  opacity: 0;
   transform: scale(0.8);
   animation: fade-scale 1.5s ease forwards;
 }
+
 
 /* NOMBRES */
 .hero h1{
@@ -244,7 +274,7 @@ button.submit:hover{background:#333;}
 
 @keyframes pulse-text {
   0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+  50% { transform: scale(1); }
   100% { transform: scale(1); }
 }
 
@@ -280,4 +310,35 @@ button.submit:hover{background:#333;}
 @media(max-width:400px){
   .date-container .linea{ width: 50px; }
   .date-container .date-below{ font-size:14px; }
+}
+
+
+
+/* FIX PARA MOVIL boton de music*/
+
+.music-btn{
+
+position: fixed !important;
+top: 20px;
+right: 20px;
+
+z-index: 9999;
+
+animation: none !important;
+transform: none !important;
+
+}
+
+
+.hero{
+
+overflow: hidden;
+
+}
+
+
+.hero-img{
+
+will-change: transform;
+
 }
