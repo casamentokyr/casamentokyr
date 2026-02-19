@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Confirmación de asistencia</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+
+font-family: Arial;
+background: #f8f5f2;
+text-align:center;
+padding:30px;
+
+}
+
+.container{
+
+background:white;
+max-width:500px;
+margin:auto;
+padding:30px;
+border-radius:15px;
+box-shadow:0 0 15px rgba(0,0,0,0.1);
+
+}
+
+h1{
+
+color:#b38b59;
+
+}
+
+button{
+
+background:#b38b59;
+color:white;
+border:none;
+padding:15px;
+width:100%;
+font-size:18px;
+border-radius:10px;
+margin-top:20px;
+
+}
+
+input, select{
+
+width:100%;
+padding:10px;
+margin-top:10px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Confirmación</h1>
+
+<p id="nombre"></p>
+
+<form id="form">
+
+<label>Adultos confirmados</label>
+
+<select name="adultos" id="adultos"></select>
+
+
+<label>Niños confirmados</label>
+
+<select name="ninos" id="ninos"></select>
+
+
+<label>Alergias</label>
+
+<input name="alergias">
+
+
+<label>Comentarios</label>
+
+<input name="comentarios">
+
+
+<button type="submit">
+
+Confirmar asistencia
+
+</button>
+
+</form>
+
+<p id="mensaje"></p>
+
+</div>
+
+
+<script>
+
+const scriptURL = "https://script.google.com/macros/s/AKfycbw_-m3FYdDkaVuB_Hh61h4vfsyLtbWtJHgMgbqQrPJZpqNOP92jiG2qEA8AjMx5qgdD/exec";
+
+
+const codigo = new URLSearchParams(window.location.search).get('codigo');
+
+
+fetch(scriptURL + "?codigo=" + codigo)
+
+.then(res => res.json())
+
+.then(data => {
+
+document.getElementById("nombre").innerText = data.nombre;
+
+
+for(let i=0;i<=data.adultos;i++){
+
+adultos.innerHTML += `<option>${i}</option>`;
+
+}
+
+
+for(let i=0;i<=data.ninos;i++){
+
+ninos.innerHTML += `<option>${i}</option>`;
+
+}
+
+
+});
+
+
+form.addEventListener("submit", e=>{
+
+e.preventDefault();
+
+
+fetch(scriptURL,{
+
+method:"POST",
+
+body:JSON.stringify({
+
+codigo:codigo,
+
+adultos:adultos.value,
+
+ninos:ninos.value,
+
+alergias:form.alergias.value,
+
+comentarios:form.comentarios.value
+
+})
+
+})
+
+.then(res=>res.text())
+
+.then(()=>{
+
+mensaje.innerText="Confirmación guardada";
+
+});
+
+});
+
+
+</script>
+
+</body>
+
+</html>

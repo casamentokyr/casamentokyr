@@ -63,32 +63,26 @@
 </section>
 
 <!-- RSVP DINÁMICO -->
-<section class="section rsvp">
-  <h2>Confirmación de asistencia</h2>
-  <form id="form">
-    <input type="hidden" id="codigo" value="">
-    <label>Nombre completo:</label>
-    <input type="text" name="nombre" required>
 
-    <div id="personas-container">
-      <label>Personas a confirmar:</label>
-      <select name="personas" id="personas"></select>
-    </div>
+<button onclick="irConfirmacion()">
 
-    <div id="ninos-container">
-      <label>Niños:</label>
-      <select name="ninos" id="ninos">
-        <option value="0">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-      </select>
-    </div>
+Confirmar Asistencia
 
-    <label>Mensaje (opcional):</label>
-    <textarea name="mensaje" placeholder="Mensaje"></textarea>
-    <button class="submit" type="submit">Enviar</button>
-  </form>
-</section> 
+</button>
+
+<script>
+
+function irConfirmacion(){
+
+const codigo = new URLSearchParams(window.location.search).get('codigo');
+
+window.location.href = "confirmar.html?codigo=" + codigo;
+
+}
+
+</script>
+
+
 
 <script src="script.js"></script>
 </body>
