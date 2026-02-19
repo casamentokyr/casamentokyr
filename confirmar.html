@@ -15,15 +15,15 @@ button:hover{background:#8d6e63;}
 <body>
 
 <div class="container">
-<h1>Confirmación</h1>
+<h1>Confirmación de asistencia</h1>
 <p id="nombre">Cargando invitado...</p>
 
 <form id="form">
 <label>Adultos que asistirán:</label>
-<select id="adultos"></select>
+<select id="adultos" required></select>
 
 <label>Niños que asistirán:</label>
-<select id="ninos"></select>
+<select id="ninos" required></select>
 
 <label>Alergias:</label>
 <input id="alergias">
@@ -40,14 +40,15 @@ button:hover{background:#8d6e63;}
 <script>
 const endpoint = "https://script.google.com/macros/s/AKfycbw_-m3FYdDkaVuB_Hh61h4vfsyLtbWtJHgMgbqQrPJZpqNOP92jiG2qEA8AjMx5qgdD/exec";
 
-// Leer el código desde el link
-const codigo = new URLSearchParams(window.location.search).get('codigo');
+// 1️⃣ Capturamos el código del link
+const urlParams = new URLSearchParams(window.location.search);
+const codigo = urlParams.get('codigo');
 
 if(!codigo){
     document.getElementById("nombre").innerText = "⚠️ Código no encontrado en el link";
 }
 
-// Traer datos del invitado desde Google Sheets
+// 2️⃣ Traer datos del invitado desde Google Sheets
 fetch(endpoint + "?codigo=" + codigo)
 .then(res => res.json())
 .then(data => {
@@ -57,16 +58,16 @@ fetch(endpoint + "?codigo=" + codigo)
     }
     document.getElementById("nombre").innerText = "Invitado: " + data.nombre;
 
-    // Adultos permitidos
-    for(let i=0; i<=data.adultos; i++){
+    // Llenar select de adultos
+    for(let i=0;i<=data.adultos;i++){
         const option = document.createElement("option");
         option.value = i;
         option.textContent = i;
         document.getElementById("adultos").appendChild(option);
     }
 
-    // Niños permitidos
-    for(let i=0; i<=data.ninos; i++){
+    // Llenar select de niños
+    for(let i=0;i<=data.ninos;i++){
         const option = document.createElement("option");
         option.value = i;
         option.textContent = i;
@@ -74,7 +75,7 @@ fetch(endpoint + "?codigo=" + codigo)
     }
 });
 
-// Enviar formulario
+// 3️⃣ Enviar confirmación
 document.getElementById("form").addEventListener("submit", e=>{
     e.preventDefault();
     if(!codigo) return;
