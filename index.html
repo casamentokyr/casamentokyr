@@ -62,29 +62,91 @@
   <p>Lugar: Braga, Portugal</p>
 </section>
 
-<!-- RSVP DINÁMICO -->
+<section id="confirmacion">
 
-<button onclick="irConfirmacion()">
+<h2>Confirmar asistencia</h2>
 
-Confirmar Asistencia
+<p id="nombreInvitado">Cargando invitado...</p>
 
-</button>
+<form id="form">
 
-<script>
+<label>Adultos:</label>
+<select id="adultos" required>
+<option value="">Seleccionar</option>
+<option value="1">1</option>
+<option value="2">2</option>
+</select>
 
-function irConfirmacion(){
+<label>Niños:</label>
+<select id="ninos">
+<option value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+</select>
 
-const codigo = new URLSearchParams(window.location.search).get('codigo');
+<label>Comentarios:</label>
+<textarea id="comentarios"></textarea>
 
-window.location.href = "confirmar.html?codigo=" + codigo;
+<button type="submit">Confirmar</button>
 
-}
+</form>
 
-</script>
+<p id="mensaje"></p>
+
+</section>
 
 
 
 <script src="script.js"></script>
+
+<script>
+
+const scriptURL = "Phttps://script.google.com/macros/s/AKfycbzaIhjfQWbwnUK9g8Hz9Q1CpUd8dcEH9ecGtvKu6hJSjc_1as6uhmxOV3xRFEWjNtFQiA/execL";
+
+const params = new URLSearchParams(window.location.search);
+
+const codigo = params.get("codigo");
+
+document.getElementById("nombreInvitado").innerText = "Código: " + codigo;
+
+document.getElementById("form").addEventListener("submit", function(e){
+
+e.preventDefault();
+
+fetch(scriptURL, {
+
+method: "POST",
+
+body: JSON.stringify({
+
+codigo: codigo,
+
+adultos: document.getElementById("adultos").value,
+
+ninos: document.getElementById("ninos").value,
+
+comentarios: document.getElementById("comentarios").value
+
+})
+
+})
+
+.then(res => res.text())
+
+.then(data => {
+
+document.getElementById("mensaje").innerText = "Confirmado correctamente";
+
+});
+
+});
+
+</script>
+
+
 </body>
+
+
+
 </html>
 
