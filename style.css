@@ -1,7 +1,7 @@
 /* GENERAL */
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Montserrat',sans-serif;background:#fff;color:#333;text-align:center;}
-button{cursor:pointer;font-weight:600;transition:0.3s;}
+button{cursor:pointer;font-weight:600;transition:0.0s;}
 
 /* ICONO MUSICA */
 #music-icon{
@@ -35,16 +35,6 @@ button{cursor:pointer;font-weight:600;transition:0.3s;}
   100% { transform: scale(1.2); }
 }
 
-.hero{
-
-position: relative;
-
-height: 100vh;
-
-overflow: hidden;
-
-}
-
 
 /* IMAGEN QUE HACE EL ZOOM */
 .hero-img{
@@ -61,27 +51,10 @@ object-fit: cover;
 
 z-index: -1;
 
-animation: zoom-hero 15s ease-in-out infinite alternate;
+animation: zoom-hero 10s ease-in-out infinite alternate;
 
 }
 
-
-/* TU ANIMACION */
-@keyframes zoom-hero{
-
-0%{
-
-transform: scale(1);
-
-}
-
-100%{
-
-transform: scale(1.2);
-
-}
-
-}
 
 
 /* OVERLAY */
