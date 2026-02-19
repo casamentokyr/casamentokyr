@@ -2,178 +2,100 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Confirmación de asistencia</title>
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<title>Confirmación de asistencia</title>
 <style>
-
-body{
-
-font-family: Arial;
-background: #f8f5f2;
-text-align:center;
-padding:30px;
-
-}
-
-.container{
-
-background:white;
-max-width:500px;
-margin:auto;
-padding:30px;
-border-radius:15px;
-box-shadow:0 0 15px rgba(0,0,0,0.1);
-
-}
-
-h1{
-
-color:#b38b59;
-
-}
-
-button{
-
-background:#b38b59;
-color:white;
-border:none;
-padding:15px;
-width:100%;
-font-size:18px;
-border-radius:10px;
-margin-top:20px;
-
-}
-
-input, select{
-
-width:100%;
-padding:10px;
-margin-top:10px;
-
-}
-
+body{font-family:Arial;background:#f8f5f2;padding:20px;text-align:center;}
+.container{background:white;padding:20px;border-radius:10px;max-width:500px;margin:auto;box-shadow:0 0 10px rgba(0,0,0,0.1);}
+select,input,button{width:100%;padding:10px;margin-top:10px;border-radius:5px;border:1px solid #ccc;}
+button{background:#b38b59;color:white;border:none;font-size:18px;}
+button:hover{background:#8d6e63;}
 </style>
-
 </head>
-
 <body>
 
 <div class="container">
-
 <h1>Confirmación</h1>
-
-<p id="nombre"></p>
+<p id="nombre">Cargando invitado...</p>
 
 <form id="form">
+<label>Adultos que asistirán:</label>
+<select id="adultos"></select>
 
-<label>Adultos confirmados</label>
+<label>Niños que asistirán:</label>
+<select id="ninos"></select>
 
-<select name="adultos" id="adultos"></select>
+<label>Alergias:</label>
+<input id="alergias">
 
+<label>Comentarios:</label>
+<input id="comentarios">
 
-<label>Niños confirmados</label>
-
-<select name="ninos" id="ninos"></select>
-
-
-<label>Alergias</label>
-
-<input name="alergias">
-
-
-<label>Comentarios</label>
-
-<input name="comentarios">
-
-
-<button type="submit">
-
-Confirmar asistencia
-
-</button>
-
+<button type="submit">Confirmar asistencia</button>
 </form>
 
 <p id="mensaje"></p>
-
 </div>
 
-
 <script>
+const endpoint = "https://script.google.com/macros/s/AKfycbw_-m3FYdDkaVuB_Hh61h4vfsyLtbWtJHgMgbqQrPJZpqNOP92jiG2qEA8AjMx5qgdD/exec";
 
-const scriptURL = "https://script.google.com/macros/s/AKfycbw_-m3FYdDkaVuB_Hh61h4vfsyLtbWtJHgMgbqQrPJZpqNOP92jiG2qEA8AjMx5qgdD/exec";
-
-
+// Leer el código desde el link
 const codigo = new URLSearchParams(window.location.search).get('codigo');
 
+if(!codigo){
+    document.getElementById("nombre").innerText = "⚠️ Código no encontrado en el link";
+}
 
-fetch(scriptURL + "?codigo=" + codigo)
-
+// Traer datos del invitado desde Google Sheets
+fetch(endpoint + "?codigo=" + codigo)
 .then(res => res.json())
-
 .then(data => {
+    if(!data.nombre){
+        document.getElementById("nombre").innerText = "⚠️ Invitado no encontrado";
+        return;
+    }
+    document.getElementById("nombre").innerText = "Invitado: " + data.nombre;
 
-document.getElementById("nombre").innerText = data.nombre;
+    // Adultos permitidos
+    for(let i=0; i<=data.adultos; i++){
+        const option = document.createElement("option");
+        option.value = i;
+        option.textContent = i;
+        document.getElementById("adultos").appendChild(option);
+    }
 
-
-for(let i=0;i<=data.adultos;i++){
-
-adultos.innerHTML += `<option>${i}</option>`;
-
-}
-
-
-for(let i=0;i<=data.ninos;i++){
-
-ninos.innerHTML += `<option>${i}</option>`;
-
-}
-
-
+    // Niños permitidos
+    for(let i=0; i<=data.ninos; i++){
+        const option = document.createElement("option");
+        option.value = i;
+        option.textContent = i;
+        document.getElementById("ninos").appendChild(option);
+    }
 });
 
+// Enviar formulario
+document.getElementById("form").addEventListener("submit", e=>{
+    e.preventDefault();
+    if(!codigo) return;
 
-form.addEventListener("submit", e=>{
-
-e.preventDefault();
-
-
-fetch(scriptURL,{
-
-method:"POST",
-
-body:JSON.stringify({
-
-codigo:codigo,
-
-adultos:adultos.value,
-
-ninos:ninos.value,
-
-alergias:form.alergias.value,
-
-comentarios:form.comentarios.value
-
-})
-
-})
-
-.then(res=>res.text())
-
-.then(()=>{
-
-mensaje.innerText="Confirmación guardada";
-
+    fetch(endpoint, {
+        method:"POST",
+        body: JSON.stringify({
+            codigo: codigo,
+            adultos: document.getElementById("adultos").value,
+            ninos: document.getElementById("ninos").value,
+            alergias: document.getElementById("alergias").value,
+            comentarios: document.getElementById("comentarios").value
+        })
+    })
+    .then(res => res.text())
+    .then(()=>{
+        document.getElementById("mensaje").innerText = "✅ Confirmación guardada";
+        document.getElementById("form").reset();
+    });
 });
-
-});
-
-
 </script>
 
 </body>
-
 </html>
