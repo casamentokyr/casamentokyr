@@ -130,50 +130,56 @@ Confirmar asistencia
 <script src="script.js"></script>
 
 <script>
-
-const scriptURL = "https://script.google.com/macros/s/AKfycbyBlxpU38VvI4Bn1a8UEAuCkSMJym6soRcr0OCfnFK5AXIgQcmKgMPVS5x_0WXiq3i0xw/exec";
+const scriptURL = "https://script.google.com/macros/library/d/15ZqBGxFY1PCdS9DBvguGaD0PnARnuAyNoVCrq0U0VyYF-8xG3ByHK0ej/6";
 
 const params = new URLSearchParams(window.location.search);
-
 const codigo = params.get("codigo");
 
-fetch(scriptURL + "?codigo=" + codigo)
+if(!codigo){
+  document.getElementById("nombreInvitado").innerText = "No se ha recibido código";
+} else {
+  fetch(scriptURL + "?codigo=" + codigo)
+    .then(res => res.json())
+    .then(data => {
+      if(data.error){
+        document.getElementById("nombreInvitado").innerText = data.error;
+        return;
+      }
 
-.then(res => res.json())
+      document.getElementById("nombreInvitado").innerText = "Hola " + data.nombre;
 
-.then(data => {
+      // Adultos
+      let selectAdultos = document.getElementById("adultos");
+      selectAdultos.innerHTML = "";
+      for(let i=1;i<=data.adultos;i++){
+        selectAdultos.innerHTML += `<option value="${i}">${i}</option>`;
+      }
 
-document.getElementById("nombreInvitado").innerText =
-data.nombre;
+      // Niños
+      let ninosContainer = document.getElementById("ninosContainer");
+      let selectNinos = document.getElementById("ninos");
+      selectNinos.innerHTML = "";
+      if(data.ninos === 0){
+        ninosContainer.style.display = "none";
+      } else {
+        ninosContainer.style.display = "block";
+        for(let i=0;i<=data.ninos;i++){
+          selectNinos.innerHTML += `<option value="${i}">${i}</option>`;
+        }
+      }
 
-// adultos
-
-let selectAdultos = document.getElementById("adultos");
-
-selectAdultos.innerHTML = "";
-
-for(let i=1; i<=data.adultos; i++){
-
-selectAdultos.innerHTML += `<option value="${i}">${i}</option>`;
-
+      // Alergias
+      if(data.alergias && data.alergias.trim() !== ""){
+        document.getElementById("alergiaTexto").style.display="block";
+        document.getElementById("alergias").value = data.alergias;
+        document.getElementById("alergiaSelect").value="Si";
+      } else {
+        document.getElementById("alergiaTexto").style.display="none";
+        document.getElementById("alergiaSelect").value="No";
+      }
+    });
 }
-
-// niños
-
-let selectNinos = document.getElementById("ninos");
-
-selectNinos.innerHTML = "";
-
-for(let i=0; i<=data.ninos; i++){
-
-selectNinos.innerHTML += `<option value="${i}">${i}</option>`;
-
-}
-
-});
-
 </script>
-
 
 
 
