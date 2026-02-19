@@ -131,49 +131,49 @@ Confirmar asistencia
 
 <script>
 
-const scriptURL = "https://script.google.com/macros/s/AKfycbzaIhjfQWbwnUK9g8Hz9Q1CpUd8dcEH9ecGtvKu6hJSjc_1as6uhmxOV3xRFEWjNtFQiA/exec";
+const scriptURL = "https://script.google.com/macros/s/AKfycbyBlxpU38VvI4Bn1a8UEAuCkSMJym6soRcr0OCfnFK5AXIgQcmKgMPVS5x_0WXiq3i0xw/exec";
 
 const params = new URLSearchParams(window.location.search);
 
 const codigo = params.get("codigo");
 
-document.getElementById("nombreInvitado").innerText =
-codigo ? "Código invitación: " + codigo : "";
+fetch(scriptURL + "?codigo=" + codigo)
 
-document.getElementById("form").addEventListener("submit", function(e){
-
-e.preventDefault();
-
-fetch(scriptURL, {
-
-method: "POST",
-
-body: JSON.stringify({
-
-codigo: codigo,
-
-adultos: document.getElementById("adultos").value,
-
-ninos: document.getElementById("ninos").value,
-
-comentarios: document.getElementById("comentarios").value
-
-})
-
-})
-
-.then(res => res.text())
+.then(res => res.json())
 
 .then(data => {
 
-document.getElementById("mensaje").innerText =
-"Confirmación enviada correctamente";
+document.getElementById("nombreInvitado").innerText =
+data.nombre;
 
-});
+// adultos
+
+let selectAdultos = document.getElementById("adultos");
+
+selectAdultos.innerHTML = "";
+
+for(let i=1; i<=data.adultos; i++){
+
+selectAdultos.innerHTML += `<option value="${i}">${i}</option>`;
+
+}
+
+// niños
+
+let selectNinos = document.getElementById("ninos");
+
+selectNinos.innerHTML = "";
+
+for(let i=0; i<=data.ninos; i++){
+
+selectNinos.innerHTML += `<option value="${i}">${i}</option>`;
+
+}
 
 });
 
 </script>
+
 
 
 
