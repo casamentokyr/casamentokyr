@@ -108,7 +108,7 @@
 
 <label>Mensaje</label>
 
-<textarea id="comentarios" placeholder="Escribe un mensaje bonito..."></textarea>
+<textarea id="comentarios" placeholder="Escribe un mensaje ..."></textarea>
 
 </div>
 
@@ -129,56 +129,68 @@ Confirmar asistencia
 
 <script src="script.js"></script>
 
+
+<form id="rsvpForm">
+
+<input type="hidden" id="codigo">
+
+<input type="text" id="nombre" placeholder="Nombre" required>
+
+<input type="number" id="adultos" required>
+
+<input type="number" id="ninos">
+
+<textarea id="alergias"></textarea>
+
+<textarea id="comentarios"></textarea>
+
+<button type="submit">
+
+Confirmar
+
+</button>
+
+</form>
+
 <script>
-const scriptURL = "https://script.google.com/macros/library/d/15ZqBGxFY1PCdS9DBvguGaD0PnARnuAyNoVCrq0U0VyYF-8xG3ByHK0ej/6";
+const scriptURL = "https://script.google.com/macros/s/AKfycbz6hkbmkO6fF6rZFmR1sSxq2DnkojVGBMwbKqkVr-vy02v77xn0cuh8z4580G-3o_gt/exec";
 
-const params = new URLSearchParams(window.location.search);
-const codigo = params.get("codigo");
+document.getElementById("rsvpForm").addEventListener("submit", function(e){
 
-if(!codigo){
-  document.getElementById("nombreInvitado").innerText = "No se ha recibido código";
-} else {
-  fetch(scriptURL + "?codigo=" + codigo)
-    .then(res => res.json())
-    .then(data => {
-      if(data.error){
-        document.getElementById("nombreInvitado").innerText = data.error;
-        return;
-      }
+e.preventDefault();
 
-      document.getElementById("nombreInvitado").innerText = "Hola " + data.nombre;
+const data = {
 
-      // Adultos
-      let selectAdultos = document.getElementById("adultos");
-      selectAdultos.innerHTML = "";
-      for(let i=1;i<=data.adultos;i++){
-        selectAdultos.innerHTML += `<option value="${i}">${i}</option>`;
-      }
+codigo: document.getElementById("codigo").value,
 
-      // Niños
-      let ninosContainer = document.getElementById("ninosContainer");
-      let selectNinos = document.getElementById("ninos");
-      selectNinos.innerHTML = "";
-      if(data.ninos === 0){
-        ninosContainer.style.display = "none";
-      } else {
-        ninosContainer.style.display = "block";
-        for(let i=0;i<=data.ninos;i++){
-          selectNinos.innerHTML += `<option value="${i}">${i}</option>`;
-        }
-      }
+nombre: document.getElementById("nombre").value,
 
-      // Alergias
-      if(data.alergias && data.alergias.trim() !== ""){
-        document.getElementById("alergiaTexto").style.display="block";
-        document.getElementById("alergias").value = data.alergias;
-        document.getElementById("alergiaSelect").value="Si";
-      } else {
-        document.getElementById("alergiaTexto").style.display="none";
-        document.getElementById("alergiaSelect").value="No";
-      }
-    });
-}
+adultos: document.getElementById("adultos").value,
+
+ninos: document.getElementById("ninos").value,
+
+alergias: document.getElementById("alergias").value,
+
+comentarios: document.getElementById("comentarios").value
+
+};
+
+
+fetch(SCRIPT_URL, {
+
+method: "POST",
+
+body: JSON.stringify(data)
+
+})
+
+.then(res => alert("Confirmación enviada"))
+
+.catch(err => alert("Error"));
+
+});
+
+
 </script>
 
 
