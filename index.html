@@ -125,31 +125,31 @@ comentarios: document.getElementById("comentarios").value
 
 };
 
-document.getElementById("rsvpForm").addEventListener("submit", function(e){
+try {
 
-e.preventDefault();
+await fetch(SCRIPT_URL, {
 
-const adultos = parseInt(document.getElementById("adultos").value);
+method: "POST",
 
+mode: "no-cors",
 
-if(adultos == 0){
+headers: {
 
-document.getElementById("mensaje").innerHTML = "Has cancelado tu invitación";
+"Content-Type": "application/json"
 
-fetch(SCRIPT_URL + "?codigo=" + codigo + "&confirmado=CANCELADO");
+},
 
-return;
+body: JSON.stringify(data)
 
-}
-
-
-// SI CONFIRMA NORMAL
-
-fetch(SCRIPT_URL + "?codigo=" + codigo + "&confirmado=SI");
+});
 
 alert("Confirmación enviada correctamente");
 
-});
+} catch(error){
+
+alert("Error al enviar");
+
+}
 
 });
 
