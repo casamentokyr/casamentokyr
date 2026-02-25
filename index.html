@@ -96,7 +96,7 @@ Confirmar
 
 <script>
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby0OcB1JLBoB83cZAG9P8kIbIDyCJ__MqmJrei1OCY4_Zbtp9wa1g6nwg29qX2WSraU/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyJtGe3cAjUEraZnZbA6RF9qX5phKgt781hXnhdJvfR1lyntGSs_G6IevgK0YHIE8F_tw/exec";
 
 document.getElementById("rsvpForm").addEventListener("submit", async function(e){
 
@@ -159,7 +159,7 @@ const params = new URLSearchParams(window.location.search);
 const codigo = params.get("codigo");
 
 
-// SI NO HAY CODIGO
+// VALIDAR CODIGO
 
 if(!codigo){
 
@@ -174,18 +174,47 @@ return;
 
 fetch(SCRIPT_URL + "?codigo=" + codigo)
 
-.then(res => res.text())
+.then(response => response.json())
 
-.then(text => {
+.then(data => {
+
+console.log(data);
 
 
-if(text == "No encontrado"){
+// LLENAR FORMULARIO
 
-alert("Código no existe");
+document.getElementById("codigo").value = codigo;
 
-return;
+document.getElementById("nombre").value = data.nombre;
+
+
+// LIMITAR ADULTOS
+
+const adultosInput = document.getElementById("adultos");
+
+adultosInput.max = data.adultos;
+
+adultosInput.value = data.adultos;
+
+
+// NIÑOS
+
+const ninosInput = document.getElementById("ninos");
+
+if(data.ninosPermitidos == 0){
+
+ninosInput.value = 0;
+
+ninosInput.disabled = true;
+
+}else{
+
+ninosInput.max = data.ninos;
+
+ninosInput.value = data.ninos;
 
 }
+
 
 // SI YA CONFIRMÓ
 
@@ -203,6 +232,9 @@ document.getElementById("rsvpForm").classList.add("form-bloqueado");
 
 }
 
+
+// SI HACEN CLICK
+
 document.getElementById("rsvpForm").addEventListener("click", function(){
 
 if(this.classList.contains("form-bloqueado")){
@@ -214,49 +246,13 @@ alert("Esta invitación ya fue confirmada");
 });
 
 
-const data = JSON.parse(text);
-
-
-// poner valores
-
-document.getElementById("codigo").value = codigo;
-
-document.getElementById("nombre").value = data.nombre;
-
-
-// limitar adultos
-
-const adultosInput = document.getElementById("adultos");
-
-adultosInput.max = data.adultos;
-
-adultosInput.value = data.adultos;
-
-
-// niños
-
-const ninosInput = document.getElementById("ninos");
-
-if(data.ninosPermitidos == 0){
-
-ninosInput.style.display = "none";
-
-}else{
-
-ninosInput.max = data.ninos;
-
-ninosInput.value = data.ninos;
-
-}
-
-
 })
 
 .catch(error => {
 
-alert("Error conectando con invitados");
+console.error(error);
 
-console.log(error);
+alert("Error conectando con invitados");
 
 });
 
