@@ -66,6 +66,10 @@
 
 <script src="script.js"></script>
 
+<div id="mensajeConfirmado" class="mensaje-confirmado" style="display:none;">
+💍 Invitación confirmada<br>
+Si necesitas hacer cambios por favor contactar a la novia.
+</div>
 
 <form id="rsvpForm">
 
@@ -92,7 +96,7 @@ Confirmar
 
 <script>
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyeog6Yjy85AgH4NUePL7emu4h10uj8PAUHd_TFcCLIaMnyc5craKLMEkPo9c8pVC2KFw/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyJtGe3cAjUEraZnZbA6RF9qX5phKgt781hXnhdJvfR1lyntGSs_G6IevgK0YHIE8F_tw/exec";
 
 document.getElementById("rsvpForm").addEventListener("submit", async function(e){
 
@@ -148,7 +152,7 @@ alert("Error al enviar");
 
 document.addEventListener("DOMContentLoaded", function(){
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyeog6Yjy85AgH4NUePL7emu4h10uj8PAUHd_TFcCLIaMnyc5craKLMEkPo9c8pVC2KFw/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyJtGe3cAjUEraZnZbA6RF9qX5phKgt781hXnhdJvfR1lyntGSs_G6IevgK0YHIE8F_tw/exec";
 
 const params = new URLSearchParams(window.location.search);
 
@@ -182,6 +186,32 @@ alert("Código no existe");
 return;
 
 }
+
+// SI YA CONFIRMÓ
+
+if(data.confirmado == "SI"){
+
+
+// mostrar mensaje
+
+document.getElementById("mensajeConfirmado").style.display = "block";
+
+
+// bloquear formulario
+
+document.getElementById("rsvpForm").classList.add("form-bloqueado");
+
+}
+
+document.getElementById("rsvpForm").addEventListener("click", function(){
+
+if(this.classList.contains("form-bloqueado")){
+
+alert("Esta invitación ya fue confirmada");
+
+}
+
+});
 
 
 const data = JSON.parse(text);
