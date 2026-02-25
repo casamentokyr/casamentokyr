@@ -66,9 +66,11 @@
 
 <script src="script.js"></script>
 
+
+
 <div id="mensajeConfirmado" class="mensaje-confirmado" style="display:none;">
 💍 Invitación confirmada<br>
-Si necesitas hacer cambios por favor contactar a la novia.
+Si necesitas hacer cambios por favor contactar a los Novios.
 </div>
 
 <form id="rsvpForm">
@@ -77,10 +79,15 @@ Si necesitas hacer cambios por favor contactar a la novia.
 
 <input type="text" id="nombre" placeholder="Nombre" required>
 
-<input type="number" id="adultos" required>
+<!-- <input type="number" id="adultos" required>
 
-<input type="number" id="ninos">
+<input type="number" id="ninos">-->
 
+<input type="number" id="adultos" min="0" value="0" oninput="evitarNegativos(this)">
+<input type="number" id="ninos" min="0" value="0" oninput="evitarNegativos(this)">
+
+
+<div id="mensajeNinos" style="color:red;font-weight:bold;"></div>
 <textarea id="alergias"></textarea>
 
 <textarea id="comentarios"></textarea>
@@ -216,7 +223,7 @@ ninosInput.value = data.ninos;
 }
 
 
-// SI YA CONFIRMÓ
+// SI YA CONFIRMÓ 
 
 if(data.confirmado == "SI"){
 
