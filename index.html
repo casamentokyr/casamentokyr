@@ -92,7 +92,7 @@ Confirmar
 
 <script>
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6hkbmkO6fF6rZFmR1sSxq2DnkojVGBMwbKqkVr-vy02v77xn0cuh8z4580G-3o_gt/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyeog6Yjy85AgH4NUePL7emu4h10uj8PAUHd_TFcCLIaMnyc5craKLMEkPo9c8pVC2KFw/exec";
 
 document.getElementById("rsvpForm").addEventListener("submit", async function(e){
 
@@ -144,6 +144,96 @@ alert("Error al enviar");
 
 </script>
 
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyeog6Yjy85AgH4NUePL7emu4h10uj8PAUHd_TFcCLIaMnyc5craKLMEkPo9c8pVC2KFw/exec";
+
+const params = new URLSearchParams(window.location.search);
+
+const codigo = params.get("codigo");
+
+
+// SI NO HAY CODIGO
+
+if(!codigo){
+
+alert("Invitación no válida");
+
+return;
+
+}
+
+
+// PEDIR DATOS
+
+fetch(SCRIPT_URL + "?codigo=" + codigo)
+
+.then(res => res.text())
+
+.then(text => {
+
+
+if(text == "No encontrado"){
+
+alert("Código no existe");
+
+return;
+
+}
+
+
+const data = JSON.parse(text);
+
+
+// poner valores
+
+document.getElementById("codigo").value = codigo;
+
+document.getElementById("nombre").value = data.nombre;
+
+
+// limitar adultos
+
+const adultosInput = document.getElementById("adultos");
+
+adultosInput.max = data.adultos;
+
+adultosInput.value = data.adultos;
+
+
+// niños
+
+const ninosInput = document.getElementById("ninos");
+
+if(data.ninosPermitidos == 0){
+
+ninosInput.style.display = "none";
+
+}else{
+
+ninosInput.max = data.ninos;
+
+ninosInput.value = data.ninos;
+
+}
+
+
+})
+
+.catch(error => {
+
+alert("Error conectando con invitados");
+
+console.log(error);
+
+});
+
+
+});
+
+</script>
 
 </body>
 
