@@ -89,10 +89,12 @@ Confirmar
 
 </form>
 
-<script>
-const scriptURL = "https://script.google.com/macros/s/AKfycbz6hkbmkO6fF6rZFmR1sSxq2DnkojVGBMwbKqkVr-vy02v77xn0cuh8z4580G-3o_gt/exec";
 
-document.getElementById("rsvpForm").addEventListener("submit", function(e){
+<script>
+
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6hkbmkO6fF6rZFmR1sSxq2DnkojVGBMwbKqkVr-vy02v77xn0cuh8z4580G-3o_gt/exec";
+
+document.getElementById("rsvpForm").addEventListener("submit", async function(e){
 
 e.preventDefault();
 
@@ -112,24 +114,35 @@ comentarios: document.getElementById("comentarios").value
 
 };
 
+try {
 
-fetch(SCRIPT_URL, {
+await fetch(SCRIPT_URL, {
 
 method: "POST",
 
+mode: "no-cors",
+
+headers: {
+
+"Content-Type": "application/json"
+
+},
+
 body: JSON.stringify(data)
-
-})
-
-.then(res => alert("Confirmación enviada"))
-
-.catch(err => alert("Error"));
 
 });
 
+alert("Confirmación enviada correctamente");
+
+} catch(error){
+
+alert("Error al enviar");
+
+}
+
+});
 
 </script>
-
 
 
 </body>
