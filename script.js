@@ -79,47 +79,25 @@ input.value = 0;
 
 // NIÑOS FINAL CORRECTO
 
-const switchNinos = document.getElementById("switchNinos");
-
 const textoNinos = document.getElementById("textoNinos");
-
 const inputNinos = document.getElementById("ninos");
-
+const switchVisual = document.querySelector(".switch");
 
 if(data.ninosPermitidos == 0){
 
-// mostrar texto
-
 textoNinos.innerText = "Niños no permitidos";
 
-// boton gris
-
-switchNinos.checked = false;
-
-switchNinos.disabled = true;
-
-// ocultar input
+switchVisual.classList.remove("activo");
 
 inputNinos.style.display = "none";
 
-
 }else{
 
-// mostrar texto
+textoNinos.innerText = "Niños permitidos";
 
-textoNinos.innerText = "Niños";
-
-// boton verde
-
-switchNinos.checked = true;
-
-switchNinos.disabled = true;
-
-// mostrar input
+switchVisual.classList.add("activo");
 
 inputNinos.style.display = "block";
-
-// limite
 
 inputNinos.max = data.ninos;
 
