@@ -188,8 +188,39 @@ Confirmar asistencia
 
 
 
+
 <div id="mensajeExito" class="mensaje-exito"></div>
 
+
+
+<script>
+
+const switchAlergia = document.getElementById("switchAlergia");
+
+const campoAlergiaTexto = document.getElementById("campoAlergiaTexto");
+
+const textoAlergia = document.getElementById("textoAlergia");
+
+
+switchAlergia.addEventListener("change", function(){
+
+if(this.checked){
+
+campoAlergiaTexto.style.display="block";
+
+textoAlergia.innerText="Sí";
+
+}else{
+
+campoAlergiaTexto.style.display="none";
+
+textoAlergia.innerText="No";
+
+}
+
+});
+
+</script>
 
 <script>
 

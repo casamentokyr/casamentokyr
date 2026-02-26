@@ -67,3 +67,22 @@ document.getElementById("form").addEventListener("submit",function(e){
   alert("¡Confirmación enviada! Gracias por celebrar con nosotros.");
   this.reset();
 });
+
+
+
+function evitarNegativos(input){
+if(input.value < 0){
+input.value = 0;
+}
+}
+
+if(data.ninosPermitidos == 0){
+
+document.getElementById("ninos").value = 0;
+
+document.getElementById("ninos").disabled = true;
+
+document.getElementById("mensajeNinos").innerHTML = "Niños no permitidos";
+
+}
+
