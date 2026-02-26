@@ -1,106 +1,132 @@
-// SCROLL SUAVE
-function scrollDown(){window.scrollBy({top:window.innerHeight,behavior:"smooth"});}
+// CONFIGURACIÓN
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyjuQb6qBEXoQCYkWSL94r87hFRcO2RIdCRpad7PRPBHrJRGixBOinmcJJN0HfvmrgF7A/exec";
+const WEDDING_DATE = new Date("May 15, 2027 16:00:00");
 
-// CUENTA REGRESIVA CIRCULAR
-const wedding = new Date("May 15, 2027 16:00:00");
-
-function updateCountdown(){
-  const now=new Date();
-  const diff=wedding-now;
-  if(diff<=0){
-    ["days","hours","minutes","seconds"].forEach(id=>document.getElementById(id).textContent=0);
-    return;
-  }
-  const days=Math.floor(diff/1000/60/60/24);
-  const hours=Math.floor((diff/1000/60/60)%24);
-  const minutes=Math.floor((diff/1000/60)%60);
-  const seconds=Math.floor((diff/1000)%60);
-
-  ["days","hours","minutes","seconds"].forEach(id=>{
-    const el=document.getElementById(id);
-    el.textContent=eval(id);
-    el.style.animation="none";
-    el.offsetHeight;
+// 1. CUENTA REGRESIVA
+function updateCountdown() {
+    const now = new Date();
+    const diff = WEDDING_DATE - now;
     
-  });
+    if (diff <= 0) return;
+
+    const parts = {
+        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((diff / (1000 * 60)) % 60),
+        seconds: Math.floor((diff / 1000) % 60)
+    };
+
+    Object.keys(parts).forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.textContent != parts[id]) {
+            el.textContent = parts[id];
+        }
+    });
 }
-setInterval(updateCountdown,1000);
-updateCountdown();
+setInterval(updateCountdown, 1000);
 
-// INVITADOS DINAMICOS
-const invitados={ "ana123":{max:1,ninos:false},"bru456":{max:4,ninos:true},"car789":{max:2,ninos:false} };
-const urlParams=new URLSearchParams(window.location.search);
-const guestCode=urlParams.get("guest");
-document.getElementById("codigo").value=guestCode;
+// 2. MÚSICA
+const music = document.getElementById("music");
+const musicBtn = document.getElementById("music-icon");
+const musicImg = document.getElementById("music-img");
+let isPlaying = false;
 
-if(guestCode && invitados[guestCode]){
-  const max=invitados[guestCode].max;
-  const ninosPermitidos=invitados[guestCode].ninos;
-  const selectPersonas=document.getElementById("personas");
-  selectPersonas.innerHTML="";
-  for(let i=1;i<=max;i++){
-    const opt=document.createElement("option"); opt.value=i; opt.textContent=i;
-    selectPersonas.appendChild(opt);
-  }
-  if(!ninosPermitidos){document.getElementById("ninos-container").style.display="none";}
-}else{
-  const selectPersonas=document.getElementById("personas");
-  selectPersonas.innerHTML="<option value='1'>1</option>";
-  document.getElementById("ninos-container").style.display="none";
-}
-
-// ICONO MUSICA
-const music=document.getElementById("music");
-const icon=document.getElementById("music-icon");
-const img=document.getElementById("music-img");
-let isPlaying=false;
-icon.addEventListener("click",()=>{
-  if(!isPlaying){music.play();img.src="pause.png";isPlaying=true;}
-  else{music.pause();img.src="play.png";isPlaying=false;}
+musicBtn.addEventListener("click", () => {
+    if (!isPlaying) {
+        music.play().catch(() => alert("Interactúa con la página primero para sonar la música"));
+        musicImg.src = "pause.png";
+    } else {
+        music.pause();
+        musicImg.src = "play.png";
+    }
+    isPlaying = !isPlaying;
 });
 
-// ENVIO FORMULARIO
-document.getElementById("form").addEventListener("submit",function(e){
-  e.preventDefault();
-  const data={nombre:this.nombre.value,codigo:this.codigo.value,personas:this.personas.value,ninos:this.ninos?this.ninos.value:0,mensaje:this.mensaje.value};
-  fetch("TU_URL_GOOGLE",{method:"POST",body:JSON.stringify(data)});
-  alert("¡Confirmación enviada! Gracias por celebrar con nosotros.");
-  this.reset();
+// 3. CARGA DE DATOS DEL INVITADO
+document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    const codigo = params.get("codigo") || params.get("guest");
+
+    if (!codigo) return;
+
+    fetch(`${SCRIPT_URL}?codigo=${codigo}`)
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("codigo").value = codigo;
+            document.getElementById("nombre").value = data.nombre;
+            
+            // Lógica de Adultos
+            const adultosInput = document.getElementById("adultos");
+            adultosInput.max = data.adultos;
+            adultosInput.value = data.adultos;
+
+            // Lógica de Niños (Tu solicitud principal)
+            const ninosInput = document.getElementById("ninos");
+            const textoNinos = document.getElementById("textoNinos");
+
+            if (data.ninosPermitidos == 0 || data.ninos == 0) {
+                textoNinos.innerText = "Niños no permitidos";
+                textoNinos.classList.add("disabled");
+                ninosInput.style.display = "none";
+                ninosInput.value = 0;
+            } else {
+                textoNinos.innerText = `Niños invitados: ${data.ninos}`;
+                ninosInput.style.display = "block";
+                ninosInput.max = data.ninos;
+                ninosInput.value = data.ninos;
+            }
+
+            // Si ya confirmó
+            if (data.confirmado === "SI") {
+                document.getElementById("mensajeConfirmado").style.display = "block";
+                document.getElementById("rsvpForm").classList.add("form-bloqueado");
+                document.getElementById("btnSubmit").disabled = true;
+                document.getElementById("btnSubmit").innerText = "Asistencia ya confirmada";
+            }
+        });
 });
 
+// 4. SWITCH ALERGIAS
+document.getElementById("switchAlergia").addEventListener("change", function() {
+    const campo = document.getElementById("campoAlergiaTexto");
+    const texto = document.getElementById("textoAlergia");
+    campo.style.display = this.checked ? "block" : "none";
+    texto.innerText = this.checked ? "Sí" : "No";
+});
 
+// 5. ENVÍO DEL FORMULARIO
+document.getElementById("rsvpForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    if (this.classList.contains("form-bloqueado")) return;
 
-function evitarNegativos(input){
-if(input.value < 0){
-input.value = 0;
-}
-}
+    const btn = document.getElementById("btnSubmit");
+    btn.innerText = "Enviando...";
+    btn.disabled = true;
 
+    const formData = {
+        codigo: document.getElementById("codigo").value,
+        nombre: document.getElementById("nombre").value,
+        adultos: document.getElementById("adultos").value,
+        ninos: document.getElementById("ninos").value,
+        alergias: document.getElementById("switchAlergia").checked ? document.getElementById("alergias").value : "Ninguna",
+        comentarios: document.getElementById("comentarios").value
+    };
 
-// NIÑOS FINAL CORRECTO
+    try {
+        await fetch(SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors",
+            body: JSON.stringify(formData)
+        });
 
-const textoNinos = document.getElementById("textoNinos");
-const inputNinos = document.getElementById("ninos");
-const switchVisual = document.querySelector(".switch");
+        const mensaje = document.getElementById("mensajeExito");
+        mensaje.innerHTML = `<div class="mensaje-box"><h2>¡Gracias!</h2><p>Confirmación enviada correctamente.</p></div>`;
+        mensaje.classList.add("show");
 
-if(data.ninosPermitidos == 0){
-
-textoNinos.innerText = "Niños no permitidos";
-
-switchVisual.classList.remove("activo");
-
-inputNinos.style.display = "none";
-
-}else{
-
-textoNinos.innerText = "Niños permitidos";
-
-switchVisual.classList.add("activo");
-
-inputNinos.style.display = "block";
-
-inputNinos.max = data.ninos;
-
-inputNinos.value = "";
-
-}
+        setTimeout(() => location.reload(), 3000);
+    } catch (err) {
+        alert("Error al enviar. Intenta de nuevo.");
+        btn.disabled = false;
+        btn.innerText = "Confirmar asistencia";
+    }
+});
