@@ -41,7 +41,8 @@ if (musicBtn) {
     });
 }
 
-// 4. CARGA DE DATOS Y LÓGICA DE CANCELACIÓN
+// ... (Mantén tu código de cuenta regresiva y música igual) ...
+
 document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
     const codigo = params.get("codigo") || params.get("guest");
@@ -54,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("codigo").value = codigo;
             document.getElementById("nombre").value = data.nombre || "Invitado";
             
-            // Generar opciones de Adultos + Opción Cancelar
+            // 1. SELECTOR DE ADULTOS
             const selectA = document.getElementById("adultos");
             selectA.innerHTML = '<option value="" disabled selected>Selecciona una opción</option>';
             
@@ -64,43 +65,71 @@ document.addEventListener("DOMContentLoaded", () => {
                 opt.text = `${i} Adulto${i > 1 ? 's' : ''} confirmado${i > 1 ? 's' : ''}`;
                 selectA.appendChild(opt);
             }
-            
             let optCancel = document.createElement("option");
             optCancel.value = "0";
             optCancel.text = "No podré asistir (Cancelar invitación)";
             selectA.appendChild(optCancel);
 
-            // EVENTO CUANDO CAMBIAN EL SELECTOR
+            // 2. FUNCIÓN PARA DIBUJAR LA SECCIÓN DE NIÑOS
+            const contenedorNinos = document.getElementById("contenedorNinosDinamico");
+            
+            function actualizarSeccionNinos(asiste) {
+                contenedorNinos.innerHTML = ""; // Limpiar
+
+                if (!asiste) {
+                    contenedorNinos.innerHTML = '<span class="badge-ninos" style="color:#888;">Invitación cancelada</span>';
+                    return;
+                }
+
+                if (parseInt(data.ninosPermitidos) === 0 || parseInt(data.ninos) === 0) {
+                    // Mensaje elegante cuando no se permiten niños
+                    contenedorNinos.innerHTML = '<span class="badge-ninos" style="color:#d4af37; font-style:italic;">Ambiente de solo adultos</span>';
+                } else {
+                    // Creamos el selector de niños
+                    let selectN = document.createElement("select");
+                    selectN.id = "ninos";
+                    selectN.className = "input-estilo";
+                    
+                    // Opción por defecto (0 o ninguno)
+                    let optNone = document.createElement("option");
+                    optNone.value = "0";
+                    optNone.text = "Ningún niño asiste";
+                    selectN.appendChild(optNone);
+
+                    // Opciones según tu Excel
+                    for (let j = 1; j <= data.ninos; j++) {
+                        let opt = document.createElement("option");
+                        opt.value = j;
+                        opt.text = `${j} Niño${j > 1 ? 's' : ''} confirmado${j > 1 ? 's' : ''}`;
+                        selectN.appendChild(opt);
+                    }
+                    contenedorNinos.appendChild(selectN);
+                }
+            }
+
+            // Inicializar sección niños
+            actualizarSeccionNinos(true);
+
+            // 3. EVENTO AL CAMBIAR SELECTOR DE ADULTOS
             selectA.addEventListener("change", function() {
-                const seccionNinos = document.getElementById("seccionNinos");
                 const contenedorExtra = document.getElementById("contenedorExtra");
                 const btn = document.getElementById("btnSubmit");
 
                 if (this.value === "0") {
-                    // SI CANCELA: Ocultamos todo
-                    seccionNinos.style.display = "none";
+                    actualizarSeccionNinos(false);
                     contenedorExtra.style.display = "none";
                     btn.innerText = "Cancelar Invitación";
-                    btn.style.background = "#ba1a1a"; // Rojo
+                    btn.style.background = "#ba1a1a";
                 } else {
-                    // SI ASISTE: Revisamos si hay niños para mostrar la sección
-                    if (parseInt(data.ninosPermitidos) > 0 && data.ninos > 0) {
-                        seccionNinos.style.display = "block";
-                        document.getElementById("textoNinos").innerText = `Niños invitados: ${data.ninos}`;
-                        document.getElementById("ninos").max = data.ninos;
-                        document.getElementById("ninos").value = data.ninos;
-                    } else {
-                        seccionNinos.style.display = "none";
-                    }
+                    actualizarSeccionNinos(true);
                     contenedorExtra.style.display = "block";
                     btn.innerText = "Confirmar Asistencia";
-                    btn.style.background = "#d4af37"; // Dorado
+                    btn.style.background = "#d4af37";
                 }
             });
 
             // Si ya confirmó previamente
             if (data.confirmado === "SI") {
-                document.getElementById("mensajeConfirmado").style.display = "block";
                 document.getElementById("rsvpForm").style.opacity = "0.5";
                 document.getElementById("rsvpForm").style.pointerEvents = "none";
                 document.getElementById("btnSubmit").innerText = "Ya confirmaste";
@@ -108,17 +137,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 });
 
-// 5. SWITCH ALERGIAS
-document.getElementById("switchAlergia").addEventListener("change", function() {
-    document.getElementById("campoAlergiaTexto").style.display = this.checked ? "block" : "none";
-    document.getElementById("textoAlergia").innerText = this.checked ? "Sí" : "No";
-});
-
-// 6. ENVÍO DEL FORMULARIO
+// Ajuste en el envío del formulario para capturar el valor del nuevo SELECT de niños
 document.getElementById("rsvpForm").addEventListener("submit", async function(e) {
     e.preventDefault();
     const btn = document.getElementById("btnSubmit");
     const esCancelado = document.getElementById("adultos").value === "0";
+    const selectNinos = document.getElementById("ninos");
     
     btn.disabled = true;
     btn.innerText = "Enviando...";
@@ -127,27 +151,11 @@ document.getElementById("rsvpForm").addEventListener("submit", async function(e)
         codigo: document.getElementById("codigo").value,
         nombre: document.getElementById("nombre").value,
         adultos: document.getElementById("adultos").value,
-        ninos: esCancelado ? 0 : (document.getElementById("ninos").value || 0),
+        ninos: esCancelado ? 0 : (selectNinos ? selectNinos.value : 0),
         alergias: esCancelado ? "Ninguna" : (document.getElementById("switchAlergia").checked ? document.getElementById("alergias").value : "Ninguna"),
         comentarios: document.getElementById("comentarios").value,
         confirmacion: esCancelado ? "CANCELADO" : "CONFIRMADO"
     };
-
-    try {
-        await fetch(SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(formData) });
-        
-        const mensaje = document.getElementById("mensajeExito");
-        mensaje.innerHTML = `
-            <div style="background:white; padding:30px; border-radius:15px; text-align:center; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
-                <h2 style="color:${esCancelado ? '#ba1a1a' : '#d4af37'}">${esCancelado ? 'Invitación Cancelada' : '¡Confirmado!'}</h2>
-                <p>Tu respuesta ha sido registrada correctamente.</p>
-            </div>`;
-        mensaje.classList.add("show");
-        
-        setTimeout(() => location.reload(), 3000);
-    } catch (e) {
-        alert("Hubo un error al enviar. Por favor intenta de nuevo.");
-        btn.disabled = false;
-        btn.innerText = "Intentar de nuevo";
-    }
+    
+    // ... (resto del fetch igual)
 });
