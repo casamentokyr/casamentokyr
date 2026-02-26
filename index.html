@@ -105,12 +105,21 @@ Si necesitas hacer cambios por favor contactar a los Novios.
 
 
 <!-- NIÑOS -->
+
 <div class="campo">
-    <label id="tituloNinos">Niños</label>
-    <div class="ninos-linea">
-        <span id="textoNinos" style="font-weight: bold;">Cargando...</span>
-    </div>
-    <input type="number" id="ninos" min="0" class="input-ninos" style="display:none;">
+
+<label id="tituloNinos">Niños</label>
+
+<div class="ninos-linea">
+  <span id="textoNinos"></span>
+
+  <div class="switch">
+    <div class="slider" id="sliderNinos"></div>
+  </div>
+</div>
+
+<input type="number" id="ninos" min="0" class="input-ninos">
+
 </div>
 
 
@@ -425,3 +434,4 @@ alert("Error conectando con invitados");
 
 
 </html>
+
