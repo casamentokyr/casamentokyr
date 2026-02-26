@@ -50,104 +50,86 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch(`${SCRIPT_URL}?codigo=${codigo}`)
         .then(res => res.json())
         .then(data => {
-            // Llenar datos básicos
             document.getElementById("codigo").value = codigo;
             document.getElementById("nombre").value = data.nombre || "Invitado";
             
-            // --- SELECTOR DE ADULTOS ---
             const selectA = document.getElementById("adultos");
-            selectA.innerHTML = '<option value="" disabled selected>¿Cuántos adultos asisten?</option>';
-            
+            const seccionNinos = document.getElementById("seccionNinos");
+            const contenedorExtra = document.getElementById("contenedorExtra");
+            const btn = document.getElementById("btnSubmit");
+
+            // Rellenar Adultos
+            selectA.innerHTML = '<option value="" disabled selected>Selecciona cantidad...</option>';
             for (let i = 1; i <= data.adultos; i++) {
                 let opt = document.createElement("option");
                 opt.value = i;
                 opt.text = `${i} Adulto${i > 1 ? 's' : ''}`;
                 selectA.appendChild(opt);
             }
-            
             let optCancel = document.createElement("option");
             optCancel.value = "0";
-            optCancel.text = "No podré asistir (Cancelar invitación)";
+            optCancel.text = "No podré asistir (Cancelar)";
             selectA.appendChild(optCancel);
 
-            const seccionNinos = document.getElementById("seccionNinos");
-            const contenedorExtra = document.getElementById("contenedorExtra");
-            const btn = document.getElementById("btnSubmit");
-
-            // --- ESCUCHADOR DE CAMBIOS ---
-            selectA.addEventListener("change", function() {
-                const valorSeleccionado = this.value;
-
-                if (valorSeleccionado === "0") {
-                    // MODO CANCELAR
-                    seccionNinos.style.display = "none";
-                    seccionNinos.innerHTML = ""; // Limpiamos para evitar IDs duplicados
-                    contenedorExtra.style.display = "none";
-                    
-                    // Ajuste del botón
-                    btn.innerText = "Cancelar Invitación";
-                    btn.style.backgroundColor = "#ba1a1a"; // Rojo fuerte
-                    btn.style.color = "white";
+            function actualizarVistaNinos() {
+                // Solo si el Excel dice que hay niños permitidos y mayor a 0
+                if (parseInt(data.ninos) > 0) {
+                    seccionNinos.style.display = "block";
+                    seccionNinos.innerHTML = `
+                        <label style="font-weight:bold; color:#d4af37; margin-bottom:10px; display:block;">Niños</label>
+                        <select id="ninos" class="input-estilo">
+                            <option value="0">0 Niños</option>
+                        </select>
+                    `;
+                    const selectN = document.getElementById("ninos");
+                    for (let j = 1; j <= data.ninos; j++) {
+                        let opt = document.createElement("option");
+                        opt.value = j;
+                        opt.text = `${j} Niño${j > 1 ? 's' : ''}`;
+                        selectN.appendChild(opt);
+                    }
                 } else {
-                    // MODO ASISTIR
+                    seccionNinos.style.display = "none";
+                    seccionNinos.innerHTML = '<input type="hidden" id="ninos" value="0">';
+                }
+            }
+
+            selectA.addEventListener("change", function() {
+                if (this.value === "0") {
+                    seccionNinos.style.display = "none";
+                    contenedorExtra.style.display = "none";
+                    btn.innerText = "Cancelar Invitación";
+                    btn.style.background = "#ba1a1a"; // Rojo
+                } else {
+                    actualizarVistaNinos(); 
                     contenedorExtra.style.display = "block";
                     btn.innerText = "Confirmar Asistencia";
-                    btn.style.backgroundColor = "#d4af37"; // Dorado
-                    btn.style.color = "white";
-
-                    // REVISAR SI HAY NIÑOS EN EL EXCEL
-                    if (parseInt(data.ninosPermitidos) > 0 && parseInt(data.ninos) > 0) {
-                        seccionNinos.style.display = "block";
-                        seccionNinos.innerHTML = `
-                            <label style="font-weight:bold; color:#d4af37; margin-bottom:10px; display:block;">¿Cuántos niños asisten?</label>
-                            <select id="ninos" class="input-estilo" style="width:100%; padding:12px; border-radius:8px; border:1px solid #ddd;">
-                                <option value="0">0 Niños</option>
-                            </select>
-                        `;
-                        const selectN = document.getElementById("ninos");
-                        for (let j = 1; j <= data.ninos; j++) {
-                            let opt = document.createElement("option");
-                            opt.value = j;
-                            opt.text = `${j} Niño${j > 1 ? 's' : ''}`;
-                            selectN.appendChild(opt);
-                        }
-                    } else {
-                        seccionNinos.style.display = "none";
-                        seccionNinos.innerHTML = '<input type="hidden" id="ninos" value="0">';
-                    }
+                    btn.style.background = "#d4af37"; // Dorado
                 }
             });
 
-            // Si ya confirmó antes
             if (data.confirmado === "SI") {
                 document.getElementById("mensajeConfirmado").style.display = "block";
                 document.getElementById("rsvpForm").style.opacity = "0.5";
                 document.getElementById("rsvpForm").style.pointerEvents = "none";
-                btn.innerText = "Invitación ya confirmada";
+                btn.innerText = "Ya confirmaste";
             }
         });
 });
 
 // 5. SWITCH ALERGIAS
 document.getElementById("switchAlergia").addEventListener("change", function() {
-    const campoAlergia = document.getElementById("campoAlergiaTexto");
-    const textoAlergia = document.getElementById("textoAlergia");
-    if(this.checked) {
-        campoAlergia.style.display = "block";
-        textoAlergia.innerText = "Sí";
-    } else {
-        campoAlergia.style.display = "none";
-        textoAlergia.innerText = "No";
-    }
+    document.getElementById("campoAlergiaTexto").style.display = this.checked ? "block" : "none";
+    document.getElementById("textoAlergia").innerText = this.checked ? "Sí" : "No";
 });
 
-// 6. ENVÍO DEL FORMULARIO
+// 6. ENVÍO
 document.getElementById("rsvpForm").addEventListener("submit", async function(e) {
     e.preventDefault();
     const btn = document.getElementById("btnSubmit");
     const adultosVal = document.getElementById("adultos").value;
-    const ninosInput = document.getElementById("ninos");
     const esCancelado = adultosVal === "0";
+    const ninosVal = document.getElementById("ninos") ? document.getElementById("ninos").value : 0;
     
     btn.disabled = true;
     btn.innerText = "Enviando...";
@@ -156,7 +138,7 @@ document.getElementById("rsvpForm").addEventListener("submit", async function(e)
         codigo: document.getElementById("codigo").value,
         nombre: document.getElementById("nombre").value,
         adultos: adultosVal,
-        ninos: esCancelado ? 0 : (ninosInput ? ninosInput.value : 0),
+        ninos: esCancelado ? 0 : ninosVal,
         alergias: esCancelado ? "Ninguna" : (document.getElementById("switchAlergia").checked ? document.getElementById("alergias").value : "Ninguna"),
         comentarios: document.getElementById("comentarios").value,
         confirmacion: esCancelado ? "CANCELADO" : "CONFIRMADO"
@@ -164,18 +146,16 @@ document.getElementById("rsvpForm").addEventListener("submit", async function(e)
 
     try {
         await fetch(SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(formData) });
-        
         document.getElementById("mensajeExito").innerHTML = `
-            <div style="background:white; padding:40px; border-radius:15px; text-align:center; box-shadow: 0 5px 20px rgba(0,0,0,0.2);">
+            <div style="background:white; padding:40px; border-radius:15px; text-align:center;">
                 <h2 style="color:${esCancelado ? '#ba1a1a' : '#d4af37'}">${esCancelado ? 'Cancelado' : '¡Confirmado!'}</h2>
-                <p>Tu respuesta ha sido guardada.</p>
+                <p>Tu respuesta ha sido enviada con éxito.</p>
             </div>`;
         document.getElementById("mensajeExito").classList.add("show");
-        
         setTimeout(() => location.reload(), 3000);
     } catch (err) {
-        alert("Error al enviar. Inténtalo de nuevo.");
+        alert("Error al enviar");
         btn.disabled = false;
-        btn.innerText = "Reintentar";
+        btn.innerText = "Confirmar Asistencia";
     }
 });
