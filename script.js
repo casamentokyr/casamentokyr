@@ -17,10 +17,10 @@ function updateCountdown() {
     const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const s = Math.floor((diff % (1000 * 60)) / 1000);
 
-    document.getElementById("days").innerText = d;
-    document.getElementById("hours").innerText = h;
-    document.getElementById("minutes").innerText = m;
-    document.getElementById("seconds").innerText = s;
+    if(document.getElementById("days")) document.getElementById("days").innerText = d;
+    if(document.getElementById("hours")) document.getElementById("hours").innerText = h;
+    if(document.getElementById("minutes")) document.getElementById("minutes").innerText = m;
+    if(document.getElementById("seconds")) document.getElementById("seconds").innerText = s;
 }
 setInterval(updateCountdown, 1000);
 updateCountdown();
@@ -35,10 +35,10 @@ if (musicBtn) {
     musicBtn.addEventListener("click", () => {
         if (!isPlaying) {
             music.play().catch(e => console.log("Error al reproducir:", e));
-            musicImg.src = "pause.png";
+            if(musicImg) musicImg.src = "pause.png";
         } else {
             music.pause();
-            musicImg.src = "play.png";
+            if(musicImg) musicImg.src = "play.png";
         }
         isPlaying = !isPlaying;
     });
@@ -73,53 +73,38 @@ document.addEventListener("DOMContentLoaded", () => {
             optCancel.text = "No podré asistir (Cancelar)";
             selectA.appendChild(optCancel);
 
-            // --- LÓGICA DINÁMICA DE NIÑOS (MEJORADA) ---
-            const contenedorNinos = document.getElementById("seccionNinos");
+            // --- LÓGICA DE NIÑOS Y BOTÓN (EL CAMBIO QUE SOLICITASTE) ---
+            const seccionNinos = document.getElementById("seccionNinos");
+            const contenedorExtra = document.getElementById("contenedorExtra");
+            const btn = document.getElementById("btnSubmit");
 
-            function gestionarNinos(mostrar) {
-                // Si no hay niños permitidos en Excel o se decide ocultar (por cancelación), se borra y oculta todo
-                if (!mostrar || parseInt(data.ninosPermitidos) === 0 || parseInt(data.ninos) === 0) {
-                    contenedorNinos.innerHTML = "";
-                    contenedorNinos.style.display = "none";
-                    return;
-                }
-
-                // SI HAY NIÑOS: Construimos el selector
-                contenedorNinos.style.display = "block";
-                contenedorNinos.innerHTML = `
-                    <label style="font-weight:bold; color:#d4af37; margin-bottom:10px; display:block;">Niños invitados (${data.ninos} máx.)</label>
-                    <select id="ninos" class="input-estilo">
-                        <option value="0">Ningún niño asiste</option>
-                    </select>
-                `;
-
-                const selectN = document.getElementById("ninos");
-                for (let j = 1; j <= data.ninos; j++) {
-                    let opt = document.createElement("option");
-                    opt.value = j;
-                    opt.text = `${j} Niño${j > 1 ? 's' : ''} confirmado${j > 1 ? 's' : ''}`;
-                    selectN.appendChild(opt);
-                }
-            }
-
-            // Inicializar al cargar
-            gestionarNinos(true);
-
-            // --- EVENTO AL CAMBIAR ADULTOS ---
             selectA.addEventListener("change", function() {
-                const contenedorExtra = document.getElementById("contenedorExtra");
-                const btn = document.getElementById("btnSubmit");
-
                 if (this.value === "0") {
-                    gestionarNinos(false); 
+                    // MODO CANCELAR: Ocultar todo
+                    seccionNinos.style.display = "none";
                     contenedorExtra.style.display = "none";
-                    btn.innerText = "Confirmar Cancelación";
-                    btn.style.background = "#ba1a1a";
+                    btn.innerText = "Cancelar Invitación";
+                    btn.style.background = "#ba1a1a"; // Rojo
                 } else {
-                    gestionarNinos(true); 
+                    // MODO ASISTIR: Mostrar extras
                     contenedorExtra.style.display = "block";
                     btn.innerText = "Confirmar Asistencia";
-                    btn.style.background = "#d4af37";
+                    btn.style.background = "#d4af37"; // Dorado
+
+                    // Lógica específica para Niños
+                    if (parseInt(data.ninosPermitidos) > 0 && parseInt(data.ninos) > 0) {
+                        seccionNinos.style.display = "block";
+                        const textoNinos = document.getElementById("textoNinos");
+                        textoNinos.innerText = `Niños invitados: ${data.ninos}`;
+                        
+                        // Convertir el input de niños a un selector de cantidad
+                        const ninosInput = document.getElementById("ninos");
+                        ninosInput.max = data.ninos;
+                        ninosInput.value = data.ninos; 
+                        ninosInput.style.display = "block";
+                    } else {
+                        seccionNinos.style.display = "none";
+                    }
                 }
             });
 
@@ -127,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("mensajeConfirmado").style.display = "block";
                 document.getElementById("rsvpForm").style.opacity = "0.5";
                 document.getElementById("rsvpForm").style.pointerEvents = "none";
-                document.getElementById("btnSubmit").innerText = "Asistencia ya confirmada";
+                document.getElementById("btnSubmit").innerText = "Ya confirmaste";
             }
         });
 });
@@ -140,13 +125,11 @@ document.getElementById("switchAlergia").addEventListener("change", function() {
     texto.innerText = this.checked ? "Sí" : "No";
 });
 
-// 6. ENVÍO DEL FORMULARIO
+// 6. ENVÍO
 document.getElementById("rsvpForm").addEventListener("submit", async function(e) {
     e.preventDefault();
     const btn = document.getElementById("btnSubmit");
-    const adultosVal = document.getElementById("adultos").value;
-    const esCancelado = adultosVal === "0";
-    const selectNinos = document.getElementById("ninos");
+    const esCancelado = document.getElementById("adultos").value === "0";
     
     btn.disabled = true;
     btn.innerText = "Enviando...";
@@ -154,8 +137,8 @@ document.getElementById("rsvpForm").addEventListener("submit", async function(e)
     const formData = {
         codigo: document.getElementById("codigo").value,
         nombre: document.getElementById("nombre").value,
-        adultos: adultosVal,
-        ninos: esCancelado ? 0 : (selectNinos ? selectNinos.value : 0),
+        adultos: document.getElementById("adultos").value,
+        ninos: esCancelado ? 0 : document.getElementById("ninos").value,
         alergias: esCancelado ? "Ninguna" : (document.getElementById("switchAlergia").checked ? document.getElementById("alergias").value : "Ninguna"),
         comentarios: document.getElementById("comentarios").value,
         confirmacion: esCancelado ? "CANCELADO" : "CONFIRMADO"
@@ -164,16 +147,14 @@ document.getElementById("rsvpForm").addEventListener("submit", async function(e)
     try {
         await fetch(SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(formData) });
         const mensaje = document.getElementById("mensajeExito");
-        mensaje.innerHTML = `
-            <div style="background:white; padding:40px; border-radius:15px; text-align:center; box-shadow:0 0 20px rgba(0,0,0,0.2);">
-                <h2 style="color:${esCancelado ? '#ba1a1a' : '#d4af37'};">${esCancelado ? 'Cancelación Enviada' : '¡Confirmado!'}</h2>
-                <p>Tu respuesta ha sido registrada. ¡Gracias!</p>
-            </div>`;
+        mensaje.innerHTML = `<div style="background:white; padding:40px; border-radius:15px; text-align:center;">
+            <h2>${esCancelado ? 'Cancelado' : '¡Confirmado!'}</h2>
+            <p>Tu respuesta ha sido enviada.</p>
+        </div>`;
         mensaje.classList.add("show");
         setTimeout(() => location.reload(), 3000);
     } catch (err) {
-        alert("Error al enviar. Intenta de nuevo.");
+        alert("Error al enviar");
         btn.disabled = false;
-        btn.innerText = "Confirmar";
     }
 });
