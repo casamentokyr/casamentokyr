@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
             optCancel.text = "No podré asistir (Cancelar)";
             selectA.appendChild(optCancel);
 
-            // FUNCIÓN PARA GENERAR NIÑOS (Se llama desde el inicio)
+            // FUNCIÓN PARA GENERAR NIÑOS (Carga inicial)
             function mostrarNinosSiExisten() {
                 if (parseInt(data.ninos) > 0) {
                     divNinos.style.display = "block";
@@ -94,32 +94,34 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
-            // LLAMADA INICIAL: Mostrar niños apenas carguen los datos
             mostrarNinosSiExisten();
 
-            // Lógica cuando el usuario cambia la selección de adultos
             selectA.addEventListener("change", function() {
                 if (this.value === "0") {
-                    // SI CANCELA
                     divNinos.style.display = "none";
                     contenedorExtra.style.display = "none";
                     btn.innerText = "Cancelar Invitación";
-                    btn.style.backgroundColor = "#ba1a1a"; // Rojo
-                    btn.style.color = "white";
+                    btn.style.backgroundColor = "#ba1a1a"; 
                 } else {
-                    // SI ASISTE
                     if (parseInt(data.ninos) > 0) divNinos.style.display = "block";
                     contenedorExtra.style.display = "block";
                     btn.innerText = "Confirmar Asistencia";
-                    btn.style.backgroundColor = "#d4af37"; // Dorado
-                    btn.style.color = "white";
+                    btn.style.backgroundColor = "#d4af37";
                 }
             });
 
-            if (data.confirmado === "SI") {
+            // Si ya confirmó en el pasado (según el Excel)
+            if (data.confirmado === "SI" || data.confirmado === "CANCELADO") {
                 document.getElementById("rsvpForm").style.opacity = "0.5";
                 document.getElementById("rsvpForm").style.pointerEvents = "none";
-                btn.innerText = "Invitación ya confirmada";
+                btn.innerText = data.confirmado === "SI" ? "Invitación Confirmada" : "Invitación Cancelada";
+                
+                // Mostrar un mensaje informativo arriba del formulario
+                const infoMsg = document.createElement("p");
+                infoMsg.innerHTML = `<strong>Nota:</strong> Tu respuesta ya fue registrada (${data.confirmado}). Para cambios, contacta a los novios.`;
+                infoMsg.style.color = "#d4af37";
+                infoMsg.style.marginBottom = "20px";
+                document.getElementById("rsvpForm").prepend(infoMsg);
             }
         });
 });
@@ -153,15 +155,31 @@ document.getElementById("rsvpForm").addEventListener("submit", async function(e)
 
     try {
         await fetch(SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(formData) });
+        
+        // Crear el mensaje personalizado de éxito
+        const titulo = esCancelado ? "Invitación Cancelada" : "¡Asistencia Confirmada!";
+        const colorTitulo = esCancelado ? "#ba1a1a" : "#d4af37";
+        const mensajeFinal = esCancelado 
+            ? "Lamentamos que no puedas acompañarnos. Tu respuesta ha sido registrada." 
+            : "¡Qué alegría! Te esperamos para celebrar juntos este gran día.";
+
         document.getElementById("mensajeExito").innerHTML = `
-            <div style="background:white; padding:40px; border-radius:15px; text-align:center; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
-                <h2 style="color:${esCancelado ? '#ba1a1a' : '#d4af37'}">${esCancelado ? 'Cancelado' : '¡Confirmado!'}</h2>
-                <p>Tu respuesta ha sido enviada con éxito.</p>
+            <div style="background:white; padding:40px; border-radius:15px; text-align:center; box-shadow: 0 5px 25px rgba(0,0,0,0.2); max-width:90%; margin:auto;">
+                <h2 style="color:${colorTitulo}; margin-bottom:15px;">${titulo}</h2>
+                <p style="margin-bottom:10px;">${mensajeFinal}</p>
+                <p style="font-size:0.9em; color:#666;">Para cualquier cambio o duda, por favor comunícate directamente con los novios.</p>
+                <p style="margin-top:20px; font-weight:bold; color:#d4af37;">Cargando estado actualizado...</p>
             </div>`;
+        
         document.getElementById("mensajeExito").classList.add("show");
-        setTimeout(() => location.reload(), 3000);
+        
+        // Esperamos 4 segundos para que lean y refrescamos para bloquear el form
+        setTimeout(() => {
+            location.reload();
+        }, 4000);
+
     } catch (err) {
-        alert("Error al enviar");
+        alert("Hubo un error al enviar. Por favor intenta de nuevo.");
         btn.disabled = false;
         btn.innerText = "Confirmar Asistencia";
     }
