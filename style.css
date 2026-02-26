@@ -3,6 +3,9 @@
 body{font-family:'Montserrat',sans-serif;background:#fff;color:#333;text-align:center;}
 button{cursor:pointer;font-weight:600;transition:0.0s;}
 
+
+
+
 /* ICONO MUSICA */
 #music-icon{
   position:fixed;
@@ -562,3 +565,5 @@ align-items:center;
 gap:10px;
 
 }
+
+

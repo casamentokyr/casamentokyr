@@ -86,3 +86,35 @@ document.getElementById("mensajeNinos").innerHTML = "Niños no permitidos";
 
 }
 
+// NIÑOS DINÁMICOS
+
+const switchNinos = document.getElementById("switchNinos");
+const textoNinos = document.getElementById("textoNinos");
+const ninosInput = document.getElementById("ninos");
+const inputCantidadNinosDiv = document.getElementById("inputCantidadNinosDiv");
+const labelNinos = document.getElementById("labelNinos");
+
+if(data.ninosPermitidos == 0){
+  // NO hay niños permitidos
+  switchNinos.checked = false;
+  switchNinos.disabled = true;
+  textoNinos.innerText = "Niños no permitidos";
+
+  // ocultar input cantidad
+  inputCantidadNinosDiv.style.display = "none";
+
+  // cambiar etiqueta
+  labelNinos.innerText = "Niños";
+  
+}else{
+  // SI hay niños permitidos
+  switchNinos.checked = true;
+  switchNinos.disabled = true; // opcional si no quieres que lo cambien
+  textoNinos.innerText = "Niños permitidos";
+
+  // mostrar input cantidad
+  inputCantidadNinosDiv.style.display = "block";
+  ninosInput.max = data.ninos; // máximo permitido
+  ninosInput.value = 0; // valor inicial en 0
+  labelNinos.innerText = "Niños";
+}
