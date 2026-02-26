@@ -71,14 +71,14 @@ document.addEventListener("DOMContentLoaded", () => {
             optCancel.text = "No podré asistir (Cancelar)";
             selectA.appendChild(optCancel);
 
-            function actualizarVistaNinos() {
-                // Solo si el Excel dice que hay niños permitidos y mayor a 0
+            // FUNCIÓN MEJORADA: Ahora con texto "No asistirán niños"
+            function generarSelectorNinos() {
                 if (parseInt(data.ninos) > 0) {
                     seccionNinos.style.display = "block";
                     seccionNinos.innerHTML = `
-                        <label style="font-weight:bold; color:#d4af37; margin-bottom:10px; display:block;">Niños</label>
+                        <label style="font-weight:bold; color:#d4af37; margin-bottom:10px; display:block;">Niños invitados</label>
                         <select id="ninos" class="input-estilo">
-                            <option value="0">0 Niños</option>
+                            <option value="0">No asistirán niños</option>
                         </select>
                     `;
                     const selectN = document.getElementById("ninos");
@@ -94,17 +94,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
+            // LLAMADA INICIAL: Cargar niños desde el principio
+            generarSelectorNinos();
+
+            // Lógica de cambio al seleccionar adultos
             selectA.addEventListener("change", function() {
                 if (this.value === "0") {
                     seccionNinos.style.display = "none";
                     contenedorExtra.style.display = "none";
                     btn.innerText = "Cancelar Invitación";
-                    btn.style.background = "#ba1a1a"; // Rojo
+                    btn.style.background = "#ba1a1a";
                 } else {
-                    actualizarVistaNinos(); 
+                    // Si vuelve a elegir adultos, nos aseguramos de mostrar los niños
+                    if (parseInt(data.ninos) > 0) seccionNinos.style.display = "block";
                     contenedorExtra.style.display = "block";
                     btn.innerText = "Confirmar Asistencia";
-                    btn.style.background = "#d4af37"; // Dorado
+                    btn.style.background = "#d4af37";
                 }
             });
 
@@ -156,6 +161,6 @@ document.getElementById("rsvpForm").addEventListener("submit", async function(e)
     } catch (err) {
         alert("Error al enviar");
         btn.disabled = false;
-        btn.innerText = "Confirmar Asistencia";
+        btn.innerText = "Intentar de nuevo";
     }
 });
