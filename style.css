@@ -567,3 +567,20 @@ gap:10px;
 }
 
 
+.switch input {
+  display: none;
+}
+
+.slider {
+  width: 60px;
+  height: 30px;
+  background-color: #ccc;
+  border-radius: 30px;
+  display: block;
+  position: relative;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #4CAF50;
+}
