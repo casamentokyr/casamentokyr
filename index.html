@@ -95,6 +95,8 @@ Si necesitas hacer cambios por favor contactar a los Novios.
 
 </form>
 
+<div id="mensajeExito" class="mensaje-exito"></div>
+
 
 <script>
 
@@ -107,15 +109,10 @@ e.preventDefault();
 const data = {
 
 codigo: document.getElementById("codigo").value,
-
 nombre: document.getElementById("nombre").value,
-
 adultos: document.getElementById("adultos").value,
-
 ninos: document.getElementById("ninos").value,
-
 alergias: document.getElementById("alergias").value,
-
 comentarios: document.getElementById("comentarios").value
 
 };
@@ -125,28 +122,67 @@ try {
 await fetch(SCRIPT_URL, {
 
 method: "POST",
-
 mode: "no-cors",
-
 headers: {
 
 "Content-Type": "application/json"
 
 },
-
 body: JSON.stringify(data)
 
 });
 
+
+// BLOQUEAR FORMULARIO
+
+document.getElementById("rsvpForm").classList.add("form-bloqueado");
+
+
+// MOSTRAR MENSAJE BONITO
+
+const mensaje = document.getElementById("mensajeExito");
+
 if(data.adultos == 0){
 
-alert("Has cancelado tu invitación");
+mensaje.innerHTML = `
+
+<div class="mensaje-box">
+
+<h2>Invitación cancelada</h2>
+
+<p>Sentimos que no puedas asistir.</p>
+
+</div>
+
+`;
 
 }else{
 
-alert("Confirmación enviada correctamente");
+mensaje.innerHTML = `
+
+<div class="mensaje-box">
+
+<h2>¡Confirmación enviada!</h2>
+
+<p>Gracias por confirmar tu asistencia.</p>
+
+</div>
+
+`;
 
 }
+
+mensaje.classList.add("show");
+
+
+// RECARGAR WEB
+
+setTimeout(()=>{
+
+location.reload();
+
+},3000);
+
 
 } catch(error){
 
