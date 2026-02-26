@@ -54,11 +54,11 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("nombre").value = data.nombre || "Invitado";
             
             const selectA = document.getElementById("adultos");
-            const seccionNinos = document.getElementById("seccionNinos");
+            const divNinos = document.getElementById("seccionNinos") || document.getElementById("contenedorNinosDinamico");
             const contenedorExtra = document.getElementById("contenedorExtra");
             const btn = document.getElementById("btnSubmit");
 
-            // Rellenar Adultos
+            // Rellenar selector de Adultos
             selectA.innerHTML = '<option value="" disabled selected>Selecciona cantidad...</option>';
             for (let i = 1; i <= data.adultos; i++) {
                 let opt = document.createElement("option");
@@ -71,11 +71,11 @@ document.addEventListener("DOMContentLoaded", () => {
             optCancel.text = "No podré asistir (Cancelar)";
             selectA.appendChild(optCancel);
 
-            // FUNCIÓN MEJORADA: Ahora con texto "No asistirán niños"
-            function generarSelectorNinos() {
+            // FUNCIÓN PARA GENERAR NIÑOS (Se llama desde el inicio)
+            function mostrarNinosSiExisten() {
                 if (parseInt(data.ninos) > 0) {
-                    seccionNinos.style.display = "block";
-                    seccionNinos.innerHTML = `
+                    divNinos.style.display = "block";
+                    divNinos.innerHTML = `
                         <label style="font-weight:bold; color:#d4af37; margin-bottom:10px; display:block;">Niños invitados</label>
                         <select id="ninos" class="input-estilo">
                             <option value="0">No asistirán niños</option>
@@ -89,35 +89,37 @@ document.addEventListener("DOMContentLoaded", () => {
                         selectN.appendChild(opt);
                     }
                 } else {
-                    seccionNinos.style.display = "none";
-                    seccionNinos.innerHTML = '<input type="hidden" id="ninos" value="0">';
+                    divNinos.style.display = "none";
+                    divNinos.innerHTML = '<input type="hidden" id="ninos" value="0">';
                 }
             }
 
-            // LLAMADA INICIAL: Cargar niños desde el principio
-            generarSelectorNinos();
+            // LLAMADA INICIAL: Mostrar niños apenas carguen los datos
+            mostrarNinosSiExisten();
 
-            // Lógica de cambio al seleccionar adultos
+            // Lógica cuando el usuario cambia la selección de adultos
             selectA.addEventListener("change", function() {
                 if (this.value === "0") {
-                    seccionNinos.style.display = "none";
+                    // SI CANCELA
+                    divNinos.style.display = "none";
                     contenedorExtra.style.display = "none";
                     btn.innerText = "Cancelar Invitación";
-                    btn.style.background = "#ba1a1a";
+                    btn.style.backgroundColor = "#ba1a1a"; // Rojo
+                    btn.style.color = "white";
                 } else {
-                    // Si vuelve a elegir adultos, nos aseguramos de mostrar los niños
-                    if (parseInt(data.ninos) > 0) seccionNinos.style.display = "block";
+                    // SI ASISTE
+                    if (parseInt(data.ninos) > 0) divNinos.style.display = "block";
                     contenedorExtra.style.display = "block";
                     btn.innerText = "Confirmar Asistencia";
-                    btn.style.background = "#d4af37";
+                    btn.style.backgroundColor = "#d4af37"; // Dorado
+                    btn.style.color = "white";
                 }
             });
 
             if (data.confirmado === "SI") {
-                document.getElementById("mensajeConfirmado").style.display = "block";
                 document.getElementById("rsvpForm").style.opacity = "0.5";
                 document.getElementById("rsvpForm").style.pointerEvents = "none";
-                btn.innerText = "Ya confirmaste";
+                btn.innerText = "Invitación ya confirmada";
             }
         });
 });
@@ -128,7 +130,7 @@ document.getElementById("switchAlergia").addEventListener("change", function() {
     document.getElementById("textoAlergia").innerText = this.checked ? "Sí" : "No";
 });
 
-// 6. ENVÍO
+// 6. ENVÍO DEL FORMULARIO
 document.getElementById("rsvpForm").addEventListener("submit", async function(e) {
     e.preventDefault();
     const btn = document.getElementById("btnSubmit");
@@ -144,7 +146,7 @@ document.getElementById("rsvpForm").addEventListener("submit", async function(e)
         nombre: document.getElementById("nombre").value,
         adultos: adultosVal,
         ninos: esCancelado ? 0 : ninosVal,
-        alergias: esCancelado ? "Ninguna" : (document.getElementById("switchAlergia").checked ? document.getElementById("alergias").value : "Ninguna"),
+        alergias: esCancelado ? "No" : (document.getElementById("switchAlergia").checked ? document.getElementById("alergias").value : "No"),
         comentarios: document.getElementById("comentarios").value,
         confirmacion: esCancelado ? "CANCELADO" : "CONFIRMADO"
     };
@@ -152,7 +154,7 @@ document.getElementById("rsvpForm").addEventListener("submit", async function(e)
     try {
         await fetch(SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(formData) });
         document.getElementById("mensajeExito").innerHTML = `
-            <div style="background:white; padding:40px; border-radius:15px; text-align:center;">
+            <div style="background:white; padding:40px; border-radius:15px; text-align:center; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
                 <h2 style="color:${esCancelado ? '#ba1a1a' : '#d4af37'}">${esCancelado ? 'Cancelado' : '¡Confirmado!'}</h2>
                 <p>Tu respuesta ha sido enviada con éxito.</p>
             </div>`;
@@ -161,6 +163,6 @@ document.getElementById("rsvpForm").addEventListener("submit", async function(e)
     } catch (err) {
         alert("Error al enviar");
         btn.disabled = false;
-        btn.innerText = "Intentar de nuevo";
+        btn.innerText = "Confirmar Asistencia";
     }
 });
