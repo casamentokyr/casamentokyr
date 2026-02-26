@@ -41,7 +41,7 @@ if (musicBtn) {
     });
 }
 
-// 4. CARGA DE DATOS Y LÓGICA DE FORMULARIO
+// 4. CARGA DE DATOS Y LÓGICA DE BLOQUEO
 document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
     const codigo = params.get("codigo") || params.get("guest");
@@ -50,15 +50,47 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch(`${SCRIPT_URL}?codigo=${codigo}`)
         .then(res => res.json())
         .then(data => {
-            document.getElementById("codigo").value = codigo;
-            document.getElementById("nombre").value = data.nombre || "Invitado";
-            
+            const rsvpForm = document.getElementById("rsvpForm");
             const selectA = document.getElementById("adultos");
             const divNinos = document.getElementById("seccionNinos") || document.getElementById("contenedorNinosDinamico");
             const contenedorExtra = document.getElementById("contenedorExtra");
             const btn = document.getElementById("btnSubmit");
 
-            // Rellenar selector de Adultos
+            // --- LÓGICA DE BLOQUEO SI YA EXISTE RESPUESTA ---
+            if (data.confirmado === "SI" || data.confirmado === "CANCELADO") {
+                const esConfirmada = data.confirmado === "SI";
+                
+                // Ocultamos el formulario completamente
+                rsvpForm.style.display = "none";
+                
+                // Creamos un aviso elegante
+                const aviso = document.createElement("div");
+                aviso.style.padding = "40px 20px";
+                aviso.style.background = "#fff";
+                aviso.style.borderRadius = "15px";
+                aviso.style.boxShadow = "0 4px 15px rgba(0,0,0,0.1)";
+                aviso.style.margin = "20px auto";
+                aviso.style.maxWidth = "500px";
+
+                aviso.innerHTML = `
+                    <h2 style="color: ${esConfirmada ? '#d4af37' : '#ba1a1a'}; margin-bottom: 15px;">
+                        ${esConfirmada ? '¡Tu invitación ha sido confirmada!' : 'Tu invitación ha sido cancelada'}
+                    </h2>
+                    <p style="color: #666; font-size: 1.1em; line-height: 1.6;">
+                        Cualquier cambio, por favor comunícate directamente con los novios.
+                    </p>
+                    <div style="margin-top: 20px; font-size: 2em;">${esConfirmada ? '🥂' : '✉️'}</div>
+                `;
+                
+                rsvpForm.parentNode.insertBefore(aviso, rsvpForm);
+                return; // Detenemos la ejecución aquí ya que no necesitamos el resto
+            }
+
+            // --- SI NO HA CONFIRMADO, CARGAMOS EL FORMULARIO NORMAL ---
+            document.getElementById("codigo").value = codigo;
+            document.getElementById("nombre").value = data.nombre || "Invitado";
+            
+            // Rellenar Adultos
             selectA.innerHTML = '<option value="" disabled selected>Selecciona cantidad...</option>';
             for (let i = 1; i <= data.adultos; i++) {
                 let opt = document.createElement("option");
@@ -71,30 +103,23 @@ document.addEventListener("DOMContentLoaded", () => {
             optCancel.text = "No podré asistir (Cancelar)";
             selectA.appendChild(optCancel);
 
-            // FUNCIÓN PARA GENERAR NIÑOS (Carga inicial)
-            function mostrarNinosSiExisten() {
-                if (parseInt(data.ninos) > 0) {
-                    divNinos.style.display = "block";
-                    divNinos.innerHTML = `
-                        <label style="font-weight:bold; color:#d4af37; margin-bottom:10px; display:block;">Niños invitados</label>
-                        <select id="ninos" class="input-estilo">
-                            <option value="0">No asistirán niños</option>
-                        </select>
-                    `;
-                    const selectN = document.getElementById("ninos");
-                    for (let j = 1; j <= data.ninos; j++) {
-                        let opt = document.createElement("option");
-                        opt.value = j;
-                        opt.text = `${j} Niño${j > 1 ? 's' : ''}`;
-                        selectN.appendChild(opt);
-                    }
-                } else {
-                    divNinos.style.display = "none";
-                    divNinos.innerHTML = '<input type="hidden" id="ninos" value="0">';
+            // Niños (Carga inicial)
+            if (parseInt(data.ninos) > 0) {
+                divNinos.style.display = "block";
+                divNinos.innerHTML = `
+                    <label style="font-weight:bold; color:#d4af37; margin-bottom:10px; display:block;">Niños invitados</label>
+                    <select id="ninos" class="input-estilo">
+                        <option value="0">No asistirán niños</option>
+                    </select>
+                `;
+                const selectN = document.getElementById("ninos");
+                for (let j = 1; j <= data.ninos; j++) {
+                    let opt = document.createElement("option");
+                    opt.value = j;
+                    opt.text = `${j} Niño${j > 1 ? 's' : ''}`;
+                    selectN.appendChild(opt);
                 }
             }
-
-            mostrarNinosSiExisten();
 
             selectA.addEventListener("change", function() {
                 if (this.value === "0") {
@@ -109,20 +134,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     btn.style.backgroundColor = "#d4af37";
                 }
             });
-
-            // Si ya confirmó en el pasado (según el Excel)
-            if (data.confirmado === "SI" || data.confirmado === "CANCELADO") {
-                document.getElementById("rsvpForm").style.opacity = "0.5";
-                document.getElementById("rsvpForm").style.pointerEvents = "none";
-                btn.innerText = data.confirmado === "SI" ? "Invitación Confirmada" : "Invitación Cancelada";
-                
-                // Mostrar un mensaje informativo arriba del formulario
-                const infoMsg = document.createElement("p");
-                infoMsg.innerHTML = `<strong>Nota:</strong> Tu respuesta ya fue registrada (${data.confirmado}). Para cambios, contacta a los novios.`;
-                infoMsg.style.color = "#d4af37";
-                infoMsg.style.marginBottom = "20px";
-                document.getElementById("rsvpForm").prepend(infoMsg);
-            }
         });
 });
 
@@ -156,30 +167,21 @@ document.getElementById("rsvpForm").addEventListener("submit", async function(e)
     try {
         await fetch(SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(formData) });
         
-        // Crear el mensaje personalizado de éxito
-        const titulo = esCancelado ? "Invitación Cancelada" : "¡Asistencia Confirmada!";
-        const colorTitulo = esCancelado ? "#ba1a1a" : "#d4af37";
-        const mensajeFinal = esCancelado 
-            ? "Lamentamos que no puedas acompañarnos. Tu respuesta ha sido registrada." 
-            : "¡Qué alegría! Te esperamos para celebrar juntos este gran día.";
-
+        // Mensaje de éxito momentáneo
         document.getElementById("mensajeExito").innerHTML = `
-            <div style="background:white; padding:40px; border-radius:15px; text-align:center; box-shadow: 0 5px 25px rgba(0,0,0,0.2); max-width:90%; margin:auto;">
-                <h2 style="color:${colorTitulo}; margin-bottom:15px;">${titulo}</h2>
-                <p style="margin-bottom:10px;">${mensajeFinal}</p>
-                <p style="font-size:0.9em; color:#666;">Para cualquier cambio o duda, por favor comunícate directamente con los novios.</p>
-                <p style="margin-top:20px; font-weight:bold; color:#d4af37;">Cargando estado actualizado...</p>
+            <div style="background:white; padding:40px; border-radius:15px; text-align:center;">
+                <h2 style="color:${esCancelado ? '#ba1a1a' : '#d4af37'}">¡Enviado!</h2>
+                <p>Actualizando estado de invitación...</p>
             </div>`;
-        
         document.getElementById("mensajeExito").classList.add("show");
         
-        // Esperamos 4 segundos para que lean y refrescamos para bloquear el form
+        // Recargar página para que entre en el modo "Bloqueado"
         setTimeout(() => {
             location.reload();
-        }, 4000);
+        }, 2500);
 
     } catch (err) {
-        alert("Hubo un error al enviar. Por favor intenta de nuevo.");
+        alert("Error al enviar. Intente de nuevo.");
         btn.disabled = false;
         btn.innerText = "Confirmar Asistencia";
     }
