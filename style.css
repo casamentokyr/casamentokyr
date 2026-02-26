@@ -643,3 +643,11 @@ width:100%;
 border-radius:8px;
 border:1px solid #ddd;
 }
+
+#textoNinos {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  background: #f4f4f4; /* Fondo suave */
+}

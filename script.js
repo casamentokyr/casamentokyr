@@ -77,30 +77,24 @@ input.value = 0;
 }
 
 
-// NIÑOS FINAL CORRECTO
+// NIÑOS 
 
+// --- LÓGICA DE NIÑOS ACTUALIZADA ---
+const ninosInput = document.getElementById("ninos");
 const textoNinos = document.getElementById("textoNinos");
-const inputNinos = document.getElementById("ninos");
-const switchVisual = document.querySelector(".switch");
 
-if(data.ninosPermitidos == 0){
-
-textoNinos.innerText = "Niños no permitidos";
-
-switchVisual.classList.remove("activo");
-
-inputNinos.style.display = "none";
-
-}else{
-
-textoNinos.innerText = "Niños permitidos";
-
-switchVisual.classList.add("activo");
-
-inputNinos.style.display = "block";
-
-inputNinos.max = data.ninos;
-
-inputNinos.value = "";
-
+// Suponiendo que 'data' es el objeto que recibes de Google Sheets
+if (data.ninosPermitidos == 0 || data.ninos == 0) {
+    // Caso: No se permiten niños
+    textoNinos.innerText = "Niños no permitidos";
+    textoNinos.style.color = "#888"; // Color gris de desactivado
+    ninosInput.style.display = "none"; // Escondemos el input
+    ninosInput.value = 0;
+} else {
+    // Caso: Sí se permiten niños
+    textoNinos.innerText = `Niños invitados: ${data.ninos}`;
+    textoNinos.style.color = "#333";
+    ninosInput.style.display = "block"; // Mostramos el input
+    ninosInput.max = data.ninos; // Límite máximo según la tabla
+    ninosInput.value = data.ninos; // Valor por defecto el máximo
 }
