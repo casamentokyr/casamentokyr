@@ -45,47 +45,45 @@
         <form id="rsvpForm" class="formulario">
             <input type="hidden" id="codigo">
             
-            <div class="campo">
-                <label>Nombre</label>
-                <input type="text" id="nombre" readonly style="background:#f9f9f9;">
-            </div>
-
-            <div class="campo">
-                <label>Adultos</label>
-                <input type="number" id="adultos" min="0">
-            </div>
-
         <div class="campo">
-    <label>Niños</label>
-    <div class="ninos-linea">
-        <span id="textoNinos" style="font-weight:bold; color:#d4af37;">Verificando cupos...</span>
-    </div>
-    <input type="number" id="ninos" min="0" class="input-ninos" style="display:none;">
+    <label>Adultos</label>
+    <select id="adultos" class="input-estilo">
+        </select>
 </div>
 
-            <div class="campo">
-                <label>Alergias</label>
-                <div class="switch-container">
-                    <label class="switch">
-                        <input type="checkbox" id="switchAlergia">
-                        <span class="slider"></span>
-                    </label>
-                    <span id="textoAlergia">No</span>
-                </div>
-            </div>
+<div class="campo" id="seccionNinos" style="display:none;">
+    <label>Niños</label>
+    <div class="ninos-linea">
+        <span id="textoNinos" class="badge-ninos"></span>
+    </div>
+    <input type="number" id="ninos" min="0" class="input-ninos">
+</div>
 
-            <div class="campo" id="campoAlergiaTexto" style="display:none;">
-                <label>Especificar alergia</label>
-                <textarea id="alergias" placeholder="Ej: Celíaco, Maní..."></textarea>
-            </div>
+<div id="contenedorExtra">
+    <div class="campo">
+        <label>¿Tienes alguna alergia?</label>
+        <div class="switch-container">
+            <label class="switch">
+                <input type="checkbox" id="switchAlergia">
+                <span class="slider"></span>
+            </label>
+            <span id="textoAlergia">No</span>
+        </div>
+    </div>
 
-            <div class="campo">
-                <label>Comentarios</label>
-                <textarea id="comentarios"></textarea>
-            </div>
+    <div class="campo" id="campoAlergiaTexto" style="display:none;">
+        <label>Especificar alergia</label>
+        <textarea id="alergias" placeholder="Ej: Celíaco..."></textarea>
+    </div>
+</div>
 
-            <button type="submit" id="btnSubmit" class="botonConfirmar">Confirmar asistencia</button>
-        </form>
+<div class="campo">
+    <label>Comentarios</label>
+    <textarea id="comentarios"></textarea>
+</div>
+
+<button type="submit" id="btnSubmit" class="botonConfirmar">Confirmar asistencia</button>
+          </form>
     </section>
 
     <div id="mensajeExito" class="mensaje-exito"></div>
