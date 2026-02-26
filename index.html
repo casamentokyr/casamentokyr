@@ -1,437 +1,85 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Katherine & Ricardo</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katherine & Ricardo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ICONO DE MUSICA -->
-<div id="music-icon">
-  <img src="play.png" alt="Reproducir música" id="music-img">
-</div>
-<audio id="music" loop>
-  <source src="musica.mp3" type="audio/mp3">
-</audio>
-
-<!-- HERO -->
-<section class="hero">
-
-    <img src="foto-fondo.jpg" class="hero-img">
-
-  <div class="hero-content">
-
-    <h3 class="subtitle">Nuestra boda</h3>
-    <h1>Katherine & Ricardo</h1>
-
-    <!-- CUENTA REGRESIVA CIRCULAR -->
-    <div id="countdown" class="countdown">
-      <div class="circle"><span id="days">0</span><small>Días</small></div>
-      <div class="circle"><span id="hours">0</span><small>Horas</small></div>
-      <div class="circle"><span id="minutes">0</span><small>Minutos</small></div>
-      <div class="circle"><span id="seconds">0</span><small>Segundos</small></div>
+    <div id="music-icon" class="music-btn">
+        <img src="play.png" alt="Reproducir" id="music-img">
     </div>
-
-<!-- fecha-->
-<div class="date-container">
-  <img src="linea.png" alt="linea" class="linea">
- <p class="date-below">15.05.2027</p>
-  <img src="linea.png" alt="linea" class="linea">
-</div>
-
-   
-  </div>
-</section>
-
-<!-- -->
-
-<!-- HISTORIA -->
-<section class="section historia">
-  <h2>Nuestra historia</h2>
-  <p>Katherine y Ricardo se conocieron en 2020 y desde entonces comenzaron esta hermosa aventura juntos. Te invitamos a celebrar con nosotros nuestro gran día.</p>
-</section>
-
-<!-- EVENTO -->
-<section class="section evento">
-  <h2>Evento</h2>
-  <p>Ceremonia: 15:00 hrs</p>
-  <p>Recepción: 17:00 hrs</p>
-  <p>Lugar: Braga, Portugal</p>
-</section>
-
-
-
-<script src="script.js"></script>
-
-
-
-<div id="mensajeConfirmado" class="mensaje-confirmado" style="display:none;">
-💍 Invitación confirmada<br>
-Si necesitas hacer cambios por favor contactar a los Novios.
-</div>
-
-
-
-<!--Formulario -->
-
-<form id="rsvpForm" class="formulario">
-<input type="hidden" id="codigo">
-
-<!-- Nombre -->
-
-<div class="campo">
-
-<label>Nombre</label>
-
-<input type="text" id="nombre" readonly>
-
-</div>
-
-
-
-<!-- Adultos -->
-
-<div class="campo">
-
-<label>Adultos</label>
-
-<input type="number" id="adultos" min="0">
-
-</div>
-
-
-
-<!-- NIÑOS -->
-
-<div class="campo">
-
-<label id="tituloNinos">Niños</label>
-
-<div class="ninos-linea">
-  <span id="textoNinos"></span>
-
-  <div class="switch">
-    <div class="slider" id="sliderNinos"></div>
-  </div>
-</div>
-
-<input type="number" id="ninos" min="0" class="input-ninos">
-
-</div>
-
-
-
-<!-- ALERGIAS -->
-
-<div class="campo">
-
-<label>Alergias</label>
-
-<div class="switch-container">
-
-<label class="switch">
-
-<input type="checkbox" id="switchAlergia">
-
-<span class="slider"></span>
-
-</label>
-
-<span id="textoAlergia">No</span>
-
-</div>
-
-</div>
-
-
-<div class="campo" id="campoAlergiaTexto" style="display:none;">
-
-<label>Especificar alergia</label>
-
-<textarea id="alergias"></textarea>
-
-</div>
-
-
-
-<!-- COMENTARIOS -->
-
-<div class="campo">
-
-<label>Comentarios</label>
-
-<textarea id="comentarios"></textarea>
-
-</div>
-
-
-
-<button type="submit" class="botonConfirmar">
-
-Confirmar asistencia
-
-</button>
-
-
-</form>
-
-
-
-
-<div id="mensajeExito" class="mensaje-exito"></div>
-
-
-
-<script>
-
-const switchAlergia = document.getElementById("switchAlergia");
-
-const campoAlergiaTexto = document.getElementById("campoAlergiaTexto");
-
-const textoAlergia = document.getElementById("textoAlergia");
-
-
-switchAlergia.addEventListener("change", function(){
-
-if(this.checked){
-
-campoAlergiaTexto.style.display="block";
-
-textoAlergia.innerText="Sí";
-
-}else{
-
-campoAlergiaTexto.style.display="none";
-
-textoAlergia.innerText="No";
-
-}
-
-});
-
-</script>
-
-<script>
-
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyjuQb6qBEXoQCYkWSL94r87hFRcO2RIdCRpad7PRPBHrJRGixBOinmcJJN0HfvmrgF7A/exec";
-
-document.getElementById("rsvpForm").addEventListener("submit", async function(e){
-
-e.preventDefault();
-
-const data = {
-
-codigo: document.getElementById("codigo").value,
-nombre: document.getElementById("nombre").value,
-adultos: document.getElementById("adultos").value,
-ninos: document.getElementById("ninos").value,
-alergias: document.getElementById("alergias").value,
-comentarios: document.getElementById("comentarios").value
-
-};
-
-try {
-
-await fetch(SCRIPT_URL, {
-
-method: "POST",
-mode: "no-cors",
-headers: {
-
-"Content-Type": "application/json"
-
-},
-body: JSON.stringify(data)
-
-});
-
-
-// BLOQUEAR FORMULARIO
-
-document.getElementById("rsvpForm").classList.add("form-bloqueado");
-
-
-// MOSTRAR MENSAJE BONITO
-
-const mensaje = document.getElementById("mensajeExito");
-
-if(data.adultos == 0){
-
-mensaje.innerHTML = `
-
-<div class="mensaje-box">
-
-<h2>Invitación cancelada</h2>
-
-<p>Sentimos que no puedas asistir.</p>
-
-</div>
-
-`;
-
-}else{
-
-mensaje.innerHTML = `
-
-<div class="mensaje-box">
-
-<h2>¡Confirmación enviada!</h2>
-
-<p>Gracias por confirmar tu asistencia.</p>
-
-</div>
-
-`;
-
-}
-
-mensaje.classList.add("show");
-
-
-// RECARGAR WEB
-
-setTimeout(()=>{
-
-location.reload();
-
-},3000);
-
-
-} catch(error){
-
-alert("Error al enviar");
-
-}
-
-});
-
-</script>
-
-<script>
-
-document.addEventListener("DOMContentLoaded", function(){
-
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyjuQb6qBEXoQCYkWSL94r87hFRcO2RIdCRpad7PRPBHrJRGixBOinmcJJN0HfvmrgF7A/exec";
-
-const params = new URLSearchParams(window.location.search);
-
-const codigo = params.get("codigo");
-
-
-// VALIDAR CODIGO
-
-if(!codigo){
-
-alert("Invitación no válida");
-
-return;
-
-}
-
-
-// PEDIR DATOS
-
-fetch(SCRIPT_URL + "?codigo=" + codigo)
-
-.then(response => response.json())
-
-.then(data => {
-
-console.log(data);
-
-
-// LLENAR FORMULARIO
-
-document.getElementById("codigo").value = codigo;
-
-document.getElementById("nombre").value = data.nombre;
-
-
-// LIMITAR ADULTOS
-
-const adultosInput = document.getElementById("adultos");
-
-adultosInput.max = data.adultos;
-
-adultosInput.value = data.adultos;
-
-
-// NIÑOS
-
-const ninosInput = document.getElementById("ninos");
-
-if(data.ninosPermitidos == 0){
-
-ninosInput.value = 0;
-
-ninosInput.disabled = true;
-
-ninosInput.placeholder = "Niños no permitidos";
-
-}else{
-
-ninosInput.max = data.ninos;
-
-ninosInput.value = data.ninos;
-
-}
-
-
-
-
-// SI YA CONFIRMÓ 
-
-if(data.confirmado == "SI"){
-
-
-// mostrar mensaje
-
-document.getElementById("mensajeConfirmado").style.display = "block";
-
-
-// bloquear formulario
-
-document.getElementById("rsvpForm").classList.add("form-bloqueado");
-
-}
-
-
-// SI HACEN CLICK
-
-document.getElementById("rsvpForm").addEventListener("click", function(){
-
-if(this.classList.contains("form-bloqueado")){
-
-alert("Esta invitación ya fue confirmada");
-
-}
-
-});
-
-
-})
-
-.catch(error => {
-
-console.error(error);
-
-alert("Error conectando con invitados");
-
-});
-
-
-});
-
-</script>
-
-
-
+    <audio id="music" loop>
+        <source src="musica.mp3" type="audio/mp3">
+    </audio>
+
+    <section class="hero">
+        <img src="foto-fondo.jpg" class="hero-img" alt="Fondo">
+        <div class="hero-content">
+            <h3 class="subtitle">Nuestra boda</h3>
+            <h1>Katherine & Ricardo</h1>
+
+            <div id="countdown" class="countdown">
+                <div class="circle"><span id="days">0</span><small>Días</small></div>
+                <div class="circle"><span id="hours">0</span><small>Horas</small></div>
+                <div class="circle"><span id="minutes">0</span><small>Minutos</small></div>
+                <div class="circle"><span id="seconds">0</span><small>Segundos</small></div>
+            </div>
+        </div> </section> <section class="section">
+        <div id="mensajeConfirmado" style="display:none; background:#fdf9ea; padding:20px; border-radius:10px; margin-bottom:20px; border: 1px solid #d4af37;">
+            💍 Invitación ya confirmada.
+        </div>
+
+        <form id="rsvpForm" class="formulario">
+            <input type="hidden" id="codigo">
+            
+            <div class="campo">
+                <label>Nombre</label>
+                <input type="text" id="nombre" readonly class="input-readonly">
+            </div>
+
+            <div class="campo">
+                <label id="labelAdultos">Adultos invitados</label>
+                <select id="adultos" class="input-estilo"></select>
+            </div>
+
+            <div class="campo" id="seccionNinos" style="display:none;">
+                <label id="textoNinos" style="font-weight:bold; color:#d4af37; margin-bottom:10px; display:block;"></label>
+                <input type="number" id="ninos" min="0" class="input-ninos" placeholder="¿Cuántos niños asisten?">
+            </div>
+
+            <div id="contenedorExtra">
+                <div class="campo">
+                    <label>¿Tienen alguna alergia?</label>
+                    <div class="switch-container">
+                        <label class="switch">
+                            <input type="checkbox" id="switchAlergia">
+                            <span class="slider"></span>
+                        </label>
+                        <span id="textoAlergia">No</span>
+                    </div>
+                </div>
+
+                <div class="campo" id="campoAlergiaTexto" style="display:none;">
+                    <label>Especificar alergia</label>
+                    <textarea id="alergias" placeholder="Ej: Celíaco, Maní..."></textarea>
+                </div>
+            </div>
+
+            <div class="campo">
+                <label>Comentarios</label>
+                <textarea id="comentarios" placeholder="Opcional..."></textarea>
+            </div>
+
+            <button type="submit" id="btnSubmit" class="botonConfirmar">Confirmar Asistencia</button>
+        </form>
+    </section>
+
+    <div id="mensajeExito" class="mensaje-exito"></div>
+
+    <script src="script.js"></script>
 </body>
-
-
-
 </html>
-

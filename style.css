@@ -1,645 +1,212 @@
-/* GENERAL */
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Montserrat',sans-serif;background:#fff;color:#333;text-align:center;}
-button{cursor:pointer;font-weight:600;transition:0.0s;}
-
-
-
-
-/* ICONO MUSICA */
-#music-icon{
-  position:fixed;
-  top:20px;
-  right:20px;
-  width:50px;
-  height:50px;
-  background:rgb(255, 255, 255); /* fondo muy ligero */
-  border-radius:50%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  cursor:pointer; z-index:1000;
+/* 1. CONFIGURACIÓN GENERAL */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-#music-icon:hover{
-  
-  background: rgb(255, 255, 255);
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: #fdfdfd;
+    color: #333;
+    text-align: center;
+    overflow-x: hidden;
 }
-#music-icon img{width:24px;height:24px;}
 
-/* HERO */
+/* 2. ICONO MÚSICA */
+.music-btn {
+    position: fixed !important;
+    top: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 9999;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
 
+.music-btn img { width: 20px; height: 20px; }
+
+/* 3. HERO SECTION */
 .hero {
-  position: relative;
-  height: 100vh;
-  overflow: hidden;
-  
+    position: relative;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
 }
 
-@keyframes zoom-hero{
-  0%   { transform: scale(1); }
-  100% { transform: scale(1.2); }
-}
-
-
-/* IMAGEN QUE HACE EL ZOOM */
-.hero-img{
-
-position: absolute;
-top: 0;
-left: 0;
-
-width: 100%;
-height: 100%;
-
-object-fit: cover;
-z-index: -1;
-animation: zoom-hero 10s ease-in-out infinite alternate;
-
+.hero-img {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    animation: zoom-hero 10s ease-in-out infinite alternate;
 }
 
 .hero-content {
-  position: absolute; /* fijamos el contenido fuera del flujo */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  color: white;
-  z-index: 2; /* encima del fondo */
-    width: 100%;             /* opcional, para que el texto no se corte en mobile */
-  max-width: 900px;
+    z-index: 2;
+    text-shadow: 0 2px 15px rgba(0,0,0,0.6);
 }
 
-.subtitle, .hero-content h1 {
-  opacity:0;
-  animation: fade-scale 1.5s ease forwards;
-  transform: scale(0.8);   /* solo al iniciar */
+.hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    margin: 15px 0;
+    animation: fade-scale 1.5s ease forwards;
 }
 
-/* OVERLAY */
-.overlay{
-  background: rgba(0,0,0,0.5);
-  width:100%; height:100%;
-  position:absolute; top:0; left:0;
-  display:flex; flex-direction:column;
-  justify-content:center; align-items:center;
-  text-align:center; color:white;
-  padding:20px;
+/* 4. CUENTA REGRESIVA */
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
 }
-
-/* SUBTITULO */
-.subtitle, .hero h1 {
-  opacity: 0;
-  transform: scale(0.8);
-  animation: fade-scale 1.5s ease forwards;
-}
-
-
-/* NOMBRES */
-.hero h1{
-  font-family:'Playfair Display', serif;
-  font-size:50px;
-  margin-bottom:30px;
-  color:white;
-  opacity:0;
-  transform: scale(0.8);
-  animation: fade-scale 1.5s ease 0.5s forwards;
-}
-
-/* ANIMACION FADE + SCALE */
-@keyframes fade-scale{
-  0% { opacity:0; transform: scale(0.8); }
-  100% { opacity:1; transform: scale(1); }
-}
-
-/* CUENTA REGRESIVA CIRCULAR */
-.countdown{
-  display:flex;
-  justify-content:center;
-  gap:15px;
-  margin-bottom:20px;
-}
-
-.countdown .circle{
-  width:90px;
-  height:90px;
-  background: rgba(255,255,255,0.1);
-  border-radius:50%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  color:white;
-  font-family:'Playfair Display', serif;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-  opacity:0; /* importante para animar aparición */
-  animation: fade-up 1s ease forwards;
-}
-
-.circle span{
-  font-size:28px;
-  font-weight:700;
-  animation: flip 0.5s ease;
-}
-
-.circle small{
-  font-size:12px;
-  margin-top:5px;
-  text-transform:uppercase;
-  letter-spacing:1px;
-}
-
-/* ANIMACION DE CIRCULOS AL CARGAR */
-@keyframes fade-up{
-  0% { opacity:0; transform: translateY(30px); }
-  100% { opacity:1; transform: translateY(0); }
-}
-
-/* HOVER CIRCULOS */
-.circle:hover{
-  transform: scale(1.1);
-  transition: transform 0.3s ease;
-}
-
 
 .countdown .circle {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgb(255, 255, 255); /* borde redondo marcado */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-family: 'Playfair Display', serif;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-  opacity: 0; /* importante para animar aparición */
-  animation: fade-up 1s ease forwards;
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    backdrop-filter: blur(4px);
 }
 
+.circle span { font-size: 24px; font-weight: bold; }
+.circle small { font-size: 9px; text-transform: uppercase; }
 
-.circle:hover{
-  transform: scale(1.1);
-  transition: transform 0.3s ease;
+/* 5. FORMULARIO RSVP */
+.formulario {
+    max-width: 480px;
+    margin: -50px auto 50px; /* Sube un poco sobre el hero si quieres, o déjalo en 40px */
+    padding: 35px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 10;
 }
 
-
-/* FECHA DEBAJO */
-.date-below{
-  font-size:18px;
-  color:white;
-  margin-bottom:40px;
+.campo {
+    margin-bottom: 25px;
+    text-align: left;
 }
 
-/* BOTON */
-button{
-  padding:12px 25px;
-  background:black;
-  color:white;
-  border:none;
-  border-radius:5px;
-  font-size:16px;
-  cursor:pointer;
-  transition:0.3s;
-}
-button:hover{
-  background:#333;
+.campo label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 500;
+    color: #555;
+    font-size: 14px;
 }
 
-/* SECCIONES */
-.section{
-  padding:80px 20px;
-  opacity:0;
-  transform:translateY(30px);
-  animation:fade-up 1s forwards;
-}
-.section h2{
-  font-family:'Playfair Display', serif;
-  font-size:36px;
-  margin-bottom:20px;
-}
-.section p{
-  font-size:18px;
-  line-height:1.5;
-  margin-bottom:10px;
+/* ESTILO PARA INPUTS Y EL NUEVO SELECT */
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    background-color: #fff;
+    transition: border 0.3s;
 }
 
-/* INPUTS Y FORM */
-input, select, textarea{
-  width:100%;
-  padding:12px;
-  margin:10px 0;
-  border:1px solid #ddd;
-  border-radius:5px;
-}
-button.submit{
-  width:100%;
-  background:black;
-  color:white;
-  margin-top:10px;
-  transition:0.3s;
-}
-button.submit:hover{background:#333;}
-
-/* ANIMACIONES FLIP DE SEGUNDOS */
-@keyframes flip{
-  0%{transform:rotateX(90deg);opacity:0;}
-  50%{transform:rotateX(-20deg);opacity:1;}
-  100%{transform:rotateX(0deg);}
+select {
+    cursor: pointer;
+    appearance: none; /* Quita el estilo por defecto del sistema */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d4af37' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 15px;
 }
 
-/* RESPONSIVE */
-@media(max-width:768px){
-  .hero h1{font-size:36px;}
-  .circle span{font-size:22px;}
-  .subtitle{font-size:18px;}
-  .date-below{font-size:16px;}
-  button{font-size:14px;}
-}
-@media(max-width:400px){
-  .hero h1{font-size:28px;}
-  .circle span{font-size:18px;}
-  .subtitle{font-size:16px;}
-  .date-below{font-size:14px;}
+input:focus, select:focus {
+    outline: none;
+    border-color: #d4af37;
 }
 
-/* Texto hero: fade al cargar + pulso constante */
-.subtitle, .hero h1 {
-  opacity: 0;
-  transform: scale(0.8);
-  animation: fade-scale 1.5s ease forwards, pulse-text 5s ease-in-out 1.5s infinite alternate;
+/* ESTADO SOLO LECTURA (PARA EL NOMBRE) */
+.input-readonly {
+    background-color: #f9f9f9 !important;
+    color: #888;
+    border-style: dashed !important;
+    cursor: not-allowed;
 }
 
-@keyframes fade-scale {
-  0% { opacity:0; transform: scale(0.8); }
-  100% { opacity:1; transform: scale(1); }
+/* 6. BOTONES */
+.botonConfirmar {
+    background: #d4af37;
+    color: white;
+    padding: 18px;
+    width: 100%;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
 }
 
-@keyframes pulse-text {
-  0% { transform: scale(1); }
-  50% { transform: scale(1); }
-  100% { transform: scale(1); }
+.botonConfirmar:hover {
+    background: #b8962d;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
 }
 
-
-/* data*/
-.date-container{
-  display: flex;
-  align-items: center;       /* centra verticalmente el texto con las líneas */
-  justify-content: center;   /* centra horizontalmente el conjunto */
-  gap: 15px;                 /* espacio entre línea y texto */
-  margin-bottom: 40px;
-}
-
-.date-container .linea{
-  height: 1px;               /* altura de la línea */
-  width: 120px;               /* ancho inicial, se ajusta responsive */
-  object-fit: cover;          /* ajusta la imagen al contenedor */
-  transform:translateY(-20px); /*subo la linea*/
-}
-
-.date-container .date-below{
-  font-size: 20px;
-  color: white;
-  white-space: nowrap;       /* evita que el texto rompa línea */
-}
-
-/* RESPONSIVE */
-@media(max-width:768px){
-  .date-container .linea{ width: 80px; }
-  .date-container .date-below{ font-size:16px; }
-}
-
-@media(max-width:400px){
-  .date-container .linea{ width: 50px; }
-  .date-container .date-below{ font-size:14px; }
-}
-
-
-
-/* FIX PARA MOVIL boton de music*/
-
-.music-btn{
-
-position: fixed !important;
-top: 20px;
-right: 20px;
-
-z-index: 9999;
-
-animation: none !important;
-transform: none !important;
-
-}
-
-
-.hero{
-
-overflow: hidden;
-
-}
-
-
-.hero-img{
-
-will-change: transform;
-
-}
-
-
-.mensaje-exito{
-
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-
-background:rgba(0,0,0,0.6);
-
-display:flex;
-justify-content:center;
-align-items:center;
-
-opacity:0;
-pointer-events:none;
-
-transition:0.3s;
-
-}
-
-.mensaje-exito.show{
-
-opacity:1;
-pointer-events:auto;
-
-}
-
-.mensaje-box{
-
-background:white;
-padding:40px;
-border-radius:10px;
-
-animation:zoom 0.3s;
-
-}
-
-@keyframes zoom{
-
-from{
-
-transform:scale(0.7);
-opacity:0;
-
-}
-
-to{
-
-transform:scale(1);
-opacity:1;
-
-}
-
-}
-
-.formulario{
-
-max-width:400px;
-margin:auto;
-padding:20px;
-
-background:white;
-border-radius:12px;
-
-box-shadow:0 5px 20px rgba(0,0,0,0.1);
-
-}
-
-
-.campo{
-
-margin-bottom:20px;
-
-display:flex;
-flex-direction:column;
-
-}
-
-
-input, textarea{
-
-padding:12px;
-
-border-radius:8px;
-border:1px solid #ddd;
-
-font-size:16px;
-
-width:100%;
-
-}
-
-
-textarea{
-
-resize:none;
-height:80px;
-
-}
-
-
-/* BOTON CONFIRMAR */
-
-.botonConfirmar{
-
-background:#d4af37;
-
-color:white;
-
-border:none;
-
-padding:15px;
-
-width:100%;
-
-border-radius:8px;
-
-font-size:18px;
-
-cursor:pointer;
-
-}
-
-
-
-/* SWITCH */
-
-.switch {
-
-position: relative;
-
-display: inline-block;
-
-width: 50px;
-
-height: 25px;
-
-}
-
-
-.switch input {
-
-display:none;
-
-}
-
+/* 7. SWITCH ALERGIAS */
+.switch-container { display: flex; align-items: center; gap: 12px; }
+.switch { position: relative; width: 45px; height: 22px; }
+.switch input { display: none; }
 
 .slider {
-
-position: absolute;
-
-cursor: pointer;
-
-background-color: #ccc;
-
-border-radius: 25px;
-
-top: 0;
-
-left: 0;
-
-right: 0;
-
-bottom: 0;
-
-transition: .4s;
-
+    position: absolute; cursor: pointer;
+    background-color: #ccc; border-radius: 34px;
+    top: 0; left: 0; right: 0; bottom: 0; transition: .4s;
 }
-
 
 .slider:before {
-
-position: absolute;
-
-content: "";
-
-height: 19px;
-
-width: 19px;
-
-left: 3px;
-
-bottom: 3px;
-
-background-color: white;
-
-border-radius: 50%;
-
-transition: .4s;
-
+    position: absolute; content: "";
+    height: 16px; width: 16px; left: 3px; bottom: 3px;
+    background-color: white; border-radius: 50%; transition: .4s;
 }
 
+input:checked + .slider { background-color: #d4af37; }
+input:checked + .slider:before { transform: translateX(23px); }
 
-input:checked + .slider {
-
-background-color: #4CAF50;
-
+/* 8. MENSAJE DE ÉXITO */
+.mensaje-exito {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.8);
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0; pointer-events: none; transition: 0.5s; z-index: 10000;
+    padding: 20px;
 }
 
+.mensaje-exito.show { opacity: 1; pointer-events: auto; }
 
-input:checked + .slider:before {
+/* 9. ANIMACIONES */
+@keyframes zoom-hero { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
+@keyframes fade-scale { 0% { opacity: 0; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
 
-transform: translateX(24px);
-
-}
-
-
-.switch-container{
-
-display:flex;
-
-align-items:center;
-
-gap:10px;
-
-}
-
-
-/* CONTENEDOR */
-
-.ninos-info{
-
-display:flex;
-align-items:center;
-gap:10px;
-
-}
-
-
-/* TEXTO */
-
-.texto-ninos{
-
-font-size:16px;
-color:#555;
-
-}
-
-
-/* INPUT */
-
-.input-ninos{
-
-margin-top:10px;
-padding:10px;
-width:100%;
-border-radius:8px;
-border:1px solid #ddd;
-
-}
-
-
-/* SWITCH */
-
-.ninos-linea{
-display:flex;
-align-items:center;
-gap:10px;
-}
-
-.switch{
-width:50px;
-height:26px;
-background:#ccc;
-border-radius:20px;
-position:relative;
-}
-
-.slider{
-width:20px;
-height:20px;
-background:white;
-border-radius:50%;
-position:absolute;
-top:3px;
-left:3px;
-transition:0.3s;
-}
-
-.switch.activo{
-background:#4CAF50;
-}
-
-.switch.activo .slider{
-left:27px;
-}
-
-.input-ninos{
-margin-top:10px;
-padding:10px;
-width:100%;
-border-radius:8px;
-border:1px solid #ddd;
+/* 10. RESPONSIVE */
+@media(max-width: 600px) {
+    .hero h1 { font-size: 2.2rem; }
+    .formulario { margin: 20px; padding: 25px; }
+    .countdown .circle { width: 65px; height: 65px; }
+    .circle span { font-size: 18px; }
 }
