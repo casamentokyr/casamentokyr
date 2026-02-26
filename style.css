@@ -567,20 +567,93 @@ gap:10px;
 }
 
 
-.switch input {
-  display: none;
+/* CONTENEDOR */
+
+.ninos-info{
+
+display:flex;
+align-items:center;
+gap:10px;
+
 }
 
-.slider {
-  width: 60px;
-  height: 30px;
-  background-color: #ccc;
-  border-radius: 30px;
-  display: block;
-  position: relative;
-  transition: 0.4s;
+
+/* TEXTO */
+
+.texto-ninos{
+
+font-size:16px;
+color:#555;
+
 }
 
-input:checked + .slider {
-  background-color: #4CAF50;
+
+/* INPUT */
+
+.input-ninos{
+
+margin-top:10px;
+padding:10px;
+width:100%;
+border-radius:8px;
+border:1px solid #ddd;
+
+}
+
+
+/* SWITCH */
+
+.switch{
+
+position:relative;
+display:inline-block;
+width:50px;
+height:26px;
+
+}
+
+.switch input{
+
+display:none;
+
+}
+
+.slider{
+
+position:absolute;
+cursor:pointer;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background-color:#ccc;
+transition:.4s;
+border-radius:26px;
+
+}
+
+.slider:before{
+
+position:absolute;
+content:"";
+height:20px;
+width:20px;
+left:3px;
+bottom:3px;
+background:white;
+transition:.4s;
+border-radius:50%;
+
+}
+
+.switch input:checked + .slider{
+
+background-color:#4CAF50;
+
+}
+
+.switch input:checked + .slider:before{
+
+transform:translateX(24px);
+
 }

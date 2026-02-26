@@ -76,45 +76,53 @@ input.value = 0;
 }
 }
 
-if(data.ninosPermitidos == 0){
 
-document.getElementById("ninos").value = 0;
-
-document.getElementById("ninos").disabled = true;
-
-document.getElementById("mensajeNinos").innerHTML = "Niños no permitidos";
-
-}
-
-// NIÑOS DINÁMICOS
+// NIÑOS FINAL CORRECTO
 
 const switchNinos = document.getElementById("switchNinos");
+
 const textoNinos = document.getElementById("textoNinos");
-const ninosInput = document.getElementById("ninos");
-const inputCantidadNinosDiv = document.getElementById("inputCantidadNinosDiv");
-const labelNinos = document.getElementById("labelNinos");
+
+const inputNinos = document.getElementById("ninos");
+
 
 if(data.ninosPermitidos == 0){
-  // NO hay niños permitidos
-  switchNinos.checked = false;
-  switchNinos.disabled = true;
-  textoNinos.innerText = "Niños no permitidos";
 
-  // ocultar input cantidad
-  inputCantidadNinosDiv.style.display = "none";
+// mostrar texto
 
-  // cambiar etiqueta
-  labelNinos.innerText = "Niños";
-  
+textoNinos.innerText = "Niños no permitidos";
+
+// boton gris
+
+switchNinos.checked = false;
+
+switchNinos.disabled = true;
+
+// ocultar input
+
+inputNinos.style.display = "none";
+
+
 }else{
-  // SI hay niños permitidos
-  switchNinos.checked = true;
-  switchNinos.disabled = true; // opcional si no quieres que lo cambien
-  textoNinos.innerText = "Niños permitidos";
 
-  // mostrar input cantidad
-  inputCantidadNinosDiv.style.display = "block";
-  ninosInput.max = data.ninos; // máximo permitido
-  ninosInput.value = 0; // valor inicial en 0
-  labelNinos.innerText = "Niños";
+// mostrar texto
+
+textoNinos.innerText = "Niños";
+
+// boton verde
+
+switchNinos.checked = true;
+
+switchNinos.disabled = true;
+
+// mostrar input
+
+inputNinos.style.display = "block";
+
+// limite
+
+inputNinos.max = data.ninos;
+
+inputNinos.value = "";
+
 }

@@ -80,10 +80,6 @@ Si necesitas hacer cambios por favor contactar a los Novios.
 <form id="rsvpForm" class="formulario">
 <input type="hidden" id="codigo">
 
-<label class="switch">
-  <input type="checkbox">
-  <span class="slider"></span>
-</label>
 <!-- Nombre -->
 
 <div class="campo">
@@ -110,24 +106,22 @@ Si necesitas hacer cambios por favor contactar a los Novios.
 
 <!-- NIÑOS -->
 
-<div class="campo" id="campoNinos">
+<div class="campo">
 
-<label id="labelNinos">Niños</label>
+<label id="tituloNinos">Niños</label>
 
-<div class="switch-container">
+<div class="ninos-info">
+
+<span id="textoNinos" class="texto-ninos"></span>
 
 <label class="switch">
-<input type="checkbox" id="switchNinos" disabled>
+<input type="checkbox" id="switchNinos">
 <span class="slider"></span>
 </label>
 
-<span id="textoNinos"></span>
-
 </div>
 
-<div id="inputCantidadNinosDiv">
-<input type="number" id="ninos" min="0">
-</div>
+<input type="number" id="ninos" class="input-ninos">
 
 </div>
 
