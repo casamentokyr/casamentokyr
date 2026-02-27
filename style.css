@@ -263,12 +263,26 @@ body {
         right: 15px !important;
     }
 
-    /* Contenedor principal de la línea de tiempo */
-.timeline-container {
-    position: relative;
+ 
+    /* =========================================
+   NUEVO ESTILO DE TARJETA Y ZIGZAG
+   ========================================= */
+
+.itinerary-card {
+    background: var(--white);
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px 0;
+    padding: 40px 20px;
+    border-radius: 25px;
+    /* Sombra para efecto de relieve */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08); 
+    border: 1px solid #eee;
+    position: relative;
+}
+
+.timeline-container {
+    position: relative;
+    width: 100%;
 }
 
 /* Línea vertical central */
@@ -276,18 +290,16 @@ body {
     content: '';
     position: absolute;
     width: 2px;
-    background-color: #D8CFC4; /* Accent color */
+    background-color: var(--accent);
     top: 0;
     bottom: 0;
     left: 50%;
     margin-left: -1px;
 }
 
-/* Contenedor de cada fila */
 .timeline-item {
     padding: 10px 40px;
     position: relative;
-    background-color: inherit;
     width: 50%;
     box-sizing: border-box;
 }
@@ -295,22 +307,23 @@ body {
 /* El círculo del icono */
 .timeline-icon {
     position: absolute;
-    width: 50px;
-    height: 50px;
-    background-color: white;
-    border: 2px solid #D8CFC4;
+    width: 60px;
+    height: 60px;
+    background-color: var(--white);
+    border: 3px solid var(--accent); /* Borde con color acento */
     border-radius: 50%;
-    top: 15px;
-    z-index: 1;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
 .timeline-icon img {
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     object-fit: contain;
 }
 
@@ -319,39 +332,57 @@ body {
 .right { left: 50%; text-align: left; }
 
 /* Posicionar los iconos en la línea central */
-.left .timeline-icon { right: -25px; }
-.right .timeline-icon { left: -25px; }
+.left .timeline-icon { right: -30px; }
+.right .timeline-icon { left: -30px; }
 
-/* Estilos de texto */
+/* Ajuste de espaciado para que el texto no toque la línea */
+.left .timeline-content { padding-right: 30px; }
+.right .timeline-content { padding-left: 30px; }
+
+/* Estilos de texto usando paleta */
 .timeline-content .desc-final {
     font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    color: #1F2F44; /* Dark color */
+    font-size: 1.5rem;
+    color: var(--dark); /* Color oscuro */
     margin: 0;
     font-weight: 600;
 }
 
 .timeline-content .time-final {
-    font-size: 1rem;
-    color: #4F6D8A; /* Primary color */
+    font-size: 1.1rem;
+    color: var(--primary); /* Color primario */
     font-weight: 400;
 }
 
 /* Ajustes para móviles: Todo alineado a la izquierda */
 @media screen and (max-width: 600px) {
-    .timeline-container::after { left: 31px; }
+    .itinerary-card {
+        padding: 20px 10px;
+    }
+    
+    .timeline-container::after { left: 30px; }
     
     .timeline-item {
         width: 100%;
-        padding-left: 70px;
-        padding-right: 25px;
+        padding-left: 60px;
+        padding-right: 10px;
         text-align: left;
     }
     
     .timeline-item.left, .timeline-item.right { left: 0; }
     
-    .timeline-icon { left: 5px; }
+    .left .timeline-content, .right .timeline-content { padding-left: 20px; padding-right: 0; }
+    
+    .timeline-icon { 
+        left: 0; 
+        width: 50px; 
+        height: 50px;
+    }
+    .timeline-icon img { width: 25px; height: 25px; }
+    
+    .left .timeline-icon, .right .timeline-icon { left: 0px; }
 }
+
 /* =========================================
    10. PRESENTES Y RESTO DE SECCIONES
    ========================================= */
