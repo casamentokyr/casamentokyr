@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Katherine & Ricardo - O Nosso Casamento</title>
+    <title>Katherine & Ricardo</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div id="music-icon" class="music-btn">
-        <img src="play.png" alt="Reproduzir música" id="music-img">
+        <img src="play.png" alt="Reproduzir" id="music-img">
     </div>
     <audio id="music" loop>
         <source src="musica.mp3" type="audio/mp3">
@@ -22,63 +22,129 @@
             <h3 class="subtitle">O Nosso Casamento</h3>
             <h1 class="names">Katherine <span class="amp">&</span> Ricardo</h1>
             
+            <p class="date-hero">22 . 05 . 2027</p>
+
             <div id="countdown" class="countdown">
                 <div class="circle"><span id="days">0</span><small>Dias</small></div>
                 <div class="circle"><span id="hours">0</span><small>Horas</small></div>
                 <div class="circle"><span id="minutes">0</span><small>Minutos</small></div>
                 <div class="circle"><span id="seconds">0</span><small>Segundos</small></div>
             </div>
-        </div> 
-    </section> 
-
-    <section class="section">
-        <div id="mensajeConfirmado" class="aviso-confirmado" style="display:none;">
-            💍 Convite já confirmado.
         </div>
-
-        <form id="rsvpForm" class="formulario">
-            <input type="hidden" id="codigo">
-            
-            <div class="campo">
-                <label for="nombre">Nome</label>
-                <input type="text" id="nombre" readonly class="input-readonly">
-            </div>
-
-            <div class="campo">
-                <label for="adultos">Convidados</label>
-                <select id="adultos" class="input-estilo"></select>
-            </div>
-
-            <div id="seccionNinos" class="campo" style="display:none;"></div>
-
-            <div id="contenedorExtra">
-                <div class="campo">
-                    <label>Têm alguma alergia?</label>
-                    <div class="switch-container">
-                        <label class="switch">
-                            <input type="checkbox" id="switchAlergia">
-                            <span class="slider"></span>
-                        </label>
-                        <span id="textoAlergia">Não</span>
-                    </div>
-                </div>
-
-                <div class="campo" id="campoAlergiaTexto" style="display:none;">
-                    <label for="alergias">Especificar alergia ou condição especial</label>
-                    <textarea id="alergias" placeholder="Ex: Celíaco, Amendoim..."></textarea>
-                </div>
-            </div>
-
-            <div class="campo">
-                <label for="comentarios">Comentários</label>
-                <textarea id="comentarios" placeholder="Opcional..."></textarea>
-            </div>
-
-            <button type="submit" id="btnSubmit" class="botonConfirmar">Confirmar Presença</button>
-        </form>
     </section>
 
-    <div id="mensajeExito" class="mensaje-exito"></div>
+    <section class="section fade-in">
+        <h2 class="section-title">Com a benção de nossos pais</h2>
+        <div class="parents-container">
+            <div class="parent-block">
+                <p>Pais da Noiva</p>
+                <p class="names-parents">Nome da Mãe & Nome do Pai</p>
+            </div>
+            <div class="parent-block">
+                <p>Pais do Noivo</p>
+                <p class="names-parents">Nome da Mãe & Nome do Pai</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in">
+        <h2 class="section-title">O Evento</h2>
+        <div class="event-card">
+            <div class="event-info">
+                <h3>Cerimónia</h3>
+                <p>Nome da Igreja ou Local</p>
+                <p>11:00 hrs</p>
+                <p>Endereço completo aqui</p>
+            </div>
+            <div class="event-info">
+                <h3>Recepção</h3>
+                <p>Nome do Salão</p>
+                <p>13:30 hrs</p>
+                <p>Endereço completo aqui</p>
+            </div>
+            <a href="URL_DEL_MAPA" target="_blank" class="btn-map">Ver mapa</a>
+        </div>
+    </section>
+
+    <section class="section fade-in">
+        <h2 class="section-title">Código de Traje</h2>
+        <div class="dress-code-container">
+            <p class="dress-description">Formal</p>
+            
+            <div class="colors-section">
+                <h3>Paleta de cores sugeridas</h3>
+                <div class="color-palette">
+                    <span class="color-circle" style="background-color: #D4AF37;"></span>
+                    <span class="color-circle" style="background-color: #B8860B;"></span>
+                    <span class="color-circle" style="background-color: #F5DEB3;"></span>
+                </div>
+            </div>
+
+            <div class="forbidden-section">
+                <h3>Cores Proibidas</h3>
+                <div class="color-palette">
+                    <span class="color-circle forbidden" style="background-color: #ffffff;"></span>
+                    <span class="color-circle forbidden" style="background-color: #ff0000;"></span>
+                </div>
+                <p class="note">Por favor, deixar o branco para a noiva.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in">
+        <h2 class="section-title">Itinerário</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <span class="time">11:00</span>
+                <p>Cerimónia</p>
+            </div>
+            <div class="timeline-item">
+                <span class="time">13:30</span>
+                <p>Coquetel</p>
+            </div>
+            <div class="timeline-item">
+                <span class="time">15:00</span>
+                <p>Jantar</p>
+            </div>
+            <div class="timeline-item">
+                <span class="time">17:00</span>
+                <p>Festa</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in">
+        <h2 class="section-title">Presentes</h2>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <h3>Mesa de Presentes</h3>
+                    <p>Clique para ver opções</p>
+                </div>
+                <div class="flip-card-back">
+                    <h3>Dados Bancários</h3>
+                    <p>Banco: XXXX</p>
+                    <p>Conta: XXXX</p>
+                    <p>IBAN: XXXX</p>
+                    <p>Nome: XXXX</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in" id="rsvp-section">
+        <h2 class="section-title">Presença</h2>
+        <div class="rsvp-container">
+            <div class="rsvp-card-start" id="rsvp-card-start">
+                <h3>Vens celebrar connosco?</h3>
+                <p>Confirma a tua presença aqui</p>
+                <button class="btn-rsvp-open" onclick="showForm()">Confirmar</button>
+            </div>
+            
+            <div id="rsvp-form-container" style="display:none;">
+                </div>
+        </div>
+    </section>
 
     <script src="script.js"></script>
 </body>

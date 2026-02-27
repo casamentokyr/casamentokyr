@@ -2,6 +2,29 @@
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyjuQb6qBEXoQCYkWSL94r87hFRcO2RIdCRpad7PRPBHrJRGixBOinmcJJN0HfvmrgF7A/exec";
 const WEDDING_DATE = new Date("May 22, 2027 11:00:00").getTime();
 
+//  ANIMACIÓN SCROLL (FADE-IN)
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach((section) => {
+    observer.observe(section);
+});
+
+//  LÓGICA DE RSVP (Ocultar tarjeta, mostrar form)
+function showForm() {
+    document.getElementById('rsvp-card-start').style.display = 'none';
+    document.getElementById('rsvp-form-container').style.display = 'block';
+    
+}
+
+
+
+
 // 2. CUENTA REGRESIVA
 function updateCountdown() {
     const now = new Date().getTime();
