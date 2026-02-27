@@ -25,23 +25,26 @@ body {
     line-height: 1.6;
 }
 
-/* 2. ICONO MÚSICA */
+/* =========================================
+   SOLUCIÓN PROBLEMA 1: ICONO MÚSICA FIJO
+   ========================================= */
 .music-btn {
-    position: fixed !important;
-    top: 20px;
-    right: 20px;
+    position: fixed !important; /* Mantiene el botón en su lugar */
+    top: 20px !important;
+    right: 20px !important;
     width: 45px;
     height: 45px;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    z-index: 9999;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 999999 !important; /* Asegura que esté por encima de todo */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    backdrop-filter: blur(5px);
 }
-.music-btn img { width: 20px; height: 20px; }
+.music-btn img { width: 22px; height: 22px; }
 
 /* 3. HERO SECTION */
 .hero {
@@ -51,6 +54,7 @@ body {
     justify-content: center;
     align-items: center;
     color: white;
+    overflow: hidden; /* Asegura que la animación no cause scroll */
 }
 .hero-img {
     position: absolute;
@@ -188,7 +192,7 @@ body {
 .gallery-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(31, 47, 68, 0.95);
-    z-index: 99999;
+    z-index: 9999999; /* Asegura que esté encima de todo */
     display: none;
     flex-direction: column;
     justify-content: center;
@@ -235,7 +239,7 @@ body {
 }
 
 /* =========================================
-   9. ITINERARIO (ESTILO ALTERNADO)
+   9. ITINERARIO (ESTILO MODERNO)
    ========================================= */
 .timeline-container-final {
     display: flex;
@@ -251,63 +255,57 @@ body {
     max-width: 600px;
     border: 1px solid #eee;
     position: relative;
+    padding-bottom: 20px;
 }
-/* LA LÍNEA VERTICAL */
+
+.timeline-row-final {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 30px;
+}
+.timeline-row-final:last-child { margin-bottom: 0; }
+
+.timeline-icon-box {
+    width: 60px;
+    height: 60px;
+    background-color: var(--white);
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    position: relative;
+    z-index: 2;
+}
+
+/* Línea vertical */
 .timeline-card-final::before {
     content: '';
     position: absolute;
     top: 40px;
     bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 49px; /* Ajuste para alinear con el centro de los iconos */
     width: 2px;
     background-color: var(--accent);
     z-index: 1;
 }
-.timeline-row-final {
-    display: flex;
-    align-items: center;
-    position: relative;
-    z-index: 2;
-    margin-bottom: 30px;
-}
-.timeline-row-final:last-child { margin-bottom: 0; }
-.timeline-icon-box {
-    width: 60px;
-    height: 60px;
-    background-color: var(--white);
-    border: 3px solid var(--accent);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-.timeline-icon-final { width: 30px; height: 30px; object-fit: contain; }
-.timeline-text-final { width: 45%; position: relative; }
 
-/* Alternar texto a izquierda y derecha (Revertido a original) */
-.timeline-row-final:nth-child(odd) .timeline-text-final {
-    text-align: right;
-    margin-right: auto;
-    padding-right: 50px;
-}
-.timeline-row-final:nth-child(even) .timeline-text-final {
+.timeline-icon-final { width: 30px; height: 30px; object-fit: contain; }
+
+.timeline-text-final {
     text-align: left;
-    margin-left: auto;
-    padding-left: 50px;
+    flex: 1;
 }
 .time-final {
     font-weight: bold;
-    color: var(--primary);
-    font-size: 1.2rem;
+    color: var(--dark);
+    font-size: 1.4rem;
     display: block;
-    margin-bottom: 5px;
 }
-.desc-final { color: #555; font-size: 1rem; margin: 0; font-weight: 300; }
+.desc-final { color: var(--primary); font-size: 1.1rem; margin: 0; font-weight: 500; }
 
 /* 10. PRESENTES */
 .gift-container {
@@ -356,7 +354,7 @@ body {
 .close-msg { font-size: 0.9rem; margin-top: 30px; opacity: 0.7; }
 
 /* =========================================
-   11. RSVP (PRESENÇA) - Diseño Nuevo
+   11. RSVP (PRESENÇA)
    ========================================= */
 .rsvp-section {
     background-color: #f4f7f9;
@@ -476,23 +474,27 @@ input:checked + .slider:before { transform: translateX(24px); }
     .parents-container { gap: 20px; }
     .event-card, .formulario { padding: 25px; }
     .gift-card { width: 280px; height: 380px; }
-    /* Ajuste para que el itinerario se vea bien en celular */
-    .timeline-row-final {
-        flex-direction: column;
-        text-align: center !important;
-        margin-bottom: 40px;
-    }
-    .timeline-text-final {
-        width: 100% !important;
-        text-align: center !important;
-        padding: 0 !important;
-        margin-top: 70px !important;
+    
+    /* SOLUCIÓN PROBLEMA 2: ITINERARIO MÓVIL */
+    .timeline-card-final {
+        padding: 20px;
     }
     .timeline-card-final::before {
-        left: 50%;
+        left: 31px; /* Ajuste para línea vertical en móvil */
     }
     .timeline-icon-box {
-        left: 50%;
-        top: 0;
+        width: 45px;
+        height: 45px;
+        margin-right: 15px;
+    }
+    .timeline-icon-final {
+        width: 20px;
+        height: 20px;
+    }
+    .time-final {
+        font-size: 1.1rem;
+    }
+    .desc-final {
+        font-size: 0.95rem;
     }
 }
