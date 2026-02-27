@@ -262,80 +262,96 @@ body {
         top: 15px !important;
         right: 15px !important;
     }
-/* =========================================
-   ITINERARIO UNIFICADO (LIMPIO Y FIJO)
-   ========================================= */
-.itinerary-wrapper {
+
+    /* Contenedor principal de la línea de tiempo */
+.timeline-container {
     position: relative;
-    max-width: 500px;
+    max-width: 800px;
     margin: 0 auto;
-    padding: 40px 20px;
-    background: #ffffff;
-    border-radius: 25px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    border: 1px solid #eee;
+    padding: 20px 0;
 }
 
-/* La línea vertical única */
-.itinerary-line {
+/* Línea vertical central */
+.timeline-container::after {
+    content: '';
     position: absolute;
-    top: 50px;
-    bottom: 50px;
-    left: 50px; /* Alineada al centro del icono */
     width: 2px;
-    background: var(--accent);
-    z-index: 1;
+    background-color: #D8CFC4; /* Accent color */
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -1px;
 }
 
-.itinerary-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 40px;
+/* Contenedor de cada fila */
+.timeline-item {
+    padding: 10px 40px;
     position: relative;
-    z-index: 2;
-    text-align: left;
+    background-color: inherit;
+    width: 50%;
+    box-sizing: border-box;
 }
 
-.itinerary-item:last-child { margin-bottom: 0; }
-
-.itinerary-icon {
-    width: 60px;
-    height: 60px;
-    background: #ffffff;
-    border: 2px solid var(--accent);
+/* El círculo del icono */
+.timeline-icon {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border: 2px solid #D8CFC4;
     border-radius: 50%;
+    top: 15px;
+    z-index: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-right: 25px;
-    flex-shrink: 0; /* Evita que Android deforme el círculo */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-.itinerary-icon img {
-    width: 30px;
-    height: 30px;
+.timeline-icon img {
+    width: 25px;
+    height: 25px;
     object-fit: contain;
 }
 
-.itinerary-content {
-    display: flex;
-    flex-direction: column;
-}
+/* Posición izquierda y derecha */
+.left { left: 0; text-align: right; }
+.right { left: 50%; text-align: left; }
 
-.itinerary-time {
-    font-weight: bold;
-    font-size: 1.4rem;
-    color: var(--dark);
-    line-height: 1.2;
-}
+/* Posicionar los iconos en la línea central */
+.left .timeline-icon { right: -25px; }
+.right .timeline-icon { left: -25px; }
 
-.itinerary-desc {
-    font-size: 1.1rem;
-    color: var(--primary);
+/* Estilos de texto */
+.timeline-content .desc-final {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: #1F2F44; /* Dark color */
     margin: 0;
+    font-weight: 600;
 }
 
+.timeline-content .time-final {
+    font-size: 1rem;
+    color: #4F6D8A; /* Primary color */
+    font-weight: 400;
+}
+
+/* Ajustes para móviles: Todo alineado a la izquierda */
+@media screen and (max-width: 600px) {
+    .timeline-container::after { left: 31px; }
+    
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+        text-align: left;
+    }
+    
+    .timeline-item.left, .timeline-item.right { left: 0; }
+    
+    .timeline-icon { left: 5px; }
+}
 /* =========================================
    10. PRESENTES Y RESTO DE SECCIONES
    ========================================= */
