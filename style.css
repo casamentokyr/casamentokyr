@@ -264,20 +264,20 @@ body {
     }
 
  
-    /* =========================================
-   NUEVO ESTILO DE TARJETA Y ZIGZAG
+/* =========================================
+   NUEVO ESTILO DE TARJETA Y ZIGZAG (MÓVIL)
    ========================================= */
 
 .itinerary-card {
     background: var(--white);
     max-width: 800px;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: 30px 10px; /* Reducido padding en móvil */
     border-radius: 25px;
-    /* Sombra para efecto de relieve */
     box-shadow: 0 15px 35px rgba(0,0,0,0.08); 
     border: 1px solid #eee;
     position: relative;
+    overflow: hidden;
 }
 
 .timeline-container {
@@ -298,19 +298,21 @@ body {
 }
 
 .timeline-item {
-    padding: 10px 40px;
+    padding: 5px 20px; /* Reducido padding */
     position: relative;
     width: 50%;
     box-sizing: border-box;
+    display: flex;
+    align-items: center;
 }
 
 /* El círculo del icono */
 .timeline-icon {
     position: absolute;
-    width: 60px;
-    height: 60px;
+    width: 50px; /* Tamaño reducido */
+    height: 50px;
     background-color: var(--white);
-    border: 3px solid var(--accent); /* Borde con color acento */
+    border: 3px solid var(--accent);
     border-radius: 50%;
     top: 50%;
     transform: translateY(-50%);
@@ -322,65 +324,71 @@ body {
 }
 
 .timeline-icon img {
-    width: 30px;
-    height: 30px;
+    width: 25px; /* Tamaño reducido */
+    height: 25px;
     object-fit: contain;
 }
 
 /* Posición izquierda y derecha */
-.left { left: 0; text-align: right; }
-.right { left: 50%; text-align: left; }
+.left { left: 0; text-align: right; justify-content: flex-end; }
+.right { left: 50%; text-align: left; justify-content: flex-start; }
 
 /* Posicionar los iconos en la línea central */
-.left .timeline-icon { right: -30px; }
-.right .timeline-icon { left: -30px; }
+.left .timeline-icon { right: -25px; } /* Ajustado */
+.right .timeline-icon { left: -25px; } /* Ajustado */
 
 /* Ajuste de espaciado para que el texto no toque la línea */
-.left .timeline-content { padding-right: 30px; }
-.right .timeline-content { padding-left: 30px; }
+.left .timeline-content { padding-right: 20px; }
+.right .timeline-content { padding-left: 20px; }
 
-/* Estilos de texto usando paleta */
+/* Estilos de texto usando paleta - TAMANOS REDUCIDOS */
 .timeline-content .desc-final {
     font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    color: var(--dark); /* Color oscuro */
+    font-size: 1.1rem; /* Más pequeño */
+    color: var(--dark);
     margin: 0;
     font-weight: 600;
+    line-height: 1.2;
 }
 
 .timeline-content .time-final {
-    font-size: 1.1rem;
-    color: var(--primary); /* Color primario */
+    font-size: 0.9rem; /* Más pequeño */
+    color: var(--primary);
     font-weight: 400;
 }
 
-/* Ajustes para móviles: Todo alineado a la izquierda */
+/* =========================================
+   AJUSTES RESPONSIVOS (MÓVIL) - MANTENER ZIGZAG
+   ========================================= */
 @media screen and (max-width: 600px) {
     .itinerary-card {
-        padding: 20px 10px;
+        padding: 15px 5px; /* Más compacto */
     }
     
-    .timeline-container::after { left: 30px; }
-    
+    /* Mantenemos el zigzag (50% de ancho) */
     .timeline-item {
-        width: 100%;
-        padding-left: 60px;
-        padding-right: 10px;
-        text-align: left;
+        width: 50%;
+        padding: 5px 10px;
     }
     
-    .timeline-item.left, .timeline-item.right { left: 0; }
-    
-    .left .timeline-content, .right .timeline-content { padding-left: 20px; padding-right: 0; }
-    
+    /* Reducimos aún más el tamaño de iconos en móvil muy pequeño */
     .timeline-icon { 
-        left: 0; 
-        width: 50px; 
-        height: 50px;
+        width: 40px; 
+        height: 40px;
     }
-    .timeline-icon img { width: 25px; height: 25px; }
     
-    .left .timeline-icon, .right .timeline-icon { left: 0px; }
+    .timeline-icon img { width: 20px; height: 20px; }
+    
+    /* Ajustamos la posición de iconos para zigzag */
+    .left .timeline-icon { right: -20px; }
+    .right .timeline-icon { left: -20px; }
+    
+    .left .timeline-content { padding-right: 15px; }
+    .right .timeline-content { padding-left: 15px; }
+    
+    /* Texto muy compacto */
+    .timeline-content .desc-final { font-size: 0.85rem; }
+    .timeline-content .time-final { font-size: 0.75rem; }
 }
 
 /* =========================================
