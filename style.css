@@ -262,127 +262,83 @@ body {
         top: 15px !important;
         right: 15px !important;
     }
-
-    /* =========================================
-   ITINERARIO DEFINITIVO (iOS & ANDROID)
+/* =========================================
+   ITINERARIO UNIFICADO (LIMPIO Y FIJO)
    ========================================= */
 .itinerary-wrapper {
     position: relative;
-    max-width: 450px; /* Un poco más estrecho para asegurar que quepa en Android */
+    max-width: 500px;
     margin: 0 auto;
-    padding: 30px 20px;
+    padding: 40px 20px;
     background: #ffffff;
-    border-radius: 20px;
+    border-radius: 25px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    text-align: left; /* Asegura alineación base */
+    border: 1px solid #eee;
 }
 
-/* La línea vertical */
+/* La línea vertical única */
 .itinerary-line {
     position: absolute;
-    top: 40px;
-    bottom: 40px;
-    left: 45px; /* Posición fija respecto al borde izquierdo */
+    top: 50px;
+    bottom: 50px;
+    left: 50px; /* Alineada al centro del icono */
     width: 2px;
-    background: #D8CFC4; /* Tu color accent */
+    background: var(--accent);
     z-index: 1;
 }
 
 .itinerary-item {
     display: flex;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     position: relative;
     z-index: 2;
-    width: 100%;
+    text-align: left;
 }
 
 .itinerary-item:last-child { margin-bottom: 0; }
 
 .itinerary-icon {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     background: #ffffff;
-    border: 2px solid #D8CFC4;
+    border: 2px solid var(--accent);
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-right: 20px;
-    flex-shrink: 0; /* CRUCIAL: Evita que Android lo aplaste */
+    margin-right: 25px;
+    flex-shrink: 0; /* Evita que Android deforme el círculo */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
 .itinerary-icon img {
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     object-fit: contain;
 }
 
 .itinerary-content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
 }
 
 .itinerary-time {
     font-weight: bold;
-    font-size: 1.2rem;
-    color: #1F2F44; /* Tu color dark */
-    line-height: 1;
-    margin-bottom: 4px;
+    font-size: 1.4rem;
+    color: var(--dark);
+    line-height: 1.2;
 }
 
 .itinerary-desc {
-    font-size: 1rem;
-    color: #4F6D8A; /* Tu color primary */
+    font-size: 1.1rem;
+    color: var(--primary);
     margin: 0;
-    padding: 0;
 }
-
-/* AJUSTE PARA MÓVILES MUY PEQUEÑOS (Androids antiguos) */
-@media (max-width: 380px) {
-    .itinerary-line { left: 35px; }
-    .itinerary-icon { width: 40px; height: 40px; margin-right: 15px; }
-    .itinerary-icon img { width: 20px; height: 20px; }
-    .itinerary-time { font-size: 1.1rem; }
-}
-
-
 
 /* =========================================
-   13. AJUSTES ESPECÍFICOS PARA TELÉFONO
+   10. PRESENTES Y RESTO DE SECCIONES
    ========================================= */
-@media (max-width: 600px) {
-    .timeline-card-final {
-        padding: 30px 15px; /* Menos espacio interno */
-    }
-
-    .timeline-card-final::before {
-        left: 45px; /* Movemos la línea para que coincida con iconos pequeños */
-    }
-
-    .timeline-icon-box {
-        width: 50px;
-        height: 50px;
-        margin-right: 15px;
-    }
-
-    .timeline-icon-final {
-        width: 24px;
-        height: 24px;
-    }
-
-    .time-final {
-        font-size: 1.1rem;
-    }
-
-    .desc-final {
-        font-size: 1rem;
-    }
-
-   
-}
-/* 10. PRESENTES */
 .gift-container {
     display: flex;
     justify-content: center;
@@ -428,16 +384,9 @@ body {
 .gift-back p { margin-bottom: 15px; font-weight: 300; font-size: 1.1rem; }
 .close-msg { font-size: 0.9rem; margin-top: 30px; opacity: 0.7; }
 
-/* =========================================
-   11. RSVP (PRESENÇA)
-   ========================================= */
-.rsvp-section {
-    background-color: #f4f7f9;
-}
-.rsvp-container {
-    max-width: 500px;
-    margin: 0 auto;
-}
+/* 11. RSVP */
+.rsvp-section { background-color: #f4f7f9; }
+.rsvp-container { max-width: 500px; margin: 0 auto; }
 .rsvp-card-start {
     background: var(--white);
     padding: 50px 30px;
@@ -446,8 +395,6 @@ body {
     border: 1px solid #eee;
 }
 .rsvp-icon { font-size: 4rem; margin-bottom: 20px; display: block; }
-.rsvp-card-start h3 { font-family: 'Playfair Display', serif; color: var(--dark); font-size: 1.8rem; margin-bottom: 10px; }
-.rsvp-card-start p { color: #666; margin-bottom: 30px; }
 .btn-rsvp-open {
     padding: 15px 40px;
     background: var(--primary);
@@ -458,118 +405,39 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
-    letter-spacing: 1px;
 }
-.btn-rsvp-open:hover { background: var(--dark); transform: translateY(-2px); }
 .formulario {
     background: var(--white);
     padding: 40px;
     border-radius: 25px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     text-align: left;
-    border: 1px solid #eee;
 }
 .campo { margin-bottom: 25px; }
-.campo label { display: block; margin-bottom: 10px; font-weight: 600; color: var(--dark); font-size: 0.95rem; }
-.input-estilo, .input-readonly, textarea {
-    width: 100%;
-    padding: 15px;
-    border: 2px solid #eee;
-    border-radius: 12px;
-    font-family: inherit;
-    font-size: 1rem;
-    transition: border-color 0.3s;
+.input-estilo, textarea {
+    width: 100%; padding: 15px; border: 2px solid #eee; border-radius: 12px;
 }
-.input-estilo:focus, textarea:focus { outline: none; border-color: var(--light); }
-.input-readonly { 
-    background-color: #f9f9f9; 
-    border-style: dashed;
-    color: #777;
-}
-textarea { resize: none; height: 100px; }
-.switch-container {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    background: #f9f9f9;
-    padding: 10px 15px;
-    border-radius: 50px;
-    border: 1px solid #eee;
-}
-.switch { position: relative; display: inline-block; width: 50px; height: 26px; }
-.switch input { opacity: 0; width: 0; height: 0; }
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
-    border-radius: 34px;
-}
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 18px;
-    width: 18px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
-}
-input:checked + .slider { background-color: var(--primary); }
-input:checked + .slider:before { transform: translateX(24px); }
-#textoAlergia { font-weight: 600; color: var(--dark); }
 .botonConfirmar {
-    background: var(--dark);
-    color: var(--white);
-    border: none;
-    padding: 18px;
-    border-radius: 12px;
-    width: 100%;
-    font-size: 1.2rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-    letter-spacing: 1px;
+    background: var(--dark); color: var(--white); border: none; padding: 18px; border-radius: 12px; width: 100%; font-size: 1.2rem; cursor: pointer;
 }
-.botonConfirmar:hover { background: var(--primary); }
 
 /* 12. ANIMACIONES */
 @keyframes zoom-hero { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
 @keyframes fade-scale { 0% { opacity: 0; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
 
-/* 13. RESPONSIVE */
+/* 13. RESPONSIVE FINAL (ANDROID & IOS) */
 @media(max-width: 600px) {
     .hero h1 { font-size: 2.5rem; }
     .section-title { font-size: 2rem; }
     .countdown .circle { width: 65px; height: 65px; }
-    .circle span { font-size: 18px; }
-    .circle small { font-size: 8px; }
     .parents-container { gap: 20px; }
-    .event-card, .formulario { padding: 25px; }
     .gift-card { width: 280px; height: 380px; }
-    
-    /* SOLUCIÓN PROBLEMA 2: ITINERARIO MÓVIL */
-    .timeline-card-final {
-        padding: 20px;
-    }
-    .timeline-card-final::before {
-        left: 31px; /* Ajuste para línea vertical en móvil */
-    }
-    .timeline-icon-box {
-        width: 45px;
-        height: 45px;
-        margin-right: 15px;
-    }
-    .timeline-icon-final {
-        width: 20px;
-        height: 20px;
-    }
-    .time-final {
-        font-size: 1.1rem;
-    }
-    .desc-final {
-        font-size: 0.95rem;
-    }
+
+    /* Ajuste Itinerario Móvil */
+    .itinerary-wrapper { padding: 30px 15px; }
+    .itinerary-line { left: 40px; }
+    .itinerary-icon { width: 50px; height: 50px; margin-right: 15px; }
+    .itinerary-icon img { width: 24px; height: 24px; }
+    .itinerary-time { font-size: 1.2rem; }
+    .itinerary-desc { font-size: 1rem; }
 }
