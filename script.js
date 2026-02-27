@@ -19,7 +19,6 @@ document.querySelectorAll('.fade-in').forEach((section) => {
 function showForm() {
     document.getElementById('rsvp-card-start').style.display = 'none';
     document.getElementById('rsvp-form-container').style.display = 'block';
-    // Aquí puedes cargar dinámicamente tu formulario JS si lo tienes por separado
 }
 
 // 4. CUENTA REGRESIVA
@@ -70,14 +69,15 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch(`${SCRIPT_URL}?codigo=${codigo}`)
         .then(res => res.json())
         .then(data => {
-            const formContainer = document.getElementById("rsvp-form-container");
+            const form = document.getElementById("rsvpForm");
             
             // ---  BLOQUEO SI YA EXISTE RESPUESTA ---
             if (data.confirmado === "SI" || data.confirmado === "CANCELADO") {
                 const esConfirmada = data.confirmado === "SI";
                 
-                // Ocultar formulario real
-                formContainer.style.display = "none";
+                // Ocultar botonera inicial y formulario
+                document.getElementById('rsvp-card-start').style.display = 'none';
+                form.style.display = "none";
                 
                 // Crear aviso elegante de bloqueo
                 const aviso = document.createElement("div");
@@ -98,14 +98,85 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div style="margin-top: 20px; font-size: 2em;">${esConfirmada ? '🥂' : '✉️'}</div>
                 `;
                 
-                document.getElementById('rsvp-section').appendChild(aviso);
+                document.getElementById('rsvp-form-container').appendChild(aviso);
                 return; 
             }
 
-            // --- SI NO HA CONFIRMADO, CARGAR FORMULARIO DENTRO DE #rsvp-form-container ---
-            // AQUÍ DEBES ASEGURARTE QUE TU HTML DEL FORMULARIO EXISTE
-            // O GENERARLO DINÁMICAMENTE COMO HICISTE ANTES.
+            // --- SI NO HA CONFIRMADO, CARGAR DATOS ---
+            document.getElementById("codigo").value = codigo;
+            document.getElementById("nombre").value = data.nombre || "Convidado";
             
-            // Re-ejecutar tu lógica de llenado del formulario aquí...
+            // Llenar select adultos
+            const selectA = document.getElementById("adultos");
+            selectA.innerHTML = '<option value="" disabled selected>Seleciona a quantidade...</option>';
+            for (let i = 1; i <= data.adultos; i++) {
+                let opt = document.createElement("option");
+                opt.value = i;
+                opt.text = `${i} Adulto${i > 1 ? 's' : ''}`;
+                selectA.appendChild(opt);
+            }
+            let optCancel = document.createElement("option");
+            optCancel.value = "0";
+            optCancel.text = "Não poderei comparecer (Cancelar) 💍";
+            selectA.appendChild(optCancel);
+
+            // Niños
+            const divNinos = document.getElementById("contenedorNinosDinamico");
+            if (parseInt(data.ninos) > 0) {
+                divNinos.innerHTML = `
+                    <div class="campo">
+                        <label>Crianças Convidadas (${data.ninos} máx)</label>
+                        <select id="ninos" class="input-estilo">
+                            <option value="0">Não virão crianças</option>
+                        </select>
+                    </div>
+                `;
+                const selectN = document.getElementById("ninos");
+                for (let j = 1; j <= data.ninos; j++) {
+                    let opt = document.createElement("option");
+                    opt.value = j;
+                    opt.text = `${j} Criança${j > 1 ? 's' : ''}`;
+                    selectN.appendChild(opt);
+                }
+            }
+
+            // Lógica botón envío
+            form.addEventListener("submit", async function(e) {
+                e.preventDefault();
+                const btn = document.getElementById("btnSubmit");
+                const adultosVal = document.getElementById("adultos").value;
+                const esCancelado = adultosVal === "0";
+                const ninosVal = document.getElementById("ninos") ? document.getElementById("ninos").value : 0;
+                
+                btn.disabled = true;
+                btn.innerText = "A Enviar...";
+
+                const formData = {
+                    codigo: document.getElementById("codigo").value,
+                    nombre: document.getElementById("nombre").value,
+                    adultos: adultosVal,
+                    ninos: esCancelado ? 0 : ninosVal,
+                    alergias: esCancelado ? "Não" : (document.getElementById("switchAlergia").checked ? document.getElementById("alergias").value : "Não"),
+                    comentarios: document.getElementById("comentarios").value,
+                    confirmacion: esCancelado ? "CANCELADO" : "CONFIRMADO"
+                };
+
+                try {
+                    await fetch(SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(formData) });
+                    setTimeout(() => location.reload(), 1500);
+                } catch (err) {
+                    alert("Erro ao enviar. Tente novamente.");
+                    btn.disabled = false;
+                    btn.innerText = "Confirmar Presença";
+                }
+            });
         });
+});
+
+// SWITCH ALERGIAS
+document.addEventListener('change', function(e) {
+    if (e.target && e.target.id === 'switchAlergia') {
+        document.getElementById("campoAlergiaTexto").style.display = e.target.checked ? "block" : "none";
+        document.getElementById("textoAlergia").innerText = e.target.checked ? "Sim" : "Não";
+    }
 });

@@ -21,9 +21,7 @@
         <div class="hero-content">
             <h3 class="subtitle">O Nosso Casamento</h3>
             <h1 class="names">Katherine <span class="amp">&</span> Ricardo</h1>
-            
             <p class="date-hero">22 . 05 . 2027</p>
-
             <div id="countdown" class="countdown">
                 <div class="circle"><span id="days">0</span><small>Dias</small></div>
                 <div class="circle"><span id="hours">0</span><small>Horas</small></div>
@@ -68,24 +66,18 @@
 
     <section class="section fade-in">
         <h2 class="section-title">Código de Traje</h2>
-        <div class="dress-code-container">
-            <p class="dress-description" style="font-weight:bold; font-size:1.2rem;">Formal</p>
-            
-            <div class="colors-section">
-                <h3 style="margin-top:15px;">Paleta de cores sugeridas</h3>
-                <div class="color-palette">
-                    <span class="color-circle" style="background-color: #D4AF37;"></span>
-                    <span class="color-circle" style="background-color: #B8860B;"></span>
-                    <span class="color-circle" style="background-color: #F5DEB3;"></span>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <h3>Formal</h3>
+                    <img src="vestuario-si.jpg" alt="Sugestões" class="dress-photo">
+                    <p style="color:#D4AF37; font-weight:bold;">Clique para ver proibidos</p>
                 </div>
-            </div>
-
-            <div class="forbidden-section">
-                <h3 style="margin-top:15px; color:red;">Cores Proibidas</h3>
-                <div class="color-palette">
-                    <span class="color-circle forbidden" style="background-color: #ffffff;"></span>
+                <div class="flip-card-back">
+                    <h3>Proibido</h3>
+                    <img src="vestuario-no.jpg" alt="Proibidos" class="dress-photo">
+                    <p>Por favor, deixar o branco para a noiva.</p>
                 </div>
-                <p class="note" style="font-size:0.9rem;">Por favor, deixar o branco para a noiva.</p>
             </div>
         </div>
     </section>
@@ -94,20 +86,32 @@
         <h2 class="section-title">Itinerário</h2>
         <div class="timeline">
             <div class="timeline-item">
-                <span class="time">11:00</span>
-                <p>Cerimónia</p>
+                <img src="icono-ceremonia.png" alt="Cerimónia" class="timeline-icon">
+                <div>
+                    <span class="time">11:00</span>
+                    <p>Cerimónia</p>
+                </div>
             </div>
             <div class="timeline-item">
-                <span class="time">13:30</span>
-                <p>Coquetel</p>
+                <img src="icono-coctel.png" alt="Coquetel" class="timeline-icon">
+                <div>
+                    <span class="time">13:30</span>
+                    <p>Coquetel</p>
+                </div>
             </div>
             <div class="timeline-item">
-                <span class="time">15:00</span>
-                <p>Jantar</p>
+                <img src="icono-cena.png" alt="Jantar" class="timeline-icon">
+                <div>
+                    <span class="time">15:00</span>
+                    <p>Jantar</p>
+                </div>
             </div>
             <div class="timeline-item">
-                <span class="time">17:00</span>
-                <p>Festa</p>
+                <img src="icono-fiesta.png" alt="Festa" class="timeline-icon">
+                <div>
+                    <span class="time">17:00</span>
+                    <p>Festa</p>
+                </div>
             </div>
         </div>
     </section>
@@ -141,7 +145,40 @@
             
             <div id="rsvp-form-container" style="display:none;">
                 <form id="rsvpForm" class="formulario">
-                    <p>Formulario cargado...</p>
+                    <div class="campo">
+                        <label>Código de convite</label>
+                        <input type="text" id="codigo" readonly class="input-readonly">
+                    </div>
+                    <div class="campo">
+                        <label>Nome</label>
+                        <input type="text" id="nombre" readonly class="input-readonly">
+                    </div>
+                    <div class="campo">
+                        <label>Adultos</label>
+                        <select id="adultos" class="input-estilo"></select>
+                    </div>
+                    <div id="contenedorNinosDinamico"></div>
+                    <div id="contenedorExtra">
+                        <div class="campo">
+                            <label>¿Tienen alguna alergia?</label>
+                            <div class="switch-container">
+                                <label class="switch">
+                                    <input type="checkbox" id="switchAlergia">
+                                    <span class="slider"></span>
+                                </label>
+                                <span id="textoAlergia">Não</span>
+                            </div>
+                        </div>
+                        <div class="campo" id="campoAlergiaTexto" style="display:none;">
+                            <label>Especificar alergia</label>
+                            <textarea id="alergias" placeholder="Ej: Celíaco, Maní..."></textarea>
+                        </div>
+                    </div>
+                    <div class="campo">
+                        <label>Comentarios</label>
+                        <textarea id="comentarios" placeholder="Opcional..."></textarea>
+                    </div>
+                    <button type="submit" id="btnSubmit" class="botonConfirmar">Confirmar Presença</button>
                 </form>
             </div>
         </div>
