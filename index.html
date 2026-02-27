@@ -1,29 +1,29 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Katherine & Ricardo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+    <title>Katherine & Ricardo - O Nosso Casamento</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div id="music-icon" class="music-btn">
-        <img src="play.png" alt="Reproducir" id="music-img">
+        <img src="play.png" alt="Reproduzir música" id="music-img">
     </div>
     <audio id="music" loop>
         <source src="musica.mp3" type="audio/mp3">
     </audio>
 
     <section class="hero">
-        <img src="foto-fondo.jpg" class="hero-img" alt="Fondo">
+        <img src="foto-fondo.jpg" class="hero-img" alt="Fundo">
         <div class="hero-content">
             <h3 class="subtitle">O Nosso Casamento</h3>
-            <h1>Katherine & Ricardo</h1>
-
+            <h1 class="names">Katherine <span class="amp">&</span> Ricardo</h1>
+            
             <div id="countdown" class="countdown">
-                <div class="circle"><span id="days">0</span><small>Días</small></div>
+                <div class="circle"><span id="days">0</span><small>Dias</small></div>
                 <div class="circle"><span id="hours">0</span><small>Horas</small></div>
                 <div class="circle"><span id="minutes">0</span><small>Minutos</small></div>
                 <div class="circle"><span id="seconds">0</span><small>Segundos</small></div>
@@ -32,7 +32,7 @@
     </section> 
 
     <section class="section">
-        <div id="mensajeConfirmado" style="display:none; background:#fdf9ea; padding:20px; border-radius:10px; margin-bottom:20px; border: 1px solid #d4af37;">
+        <div id="mensajeConfirmado" class="aviso-confirmado" style="display:none;">
             💍 Convite já confirmado.
         </div>
 
@@ -40,12 +40,12 @@
             <input type="hidden" id="codigo">
             
             <div class="campo">
-                <label>Nome</label>
+                <label for="nombre">Nome</label>
                 <input type="text" id="nombre" readonly class="input-readonly">
             </div>
 
             <div class="campo">
-                <label>Convidados</label>
+                <label for="adultos">Convidados</label>
                 <select id="adultos" class="input-estilo"></select>
             </div>
 
@@ -64,13 +64,13 @@
                 </div>
 
                 <div class="campo" id="campoAlergiaTexto" style="display:none;">
-                    <label>Especificar alergia ou condição especial.</label>
-                    <textarea id="alergias" placeholder="Ej: Celíaco, Amendoim..."></textarea>
+                    <label for="alergias">Especificar alergia ou condição especial</label>
+                    <textarea id="alergias" placeholder="Ex: Celíaco, Amendoim..."></textarea>
                 </div>
             </div>
 
             <div class="campo">
-                <label>Comentários</label>
+                <label for="comentarios">Comentários</label>
                 <textarea id="comentarios" placeholder="Opcional..."></textarea>
             </div>
 

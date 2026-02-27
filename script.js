@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // --- SI NO HA CONFIRMADO, SE CARGA EL FORMULARIO NORMAL ---
             document.getElementById("codigo").value = codigo;
-            document.getElementById("nombre").value = data.nombre || "Invitado";
+            document.getElementById("nombre").value = data.nombre || "Convidado";
             
             // Rellenar Adultos
             selectA.innerHTML = '<option value="" disabled selected>Seleciona a quantidade...</option>';
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             let optCancel = document.createElement("option");
             optCancel.value = "0";
-            optCancel.text = "No podré asistir (Cancelar)";
+            optCancel.text = "Não poderei comparecer (Cancelar) 💍";
             selectA.appendChild(optCancel);
 
             // Niños (Carga inicial)
@@ -109,14 +109,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 divNinos.innerHTML = `
                     <label style="font-weight:bold; color:#d4af37; margin-bottom:10px; display:block;">Crianças Convidadas</label>
                     <select id="ninos" class="input-estilo">
-                        <option value="0">No asistirán niños</option>
+                        <option value="0">Não virão crianças</option>
                     </select>
                 `;
                 const selectN = document.getElementById("ninos");
                 for (let j = 1; j <= data.ninos; j++) {
                     let opt = document.createElement("option");
                     opt.value = j;
-                    opt.text = `${j} Niño${j > 1 ? 's' : ''}`;
+                    opt.text = `${j} Criança${j > 1 ? 's' : ''}`;
                     selectN.appendChild(opt);
                 }
             }
@@ -159,7 +159,7 @@ document.getElementById("rsvpForm").addEventListener("submit", async function(e)
         nombre: document.getElementById("nombre").value,
         adultos: adultosVal,
         ninos: esCancelado ? 0 : ninosVal,
-        alergias: esCancelado ? "No" : (document.getElementById("switchAlergia").checked ? document.getElementById("alergias").value : "No"),
+        alergias: esCancelado ? "Não" : (document.getElementById("switchAlergia").checked ? document.getElementById("alergias").value : "Não"),
         comentarios: document.getElementById("comentarios").value,
         confirmacion: esCancelado ? "CANCELADO" : "CONFIRMADO"
     };
@@ -175,7 +175,7 @@ document.getElementById("rsvpForm").addEventListener("submit", async function(e)
             </div>`;
         document.getElementById("mensajeExito").classList.add("show");
         
-        // Recargar página para que entre en el modo BLOQUEDO 
+        // Recargar página para que entre en el modo BLOQUEADO 
         setTimeout(() => {
             location.reload();
         }, 2500);

@@ -11,6 +11,7 @@ body {
     color: #333;
     text-align: center;
     overflow-x: hidden;
+    line-height: 1.6;
 }
 
 /* 2. ICONO MÚSICA */
@@ -53,6 +54,14 @@ body {
 .hero-content {
     z-index: 2;
     text-shadow: 0 2px 15px rgba(0,0,0,0.6);
+    padding: 0 20px;
+}
+
+.subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    font-weight: 400;
 }
 
 .hero h1 {
@@ -62,12 +71,14 @@ body {
     animation: fade-scale 1.5s ease forwards;
 }
 
+.amp { color: #d4af37; font-style: italic; }
+
 /* 4. CUENTA REGRESIVA */
 .countdown {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 15px;
+    margin-top: 30px;
 }
 
 .countdown .circle {
@@ -79,16 +90,22 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     backdrop-filter: blur(4px);
 }
 
 .circle span { font-size: 24px; font-weight: bold; }
-.circle small { font-size: 9px; text-transform: uppercase; }
+.circle small { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; }
 
 /* 5. FORMULARIO RSVP */
+.section {
+    padding: 0 20px;
+    margin-top: 40px;
+}
+
 .formulario {
     max-width: 480px;
-    margin: -50px auto 50px; /* Sube un poco sobre el hero si quieres, o déjalo en 40px */
+    margin: 0 auto 50px;
     padding: 35px;
     background: white;
     border-radius: 20px;
@@ -110,9 +127,8 @@ body {
     font-size: 14px;
 }
 
-/* ESTILO PARA INPUTS Y EL NUEVO SELECT */
+/* ESTILO PARA INPUTS Y SELECT */
 input[type="text"],
-input[type="number"],
 select,
 textarea {
     width: 100%;
@@ -127,14 +143,14 @@ textarea {
 
 select {
     cursor: pointer;
-    appearance: none; /* Quita el estilo por defecto del sistema */
+    appearance: none;
     background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d4af37' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 15px center;
     background-size: 15px;
 }
 
-input:focus, select:focus {
+input:focus, select:focus, textarea:focus {
     outline: none;
     border-color: #d4af37;
 }
@@ -199,40 +215,27 @@ input:checked + .slider:before { transform: translateX(23px); }
 
 .mensaje-exito.show { opacity: 1; pointer-events: auto; }
 
-/* 9. ANIMACIONES */
+/* 9. AVISO DE BLOQUEO */
+.aviso-confirmado {
+    background: #fdf9ea;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 0 auto 20px;
+    border: 1px solid #d4af37;
+    max-width: 480px;
+    color: #555;
+    font-weight: 500;
+}
+
+/* 10. ANIMACIONES */
 @keyframes zoom-hero { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
 @keyframes fade-scale { 0% { opacity: 0; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
 
-/* 10. RESPONSIVE */
+/* 11. RESPONSIVE */
 @media(max-width: 600px) {
     .hero h1 { font-size: 2.2rem; }
-    .formulario { margin: 20px; padding: 25px; }
+    .formulario { margin: 10px auto 30px; padding: 25px; }
     .countdown .circle { width: 65px; height: 65px; }
     .circle span { font-size: 18px; }
-}
-
-/* ... (Tus estilos anteriores están bien, pero verifica estos puntos) ... */
-
-.botonConfirmar {
-    background: #d4af37;
-    color: white;
-    padding: 18px;
-    width: 100%;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    transition: background 0.4s ease, transform 0.2s ease; /* Transición para el color */
-}
-
-/* Para que el select de niños se vea igual */
-.input-estilo {
-    width: 100%;
-    padding: 14px;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    font-family: 'Montserrat', sans-serif;
-    background-color: #fff;
-    margin-bottom: 10px;
+    .circle small { font-size: 8px; }
 }
