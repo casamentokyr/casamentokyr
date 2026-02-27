@@ -15,6 +15,20 @@ document.querySelectorAll('.fade-in').forEach((section) => {
     observer.observe(section);
 });
 
+// --- LÓGICA VESTIMENTA (Galería) ---
+function openGallery() {
+    document.getElementById("dress-gallery").style.display = "flex";
+}
+function closeGallery() {
+    document.getElementById("dress-gallery").style.display = "none";
+}
+
+// --- LÓGICA TARJETA REGALOS ---
+function toggleGiftCard() {
+    const card = document.getElementById("gift-card");
+    card.classList.toggle("is-flipped");
+}
+
 // 3. LÓGICA DE RSVP (Ocultar tarjeta, mostrar form)
 function showForm() {
     document.getElementById('rsvp-card-start').style.display = 'none';
@@ -89,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 aviso.style.maxWidth = "500px";
 
                 aviso.innerHTML = `
-                    <h2 style="color: ${esConfirmada ? '#D4AF37' : '#ba1a1a'}; margin-bottom: 15px;">
+                    <h2 style="color: ${esConfirmada ? '#4F6D8A' : '#ba1a1a'}; margin-bottom: 15px;">
                         ${esConfirmada ? '¡O teu convite foi confirmado!' : 'O teu convite foi cancelado'}
                     </h2>
                     <p style="color: #666; font-size: 1.1em; line-height: 1.6;">
@@ -99,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 `;
                 
                 document.getElementById('rsvp-form-container').appendChild(aviso);
+                document.getElementById('rsvp-form-container').style.display = 'block';
                 return; 
             }
 
@@ -162,7 +177,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
 
                 try {
-                    await fetch(SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(formData) });
+                    await fetch(SCRIPT_URL, { 
+                        method: "POST", 
+                        mode: "no-cors", 
+                        body: JSON.stringify(formData) 
+                    });
+                    
                     setTimeout(() => location.reload(), 1500);
                 } catch (err) {
                     alert("Erro ao enviar. Tente novamente.");
@@ -176,7 +196,15 @@ document.addEventListener("DOMContentLoaded", () => {
 // SWITCH ALERGIAS
 document.addEventListener('change', function(e) {
     if (e.target && e.target.id === 'switchAlergia') {
-        document.getElementById("campoAlergiaTexto").style.display = e.target.checked ? "block" : "none";
-        document.getElementById("textoAlergia").innerText = e.target.checked ? "Sim" : "Não";
+        const campoAlergia = document.getElementById("campoAlergiaTexto");
+        const textoAlergia = document.getElementById("textoAlergia");
+        
+        if (e.target.checked) {
+            campoAlergia.style.display = "block";
+            textoAlergia.innerText = "Sim";
+        } else {
+            campoAlergia.style.display = "none";
+            textoAlergia.innerText = "Não";
+        }
     }
 });

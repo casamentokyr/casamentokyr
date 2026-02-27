@@ -35,11 +35,11 @@
         <h2 class="section-title">Com a benção de nossos pais</h2>
         <div class="parents-container">
             <div class="parent-block">
-                <p>Pais da Noiva</p>
+                <p class="role">Pais da Noiva</p>
                 <p class="names-parents">Nome da Mãe & Nome do Pai</p>
             </div>
             <div class="parent-block">
-                <p>Pais do Noivo</p>
+                <p class="role">Pais do Noivo</p>
                 <p class="names-parents">Nome da Mãe & Nome do Pai</p>
             </div>
         </div>
@@ -64,18 +64,23 @@
         </div>
     </section>
 
-    <section class="section fade-in">
+    <section class="section fade-in dress-section">
         <h2 class="section-title">Código de Traje</h2>
-        <div class="flip-card">
-            <div class="flip-card-inner">
-                <div class="flip-card-front">
-                    <h3>Formal</h3>
-                    <img src="vestuario-si.jpg" alt="Sugestões" class="dress-photo">
-                    <p style="color:#D4AF37; font-weight:bold;">Clique para ver proibidos</p>
+        <div class="dress-card" onclick="openGallery()">
+            <div class="dress-icon">👗👔</div>
+            <h3>Formal</h3>
+            <p>Clique para ver exemplos</p>
+        </div>
+        
+        <div id="dress-gallery" class="gallery-overlay">
+            <span class="close-gallery" onclick="closeGallery()">&times;</span>
+            <div class="gallery-content">
+                <div class="gallery-slide">
+                    <img src="vestuario-si.jpg" alt="Sugestões">
+                    <p>Cores sugeridas</p>
                 </div>
-                <div class="flip-card-back">
-                    <h3>Proibido</h3>
-                    <img src="vestuario-no.jpg" alt="Proibidos" class="dress-photo">
+                <div class="gallery-slide">
+                    <img src="vestuario-no.jpg" alt="Proibidos">
                     <p>Por favor, deixar o branco para a noiva.</p>
                 </div>
             </div>
@@ -83,61 +88,54 @@
     </section>
 
     <section class="section fade-in">
-        <h2 class="section-title">Itinerário</h2>
-        <div class="timeline">
-            <div class="timeline-item">
-                <img src="icono-ceremonia.png" alt="Cerimónia" class="timeline-icon">
-                <div>
-                    <span class="time">11:00</span>
-                    <p>Cerimónia</p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <img src="icono-coctel.png" alt="Coquetel" class="timeline-icon">
-                <div>
-                    <span class="time">13:30</span>
-                    <p>Coquetel</p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <img src="icono-cena.png" alt="Jantar" class="timeline-icon">
-                <div>
-                    <span class="time">15:00</span>
-                    <p>Jantar</p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <img src="icono-fiesta.png" alt="Festa" class="timeline-icon">
-                <div>
-                    <span class="time">17:00</span>
-                    <p>Festa</p>
-                </div>
-            </div>
-        </div>
+      <h2 class="section-title">Itinerário</h2>
+      <div class="timeline-container-final">
+          <div class="timeline-card-final">
+              <div class="timeline-row-final">
+                  <div class="timeline-icon-box"><img src="icono-ceremonia.png" alt="Cerimónia" class="timeline-icon-final"></div>
+                  <div class="timeline-text-final"><span class="time-final">11:00</span><p class="desc-final">Cerimónia</p></div>
+              </div>
+              <div class="timeline-row-final">
+                  <div class="timeline-icon-box"><img src="icono-coctel.png" alt="Coquetel" class="timeline-icon-final"></div>
+                  <div class="timeline-text-final"><span class="time-final">13:30</span><p class="desc-final">Coquetel</p></div>
+              </div>
+              <div class="timeline-row-final">
+                  <div class="timeline-icon-box"><img src="icono-cena.png" alt="Jantar" class="timeline-icon-final"></div>
+                  <div class="timeline-text-final"><span class="time-final">15:00</span><p class="desc-final">Jantar</p></div>
+              </div>
+              <div class="timeline-row-final">
+                  <div class="timeline-icon-box"><img src="icono-fiesta.png" alt="Festa" class="timeline-icon-final"></div>
+                  <div class="timeline-text-final"><span class="time-final">17:00</span><p class="desc-final">Festa</p></div>
+              </div>
+          </div>
+      </div>
     </section>
 
-    <section class="section fade-in">
+    <section class="section fade-in gift-section">
         <h2 class="section-title">Presentes</h2>
-        <div class="flip-card">
-            <div class="flip-card-inner">
-                <div class="flip-card-front">
+        <div class="gift-container">
+            <div id="gift-card" class="gift-card" onclick="toggleGiftCard()">
+                <div class="gift-front">
+                    <div class="gift-icon">🎁</div>
                     <h3>Mesa de Presentes</h3>
-                    <p style="color:#D4AF37; font-weight:bold;">Clique para ver opções</p>
+                    <p>Clique para ver opções</p>
                 </div>
-                <div class="flip-card-back">
+                <div class="gift-back">
                     <h3>Dados Bancários</h3>
                     <p>Banco: XXXX</p>
                     <p>IBAN: XXXX</p>
                     <p>Nome: XXXX</p>
+                    <p class="close-msg">Clique para fechar</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="section fade-in" id="rsvp-section">
+    <section class="section fade-in rsvp-section" id="rsvp-section">
         <h2 class="section-title">Presença</h2>
         <div class="rsvp-container">
             <div class="rsvp-card-start" id="rsvp-card-start">
+                <div class="rsvp-icon">✉️</div>
                 <h3>Vens celebrar connosco?</h3>
                 <p>Confirma a tua presença aqui</p>
                 <button class="btn-rsvp-open" onclick="showForm()">Confirmar</button>
@@ -145,34 +143,29 @@
             
             <div id="rsvp-form-container" style="display:none;">
                 <form id="rsvpForm" class="formulario">
-                    <div class="campo">
-                        <label>Código de convite</label>
-                        <input type="text" id="codigo" readonly class="input-readonly">
-                    </div>
+                    <input type="hidden" id="codigo">
                     <div class="campo">
                         <label>Nome</label>
                         <input type="text" id="nombre" readonly class="input-readonly">
                     </div>
                     <div class="campo">
                         <label>Adultos</label>
-                        <select id="adultos" class="input-estilo"></select>
+                        <select id="adultos" class="input-estilo" required></select>
                     </div>
                     <div id="contenedorNinosDinamico"></div>
-                    <div id="contenedorExtra">
-                        <div class="campo">
-                            <label>¿Tienen alguna alergia?</label>
-                            <div class="switch-container">
-                                <label class="switch">
-                                    <input type="checkbox" id="switchAlergia">
-                                    <span class="slider"></span>
-                                </label>
-                                <span id="textoAlergia">Não</span>
-                            </div>
+                    <div class="campo">
+                        <label>¿Tienen alguna alergia?</label>
+                        <div class="switch-container">
+                            <label class="switch">
+                                <input type="checkbox" id="switchAlergia">
+                                <span class="slider"></span>
+                            </label>
+                            <span id="textoAlergia">Não</span>
                         </div>
-                        <div class="campo" id="campoAlergiaTexto" style="display:none;">
-                            <label>Especificar alergia</label>
-                            <textarea id="alergias" placeholder="Ej: Celíaco, Maní..."></textarea>
-                        </div>
+                    </div>
+                    <div class="campo" id="campoAlergiaTexto" style="display:none;">
+                        <label>Especificar alergia</label>
+                        <textarea id="alergias" placeholder="Ej: Celíaco, Maní..."></textarea>
                     </div>
                     <div class="campo">
                         <label>Comentarios</label>
