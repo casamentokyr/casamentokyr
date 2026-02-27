@@ -238,86 +238,111 @@ body {
     border-radius: 50px;
 }
 
-/* =========================================
-   9. ITINERARIO (SISTEMA FLEXIBLE)
-   ========================================= */
-.timeline-container-final {
+/* FIJAR BOTÓN DE MÚSICA - Fuera de cualquier animación */
+.music-btn {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
     display: flex;
     justify-content: center;
-    padding: 0 15px;
+    align-items: center;
+    z-index: 99999 !important; /* Por encima de todo */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    cursor: pointer;
 }
 
-.timeline-card-final {
-    background: var(--white);
-    padding: 40px 30px;
-    border-radius: 25px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    width: 100%;
-    max-width: 550px;
-    border: 1px solid #eee;
+/* DISEÑO DE ITINERARIO TIPO LISTA (Como en tu foto) */
+.itinerary-wrapper {
     position: relative;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
 
-/* La línea vertical base */
-.timeline-card-final::before {
-    content: '';
+.itinerary-line {
     position: absolute;
-    top: 50px;
-    bottom: 50px;
-    left: 60px; /* Alineada con el centro de los iconos */
+    top: 40px;
+    bottom: 40px;
+    left: 50px; /* Alineada al centro de los iconos */
     width: 2px;
-    background-color: var(--accent);
+    background: var(--accent);
     z-index: 1;
 }
 
-.timeline-row-final {
+.itinerary-item {
     display: flex;
     align-items: center;
+    margin-bottom: 35px;
     position: relative;
     z-index: 2;
-    margin-bottom: 40px;
-    text-align: left; /* Todo alineado a la izquierda para evitar caos */
 }
 
-.timeline-row-final:last-child { margin-bottom: 0; }
+.itinerary-item:last-child { margin-bottom: 0; }
 
-.timeline-icon-box {
+.itinerary-icon {
     width: 60px;
     height: 60px;
-    background-color: var(--white);
+    background: white;
     border: 2px solid var(--accent);
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-right: 25px; /* Espacio fijo entre icono y texto */
-    flex-shrink: 0; /* Evita que el círculo se aplaste en móviles */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    margin-right: 20px;
+    flex-shrink: 0;
 }
 
-.timeline-icon-final { 
-    width: 30px; 
-    height: 30px; 
-    object-fit: contain; 
+.itinerary-icon img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
 }
 
-.timeline-text-final {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.itinerary-content {
+    text-align: left;
 }
 
-.time-final {
+.itinerary-time {
+    display: block;
     font-weight: bold;
-    color: var(--dark);
     font-size: 1.3rem;
+    color: var(--dark);
     line-height: 1.2;
 }
 
-.desc-final { 
-    color: var(--primary); 
-    font-size: 1.1rem; 
-    font-weight: 400;
+.itinerary-desc {
+    font-size: 1.1rem;
+    color: var(--primary);
+    margin: 0;
+}
+
+/* AJUSTE PARA MÓVIL */
+@media (max-width: 600px) {
+    .itinerary-wrapper {
+        padding: 30px 15px;
+        margin: 0 10px;
+    }
+    .itinerary-line {
+        left: 40px;
+    }
+    .itinerary-icon {
+        width: 50px;
+        height: 50px;
+        margin-right: 15px;
+    }
+    .itinerary-icon img {
+        width: 24px;
+        height: 24px;
+    }
+    .itinerary-time { font-size: 1.1rem; }
+    .itinerary-desc { font-size: 1rem; }
 }
 
 /* =========================================
