@@ -1,6 +1,6 @@
-// 1. CONFIGURACIÓN
+// 1. CONFIGURACION INICIO
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyjuQb6qBEXoQCYkWSL94r87hFRcO2RIdCRpad7PRPBHrJRGixBOinmcJJN0HfvmrgF7A/exec";
-const WEDDING_DATE = new Date("May 15, 2027 16:00:00").getTime();
+const WEDDING_DATE = new Date("May 22, 2027 11:00:00").getTime();
 
 // 2. CUENTA REGRESIVA
 function updateCountdown() {
@@ -41,7 +41,7 @@ if (musicBtn) {
     });
 }
 
-// 4. CARGA DE DATOS Y LÓGICA DE BLOQUEO
+// 4. CARGA DE DATOS Y LOGICA PARA QUE SE BLOQUEE
 document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
     const codigo = params.get("codigo") || params.get("guest");
@@ -56,11 +56,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const contenedorExtra = document.getElementById("contenedorExtra");
             const btn = document.getElementById("btnSubmit");
 
-            // --- LÓGICA DE BLOQUEO SI YA EXISTE RESPUESTA ---
+            // ---  BLOQUEO SI YA EXISTE RESPUESTA ---
             if (data.confirmado === "SI" || data.confirmado === "CANCELADO") {
                 const esConfirmada = data.confirmado === "SI";
                 
-                // Ocultamos el formulario completamente
+                // OcultO FORMULARIO
                 rsvpForm.style.display = "none";
                 
                 // Creamos un aviso elegante
@@ -74,24 +74,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 aviso.innerHTML = `
                     <h2 style="color: ${esConfirmada ? '#d4af37' : '#ba1a1a'}; margin-bottom: 15px;">
-                        ${esConfirmada ? '¡Tu invitación ha sido confirmada!' : 'Tu invitación ha sido cancelada'}
+                        ${esConfirmada ? '¡O teu convite foi confirmado!' : 'O teu convite foi cancelado'}
                     </h2>
                     <p style="color: #666; font-size: 1.1em; line-height: 1.6;">
-                        Cualquier cambio, por favor comunícate directamente con los novios.
+                        Qualquer alteração, por favor contacta diretamente os noivos.
                     </p>
                     <div style="margin-top: 20px; font-size: 2em;">${esConfirmada ? '🥂' : '✉️'}</div>
                 `;
                 
                 rsvpForm.parentNode.insertBefore(aviso, rsvpForm);
-                return; // Detenemos la ejecución aquí ya que no necesitamos el resto
+                return; 
             }
 
-            // --- SI NO HA CONFIRMADO, CARGAMOS EL FORMULARIO NORMAL ---
+            // --- SI NO HA CONFIRMADO, SE CARGA EL FORMULARIO NORMAL ---
             document.getElementById("codigo").value = codigo;
             document.getElementById("nombre").value = data.nombre || "Invitado";
             
             // Rellenar Adultos
-            selectA.innerHTML = '<option value="" disabled selected>Selecciona cantidad...</option>';
+            selectA.innerHTML = '<option value="" disabled selected>Seleciona a quantidade...</option>';
             for (let i = 1; i <= data.adultos; i++) {
                 let opt = document.createElement("option");
                 opt.value = i;
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (parseInt(data.ninos) > 0) {
                 divNinos.style.display = "block";
                 divNinos.innerHTML = `
-                    <label style="font-weight:bold; color:#d4af37; margin-bottom:10px; display:block;">Niños invitados</label>
+                    <label style="font-weight:bold; color:#d4af37; margin-bottom:10px; display:block;">Crianças Convidadas</label>
                     <select id="ninos" class="input-estilo">
                         <option value="0">No asistirán niños</option>
                     </select>
@@ -125,25 +125,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (this.value === "0") {
                     divNinos.style.display = "none";
                     contenedorExtra.style.display = "none";
-                    btn.innerText = "Cancelar Invitación";
+                    btn.innerText = "Cancelar Convite";
                     btn.style.backgroundColor = "#ba1a1a"; 
                 } else {
                     if (parseInt(data.ninos) > 0) divNinos.style.display = "block";
                     contenedorExtra.style.display = "block";
-                    btn.innerText = "Confirmar Asistencia";
+                    btn.innerText = "Confirmar Presença";
                     btn.style.backgroundColor = "#d4af37";
                 }
             });
         });
 });
 
-// 5. SWITCH ALERGIAS
+// SWITCH ALERGIAS
 document.getElementById("switchAlergia").addEventListener("change", function() {
     document.getElementById("campoAlergiaTexto").style.display = this.checked ? "block" : "none";
-    document.getElementById("textoAlergia").innerText = this.checked ? "Sí" : "No";
+    document.getElementById("textoAlergia").innerText = this.checked ? "Sim" : "Não";
 });
 
-// 6. ENVÍO DEL FORMULARIO
+// ENVÍO DEL FORMULARIO
 document.getElementById("rsvpForm").addEventListener("submit", async function(e) {
     e.preventDefault();
     const btn = document.getElementById("btnSubmit");
@@ -152,7 +152,7 @@ document.getElementById("rsvpForm").addEventListener("submit", async function(e)
     const ninosVal = document.getElementById("ninos") ? document.getElementById("ninos").value : 0;
     
     btn.disabled = true;
-    btn.innerText = "Enviando...";
+    btn.innerText = "A Enviar...";
 
     const formData = {
         codigo: document.getElementById("codigo").value,
@@ -167,22 +167,22 @@ document.getElementById("rsvpForm").addEventListener("submit", async function(e)
     try {
         await fetch(SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(formData) });
         
-        // Mensaje de éxito momentáneo
+        // Mensaje de éxito 
         document.getElementById("mensajeExito").innerHTML = `
             <div style="background:white; padding:40px; border-radius:15px; text-align:center;">
                 <h2 style="color:${esCancelado ? '#ba1a1a' : '#d4af37'}">¡Enviado!</h2>
-                <p>Actualizando estado de invitación...</p>
+                <p>A atualizar o estado do convite...</p>
             </div>`;
         document.getElementById("mensajeExito").classList.add("show");
         
-        // Recargar página para que entre en el modo "Bloqueado"
+        // Recargar página para que entre en el modo BLOQUEDO 
         setTimeout(() => {
             location.reload();
         }, 2500);
 
     } catch (err) {
-        alert("Error al enviar. Intente de nuevo.");
+        alert("Erro ao enviar. Tente novamente.");
         btn.disabled = false;
-        btn.innerText = "Confirmar Asistencia";
+        btn.innerText = "Confirmar Presença";
     }
 });

@@ -19,7 +19,7 @@
     <section class="hero">
         <img src="foto-fondo.jpg" class="hero-img" alt="Fondo">
         <div class="hero-content">
-            <h3 class="subtitle">Nuestra boda</h3>
+            <h3 class="subtitle">O Nosso Casamento</h3>
             <h1>Katherine & Ricardo</h1>
 
             <div id="countdown" class="countdown">
@@ -33,19 +33,19 @@
 
     <section class="section">
         <div id="mensajeConfirmado" style="display:none; background:#fdf9ea; padding:20px; border-radius:10px; margin-bottom:20px; border: 1px solid #d4af37;">
-            💍 Invitación ya confirmada.
+            💍 Convite já confirmado.
         </div>
 
         <form id="rsvpForm" class="formulario">
             <input type="hidden" id="codigo">
             
             <div class="campo">
-                <label>Nombre</label>
+                <label>Nome</label>
                 <input type="text" id="nombre" readonly class="input-readonly">
             </div>
 
             <div class="campo">
-                <label>Adultos</label>
+                <label>Convidados</label>
                 <select id="adultos" class="input-estilo"></select>
             </div>
 
@@ -53,28 +53,28 @@
 
             <div id="contenedorExtra">
                 <div class="campo">
-                    <label>¿Tienen alguna alergia?</label>
+                    <label>Têm alguma alergia?</label>
                     <div class="switch-container">
                         <label class="switch">
                             <input type="checkbox" id="switchAlergia">
                             <span class="slider"></span>
                         </label>
-                        <span id="textoAlergia">No</span>
+                        <span id="textoAlergia">Não</span>
                     </div>
                 </div>
 
                 <div class="campo" id="campoAlergiaTexto" style="display:none;">
-                    <label>Especificar alergia</label>
-                    <textarea id="alergias" placeholder="Ej: Celíaco, Maní..."></textarea>
+                    <label>Especificar alergia ou condição especial.</label>
+                    <textarea id="alergias" placeholder="Ej: Celíaco, Amendoim..."></textarea>
                 </div>
             </div>
 
             <div class="campo">
-                <label>Comentarios</label>
+                <label>Comentários</label>
                 <textarea id="comentarios" placeholder="Opcional..."></textarea>
             </div>
 
-            <button type="submit" id="btnSubmit" class="botonConfirmar">Confirmar Asistencia</button>
+            <button type="submit" id="btnSubmit" class="botonConfirmar">Confirmar Presença</button>
         </form>
     </section>
 
