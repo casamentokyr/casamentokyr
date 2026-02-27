@@ -255,95 +255,99 @@ body {
     cursor: pointer;
 }
 
-/* DISEÑO DE ITINERARIO TIPO LISTA (Como en tu foto) */
+ /* Forzamos que el botón de música sea más pequeño en móvil */
+    .music-btn {
+        width: 40px;
+        height: 40px;
+        top: 15px !important;
+        right: 15px !important;
+    }
+
+    /* =========================================
+   ITINERARIO DEFINITIVO (iOS & ANDROID)
+   ========================================= */
 .itinerary-wrapper {
     position: relative;
-    max-width: 500px;
+    max-width: 450px; /* Un poco más estrecho para asegurar que quepa en Android */
     margin: 0 auto;
-    padding: 40px 20px;
-    background: white;
+    padding: 30px 20px;
+    background: #ffffff;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    text-align: left; /* Asegura alineación base */
 }
 
+/* La línea vertical */
 .itinerary-line {
     position: absolute;
     top: 40px;
     bottom: 40px;
-    left: 50px; /* Alineada al centro de los iconos */
+    left: 45px; /* Posición fija respecto al borde izquierdo */
     width: 2px;
-    background: var(--accent);
+    background: #D8CFC4; /* Tu color accent */
     z-index: 1;
 }
 
 .itinerary-item {
     display: flex;
     align-items: center;
-    margin-bottom: 35px;
+    margin-bottom: 30px;
     position: relative;
     z-index: 2;
+    width: 100%;
 }
 
 .itinerary-item:last-child { margin-bottom: 0; }
 
 .itinerary-icon {
-    width: 60px;
-    height: 60px;
-    background: white;
-    border: 2px solid var(--accent);
+    width: 50px;
+    height: 50px;
+    background: #ffffff;
+    border: 2px solid #D8CFC4;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-right: 20px;
-    flex-shrink: 0;
+    flex-shrink: 0; /* CRUCIAL: Evita que Android lo aplaste */
 }
 
 .itinerary-icon img {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     object-fit: contain;
 }
 
 .itinerary-content {
-    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .itinerary-time {
-    display: block;
     font-weight: bold;
-    font-size: 1.3rem;
-    color: var(--dark);
-    line-height: 1.2;
+    font-size: 1.2rem;
+    color: #1F2F44; /* Tu color dark */
+    line-height: 1;
+    margin-bottom: 4px;
 }
 
 .itinerary-desc {
-    font-size: 1.1rem;
-    color: var(--primary);
+    font-size: 1rem;
+    color: #4F6D8A; /* Tu color primary */
     margin: 0;
+    padding: 0;
 }
 
-/* AJUSTE PARA MÓVIL */
-@media (max-width: 600px) {
-    .itinerary-wrapper {
-        padding: 30px 15px;
-        margin: 0 10px;
-    }
-    .itinerary-line {
-        left: 40px;
-    }
-    .itinerary-icon {
-        width: 50px;
-        height: 50px;
-        margin-right: 15px;
-    }
-    .itinerary-icon img {
-        width: 24px;
-        height: 24px;
-    }
+/* AJUSTE PARA MÓVILES MUY PEQUEÑOS (Androids antiguos) */
+@media (max-width: 380px) {
+    .itinerary-line { left: 35px; }
+    .itinerary-icon { width: 40px; height: 40px; margin-right: 15px; }
+    .itinerary-icon img { width: 20px; height: 20px; }
     .itinerary-time { font-size: 1.1rem; }
-    .itinerary-desc { font-size: 1rem; }
 }
+
+
 
 /* =========================================
    13. AJUSTES ESPECÍFICOS PARA TELÉFONO
@@ -376,13 +380,7 @@ body {
         font-size: 1rem;
     }
 
-    /* Forzamos que el botón de música sea más pequeño en móvil */
-    .music-btn {
-        width: 40px;
-        height: 40px;
-        top: 15px !important;
-        right: 15px !important;
-    }
+   
 }
 /* 10. PRESENTES */
 .gift-container {
