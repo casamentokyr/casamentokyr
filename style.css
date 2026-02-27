@@ -239,31 +239,46 @@ body {
 }
 
 /* =========================================
-   9. ITINERARIO (ESTILO MODERNO)
+   9. ITINERARIO (SISTEMA FLEXIBLE)
    ========================================= */
 .timeline-container-final {
     display: flex;
     justify-content: center;
-    padding: 0 20px;
+    padding: 0 15px;
 }
+
 .timeline-card-final {
     background: var(--white);
-    padding: 40px;
-    border-radius: 20px;
+    padding: 40px 30px;
+    border-radius: 25px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     width: 100%;
-    max-width: 600px;
+    max-width: 550px;
     border: 1px solid #eee;
     position: relative;
-    padding-bottom: 20px;
+}
+
+/* La línea vertical base */
+.timeline-card-final::before {
+    content: '';
+    position: absolute;
+    top: 50px;
+    bottom: 50px;
+    left: 60px; /* Alineada con el centro de los iconos */
+    width: 2px;
+    background-color: var(--accent);
+    z-index: 1;
 }
 
 .timeline-row-final {
     display: flex;
     align-items: center;
     position: relative;
-    margin-bottom: 30px;
+    z-index: 2;
+    margin-bottom: 40px;
+    text-align: left; /* Todo alineado a la izquierda para evitar caos */
 }
+
 .timeline-row-final:last-child { margin-bottom: 0; }
 
 .timeline-icon-box {
@@ -275,38 +290,75 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-right: 20px;
+    margin-right: 25px; /* Espacio fijo entre icono y texto */
+    flex-shrink: 0; /* Evita que el círculo se aplaste en móviles */
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    position: relative;
-    z-index: 2;
 }
 
-/* Línea vertical */
-.timeline-card-final::before {
-    content: '';
-    position: absolute;
-    top: 40px;
-    bottom: 40px;
-    left: 49px; /* Ajuste para alinear con el centro de los iconos */
-    width: 2px;
-    background-color: var(--accent);
-    z-index: 1;
+.timeline-icon-final { 
+    width: 30px; 
+    height: 30px; 
+    object-fit: contain; 
 }
-
-.timeline-icon-final { width: 30px; height: 30px; object-fit: contain; }
 
 .timeline-text-final {
-    text-align: left;
-    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
+
 .time-final {
     font-weight: bold;
     color: var(--dark);
-    font-size: 1.4rem;
-    display: block;
+    font-size: 1.3rem;
+    line-height: 1.2;
 }
-.desc-final { color: var(--primary); font-size: 1.1rem; margin: 0; font-weight: 500; }
 
+.desc-final { 
+    color: var(--primary); 
+    font-size: 1.1rem; 
+    font-weight: 400;
+}
+
+/* =========================================
+   13. AJUSTES ESPECÍFICOS PARA TELÉFONO
+   ========================================= */
+@media (max-width: 600px) {
+    .timeline-card-final {
+        padding: 30px 15px; /* Menos espacio interno */
+    }
+
+    .timeline-card-final::before {
+        left: 45px; /* Movemos la línea para que coincida con iconos pequeños */
+    }
+
+    .timeline-icon-box {
+        width: 50px;
+        height: 50px;
+        margin-right: 15px;
+    }
+
+    .timeline-icon-final {
+        width: 24px;
+        height: 24px;
+    }
+
+    .time-final {
+        font-size: 1.1rem;
+    }
+
+    .desc-final {
+        font-size: 1rem;
+    }
+
+    /* Forzamos que el botón de música sea más pequeño en móvil */
+    .music-btn {
+        width: 40px;
+        height: 40px;
+        top: 15px !important;
+        right: 15px !important;
+    }
+}
 /* 10. PRESENTES */
 .gift-container {
     display: flex;
