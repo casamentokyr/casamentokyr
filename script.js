@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <h2 style="color: ${esConfirmada ? '#4F6D8A' : '#ba1a1a'}; margin-bottom: 15px;">
                         ${esConfirmada ? '¡O teu convite foi confirmado!' : 'O teu convite foi cancelado'}
                     </h2>
-                    <p style="color: #666; font-size: 1.1em; line-height: 1.6;">
+                    <p style="color: #ffffff; font-size: 1.1em; line-height: 1.6;">
                         Qualquer alteração, por favor contacta diretamente os noivos.
                     </p>
                     <div style="margin-top: 20px; font-size: 2em;">${esConfirmada ? '🥂' : '✉️'}</div>
@@ -194,17 +194,26 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // SWITCH ALERGIAS
-document.addEventListener('change', function(e) {
-    if (e.target && e.target.id === 'switchAlergia') {
-        const campoAlergia = document.getElementById("campoAlergiaTexto");
-        const textoAlergia = document.getElementById("textoAlergia");
-        
-        if (e.target.checked) {
-            campoAlergia.style.display = "block";
-            textoAlergia.innerText = "Sim";
-        } else {
-            campoAlergia.style.display = "none";
-            textoAlergia.innerText = "Não";
-        }
+// SWITCH ALERGIAS - CORREGIDO Y SEGURO
+document.addEventListener('DOMContentLoaded', function() {
+    const switchAlergia = document.getElementById('switchAlergia');
+    const campoAlergia = document.getElementById('campoAlergiaTexto');
+    const textoAlergia = document.getElementById('textoAlergia');
+
+    if (switchAlergia && campoAlergia && textoAlergia) {
+        // Asegurar estado inicial oculto
+        campoAlergia.style.display = 'none';
+
+        switchAlergia.addEventListener('change', function() {
+            if (this.checked) {
+                campoAlergia.style.display = 'block';
+                textoAlergia.innerText = 'Sim';
+            } else {
+                campoAlergia.style.display = 'none';
+                textoAlergia.innerText = 'Não';
+                // Limpiar el campo cuando se oculta
+                document.getElementById('alergias').value = '';
+            }
+        });
     }
 });
