@@ -553,4 +553,112 @@ body {
     background: var(--azul-medio); /* Azul claro */
     padding: 40px;
     border-radius: 25px;
-    box-shadow: 0 10px 30px rgba(0,
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    text-align: left;
+    border: 1px solid var(--border-color); /* Borde */
+}
+
+.campo { margin-bottom: 25px; color: var(--white); }
+.input-estilo, textarea {
+    width: 100%; padding: 15px; border: 2px solid var(--border-color); border-radius: 12px;
+    background: var(--azul-medio);
+    color: var(--white);
+}
+.botonConfirmar {
+    background: var(--primary); color: var(--white); border: none; padding: 18px; border-radius: 12px; width: 100%; font-size: 1.2rem; cursor: pointer;
+}
+.botonConfirmar:hover { background: var(--accent); color: var(--dark); }
+
+/* 12. ANIMACIONES */
+@keyframes zoom-hero { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
+@keyframes fade-scale { 0% { opacity: 0; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
+
+/* 13. RESPONSIVE FINAL (ANDROID & IOS) */
+@media(max-width: 600px) {
+    .hero h1 { font-size: 2.5rem; }
+    .section-title { font-size: 2rem; }
+    .countdown .circle { width: 65px; height: 65px; }
+    .parents-container { gap: 20px; }
+    .gift-card { width: 280px; height: 380px; }
+
+    /* Ajuste Itinerario Móvil */
+    .itinerary-wrapper { padding: 30px 15px; }
+    .itinerary-line { left: 40px; }
+    .itinerary-icon { width: 50px; height: 50px; margin-right: 15px; }
+    .itinerary-icon img { width: 24px; height: 24px; }
+    .itinerary-time { font-size: 1.2rem; }
+    .itinerary-desc { font-size: 1rem; }
+}
+/* --- ARREGLO FINAL: COLORES Y SWITCH --- */
+
+/* 1. Forzar color blanco en los títulos (labels) */
+.campo label {
+    color: var(--white) !important;
+}
+
+/* 2. Forzar estilo de campos de texto (fondo blanco, letra negra) */
+.input-estilo, textarea {
+    background-color: var(--white) !important;
+    color: #333 !important;
+    border: 2px solid var(--border-color) !important;
+}
+
+/* 3. Acomodar el switch y asegurar que sea blanco */
+.switch-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--white) !important; /* Texto "Sim/Não" blanco */
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+}
+
+.switch input { opacity: 0; width: 0; height: 0; }
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #ccc; /* Color de fondo del switch apagado */
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px; width: 18px;
+    left: 4px; bottom: 3.5px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--accent); /* Color cuando está activado */
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+/* CORRECCIÓN FINAL: El nombre se ve como texto limpio y sin ningún marco o borde */
+.input-readonly, #nombre {
+    background: transparent !important; /* Quita el fondo */
+    color: var(--white) !important;      /* Letra blanca */
+    border: none !important;            /* Quita todos los bordes */
+    box-shadow: none !important;        /* Quita sombras */
+    outline: none !important;           /* Quita marcos de selección */
+    font-size: 1rem;                    /* Ajusta el tamaño idéntico a los labels */
+    font-family: 'Montserrat', sans-serif; /* Misma tipografía simple que 'nome' */
+    font-weight: normal;                /* Quita el grosor extra */
+    padding: 0 !important;              /* Sin espacios internos */
+    margin-bottom: 15px;
+    pointer-events: none;               /* Bloquea clicks */
+    text-align: left;                   /* Alinea a la izquierda */
+}
