@@ -66,8 +66,6 @@ body {
 }
 .music-btn img { width: 22px; height: 22px; }
 
-/* 3. HERO SECTION */
-
 /* =========================================
    3. HERO SECTION (Modificada)
    ========================================= */
@@ -106,8 +104,6 @@ body {
     width: 100%;
     max-width: 800px;
 }
-
-
 
 .subtitle {
     font-family: 'Playfair Display', serif;
@@ -447,6 +443,7 @@ body {
    AJUSTES RESPONSIVOS (MÓVIL) - MANTENER ZIGZAG
    ========================================= */
 @media screen and (max-width: 600px) {
+    
     .itinerary-card {
         padding: 15px 5px; /* Más compacto */
     }
@@ -650,9 +647,17 @@ input:checked + .slider:before {
     transform: translateX(24px);
 }
 
-/* Hacer que el campo del nombre tenga el mismo color del formulario */
+/* CORRECCIÓN FINAL: El nombre se ve como texto limpio y sin ningún marco o borde */
 .input-readonly, #nombre {
-    background-color: var(--azul-medio) !important;
-    color: var(--white) !important;
-    border: 2px solid var(--border-color) !important;
+    background: transparent !important; /* Quita el color azul o blanco de fondo */
+    color: var(--white) !important;      /* Letra blanca */
+    border: none !important;            /* Elimina los bordes oscuros por completo */
+    box-shadow: none !important;        /* Elimina cualquier sombra de recuadro */
+    font-size: 1.8rem;                  /* Hace el nombre un título elegante */
+    font-family: 'Playfair Display', serif;
+    font-weight: bold;
+    padding: 0 !important;              /* Elimina el espacio interno de caja */
+    margin-bottom: 15px;
+    pointer-events: none;               /* Evita que se pueda seleccionar o editar */
+    outline: none !important;           /* Quita marcos de enfoque activos */
 }
