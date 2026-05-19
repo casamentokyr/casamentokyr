@@ -649,3 +649,10 @@ input:checked + .slider {
 input:checked + .slider:before {
     transform: translateX(24px);
 }
+
+/* Hacer que el campo del nombre tenga el mismo color del formulario */
+.input-readonly, #nombre {
+    background-color: var(--azul-medio) !important;
+    color: var(--white) !important;
+    border: 2px solid var(--border-color) !important;
+}

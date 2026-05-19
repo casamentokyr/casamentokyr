@@ -74,10 +74,33 @@ if (musicBtn) {
     });
 }
 
-// 6. LÓGICA RSVP (Carga de datos y bloqueo)
+// 6. LÓGICA RSVP (Carga de datos, bloqueo y Switch integrado)
 document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
     const codigo = params.get("codigo") || params.get("guest");
+    
+    // Inicializar lógica de Switch de Alergias de forma segura aquí dentro
+    const switchAlergia = document.getElementById('switchAlergia');
+    const campoAlergia = document.getElementById('campoAlergiaTexto');
+    const textoAlergia = document.getElementById('textoAlergia');
+
+    if (switchAlergia && campoAlergia && textoAlergia) {
+        campoAlergia.style.display = 'none'; // Estado inicial oculto
+
+        switchAlergia.addEventListener('change', function() {
+            if (this.checked) {
+                campoAlergia.style.display = 'block';
+                textoAlergia.innerText = 'Sim';
+            } else {
+                campoAlergia.style.display = 'none';
+                textoAlergia.innerText = 'Não';
+                if(document.getElementById('alergias')) {
+                    document.getElementById('alergias').value = '';
+                }
+            }
+        });
+    }
+
     if (!codigo) return;
 
     fetch(`${SCRIPT_URL}?codigo=${codigo}`)
@@ -85,31 +108,29 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(data => {
             const form = document.getElementById("rsvpForm");
             
-            // ---  BLOQUEO SI YA EXISTE RESPUESTA ---
+            // ---  BLOQUEO SI YA EXISTE RESPUESTA (Arreglado color fondo y texto) ---
             if (data.confirmado === "SI" || data.confirmado === "CANCELADO") {
                 const esConfirmada = data.confirmado === "SI";
                 
-                // Ocultar botonera inicial y formulario
                 document.getElementById('rsvp-card-start').style.display = 'none';
                 form.style.display = "none";
                 
-                // Crear aviso elegante de bloqueo
                 const aviso = document.createElement("div");
                 aviso.style.padding = "40px 20px";
-                aviso.style.background = "#fff";
-                aviso.style.borderRadius = "15px";
-                aviso.style.boxShadow = "0 4px 15px rgba(0,0,0,0.1)";
+                aviso.style.background = "#4f6d8a"; // Color igual al fondo del formulario
+                aviso.style.borderRadius = "25px";
+                aviso.style.boxShadow = "0 10px 30px rgba(0,0,0,0.15)";
                 aviso.style.margin = "20px auto";
                 aviso.style.maxWidth = "500px";
 
                 aviso.innerHTML = `
-                    <h2 style="color: ${esConfirmada ? '#4F6D8A' : '#ba1a1a'}; margin-bottom: 15px;">
+                    <h2 style="color: #ffffff; margin-bottom: 15px; font-family: 'Playfair Display', serif;">
                         ${esConfirmada ? '¡O teu convite foi confirmado!' : 'O teu convite foi cancelado'}
                     </h2>
                     <p style="color: #ffffff; font-size: 1.1em; line-height: 1.6;">
                         Qualquer alteração, por favor contacta diretamente os noivos.
                     </p>
-                    <div style="margin-top: 20px; font-size: 2em;">${esConfirmada ? '🥂' : '✉️'}</div>
+                    <div style="margin-top: 20px; font-size: 2.5em;">${esConfirmada ? '🥂' : '✉️'}</div>
                 `;
                 
                 document.getElementById('rsvp-form-container').appendChild(aviso);
@@ -191,29 +212,4 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
         });
-});
-
-// SWITCH ALERGIAS
-// SWITCH ALERGIAS - CORREGIDO Y SEGURO
-document.addEventListener('DOMContentLoaded', function() {
-    const switchAlergia = document.getElementById('switchAlergia');
-    const campoAlergia = document.getElementById('campoAlergiaTexto');
-    const textoAlergia = document.getElementById('textoAlergia');
-
-    if (switchAlergia && campoAlergia && textoAlergia) {
-        // Asegurar estado inicial oculto
-        campoAlergia.style.display = 'none';
-
-        switchAlergia.addEventListener('change', function() {
-            if (this.checked) {
-                campoAlergia.style.display = 'block';
-                textoAlergia.innerText = 'Sim';
-            } else {
-                campoAlergia.style.display = 'none';
-                textoAlergia.innerText = 'Não';
-                // Limpiar el campo cuando se oculta
-                document.getElementById('alergias').value = '';
-            }
-        });
-    }
 });
