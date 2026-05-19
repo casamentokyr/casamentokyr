@@ -649,16 +649,15 @@ input:checked + .slider:before {
 
 /* CORRECCIÓN FINAL: El nombre se ve como texto limpio y sin ningún marco o borde */
 .input-readonly, #nombre {
-    background: transparent !important; /* Quita el fondo */
+    background: transparent !important; /* Quita el color azul o blanco de fondo */
     color: var(--white) !important;      /* Letra blanca */
-    border: none !important;            /* Quita todos los bordes */
-    box-shadow: none !important;        /* Quita sombras */
-    outline: none !important;           /* Quita marcos de selección */
-    font-size: 1rem;                    /* Ajusta el tamaño idéntico a los labels */
-    font-family: 'Montserrat', sans-serif; /* Misma tipografía simple que 'nome' */
-    font-weight: normal;                /* Quita el grosor extra */
-    padding: 0 !important;              /* Sin espacios internos */
+    border: none !important;            /* Elimina los bordes oscuros por completo */
+    box-shadow: none !important;        /* Elimina cualquier sombra de recuadro */
+    font-size: 1.8rem;                  /* Hace el nombre un título elegante */
+    font-family: 'Playfair Display', serif;
+    font-weight: bold;
+    padding: 0 !important;              /* Elimina el espacio interno de caja */
     margin-bottom: 15px;
-    pointer-events: none;               /* Bloquea clicks */
-    text-align: left;                   /* Alinea a la izquierda */
+    pointer-events: none;               /* Evita que se pueda seleccionar o editar */
+    outline: none !important;           /* Quita marcos de enfoque activos */
 }
