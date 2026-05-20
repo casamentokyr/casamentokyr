@@ -659,7 +659,7 @@ input:checked + .slider:before {
     font-family: 'Montserrat', sans-serif; /* Misma tipografía simple que 'nome' */
     font-weight: normal;                /* Quita el grosor extra */
     padding: 0 !important;              /* Sin espacios internos */
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     pointer-events: none;               /* Bloquea clicks */
     text-align: left;                   /* Alinea a la izquierda */
 }
