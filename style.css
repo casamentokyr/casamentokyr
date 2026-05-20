@@ -471,6 +471,12 @@ body {
 }
 .btn-rsvp-open:hover { background: var(--accent); color: var(--dark); }
 
+.btn-rsvp-open {
+    /* ... todos tus estilos actuales (background, color, etc.) ... */
+    
+    margin-top: 20px !important; /* 👈 Esto despega el botón del texto de arriba */
+}
+
 .formulario {
     background: var(--azul-medio); 
     padding: 40px;
