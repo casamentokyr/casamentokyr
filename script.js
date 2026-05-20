@@ -2,16 +2,26 @@
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyjuQb6qBEXoQCYkWSL94r87hFRcO2RIdCRpad7PRPBHrJRGixBOinmcJJN0HfvmrgF7A/exec";
 const WEDDING_DATE = new Date("May 22, 2027 11:00:00").getTime();
 
-// 2. ANIMACIÓN SCROLL (FADE-IN)
+
+// 2. ANIMACIÓN SCROLL (FADE-IN DINÁMICO SUBIR/BAJAR)
 const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
+            // Cuando la sección entra en la pantalla (bajando o subiendo)
             entry.target.classList.add('visible');
+        } else {
+            // NUEVO: Cuando la sección sale de la pantalla, le quitamos la clase
+            // Esto hace que se vuelva a animar si el usuario sube
+            entry.target.classList.remove('visible');
         }
     });
-}, { threshold: 0.1 });
+}, { 
+    threshold: 0.15,     /* Espera a que se vea un 15% de la sección para activarse */
+    rootMargin: "-20px 0px -20px 0px" /* Margen para suavizar la detección en móviles */
+});
 
-document.querySelectorAll('.fade-in').forEach((section) => {
+// Registramos únicamente bloques contenedores globales para evitar que los elementos internos (como el giro de regalos) se desarmen
+document.querySelectorAll('.fade-in, .section').forEach((section) => {
     observer.observe(section);
 });
 
