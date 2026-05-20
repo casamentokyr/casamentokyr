@@ -168,7 +168,7 @@ body {
    ========================================= */
 .section-title {
     font-family: 'Playfair Display', serif;
-    font-size: 2.8rem;
+    font-size: 2.0rem;
     color: var(--accent); /* Color arena */
     margin-bottom: 50px;
 }
@@ -300,7 +300,7 @@ body {
     color: var(--white); 
     margin-top: 20px; 
     font-weight: bold; 
-    font-size: 1.3rem;
+    font-size: 0.9rem;
     background: rgba(0,0,0,0.3);
     padding: 8px 15px;
     border-radius: 50px;
@@ -581,7 +581,7 @@ input:checked + .slider:before { transform: translateX(24px); }
    ========================================= */
 @media screen and (max-width: 600px) {
     .hero h1 { font-size: 2.5rem; }
-    .section-title { font-size: 2rem; }
+    .section-title { font-size: 1.5rem; }
     .countdown .circle { width: 65px; height: 65px; }
     .parents-container { gap: 20px; }
     
