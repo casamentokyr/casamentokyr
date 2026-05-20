@@ -161,7 +161,7 @@ body {
     backdrop-filter: blur(5px);
 }
 .circle span { font-size: 26px; font-weight: bold; color: var(--accent); }
-.circle small { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--white); }
+.circle small { font-size: 8px; text-transform: uppercase; letter-spacing: 1px; color: var(--white); }
 
 /* =========================================
    5. ESTRUCTURA DE SECCIONES BASE
@@ -581,7 +581,7 @@ input:checked + .slider:before { transform: translateX(24px); }
    ========================================= */
 @media screen and (max-width: 600px) {
     .hero h1 { font-size: 2.5rem; }
-    .section-title { font-size: 1.5rem; }
+    .section-title { font-size: 1.2rem; }
     .countdown .circle { width: 65px; height: 65px; }
     .parents-container { gap: 20px; }
     
