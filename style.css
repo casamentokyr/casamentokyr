@@ -27,7 +27,6 @@ body {
     line-height: 1.6;
 }
 
-
 .event-card, .dress-card, .timeline-card-final {
     background: var(--card-bg); /* Azul claro */
     border: 1px solid var(--border-color); /* Borde azul oscuro */
@@ -46,28 +45,38 @@ body {
 }
 
 /* =========================================
-   SOLUCIÓN PROBLEMA 1: ICONO MÚSICA FIJO
+   2. ICONO MÚSICA FIJO
    ========================================= */
 .music-btn {
     position: fixed !important; /* Mantiene el botón en su lugar */
     top: 20px !important;
     right: 20px !important;
-    width: 45px;
-    height: 45px;
-    background: rgba(216, 207, 196, 0.8); /* Fondo accent transparente */
+    width: 50px;
+    height: 50px;
+    background: rgba(216, 207, 196, 0.9); /* Fondo accent transparente */
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    z-index: 999999 !important; /* Asegura que esté por encima de todo */
+    z-index: 99999 !important; /* Asegura que esté por encima de todo */
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     backdrop-filter: blur(5px);
 }
 .music-btn img { width: 22px; height: 22px; }
 
+/* Forzamos que el botón de música sea más pequeño en móvil */
+@media screen and (max-width: 600px) {
+    .music-btn {
+        width: 40px;
+        height: 40px;
+        top: 15px !important;
+        right: 15px !important;
+    }
+}
+
 /* =========================================
-   3. HERO SECTION (Modificada)
+   3. HERO SECTION
    ========================================= */
 .hero {
     position: relative;
@@ -87,12 +96,11 @@ body {
     animation: zoom-hero 15s ease-in-out infinite alternate;
 }
 
-/* --- SOLUCIÓN: Overlay para mejorar contraste --- */
+/* --- Overlay para mejorar contraste --- */
 .hero::after {
     content: '';
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
-    /* Superposición color azul oscuro con transparencia */
     background: rgba(31, 47, 68, 0.6); 
     z-index: 2;
 }
@@ -137,42 +145,9 @@ body {
     text-transform: uppercase;
 }
 
-/* --- AJUSTE DE CUENTA REGRESIVA --- */
-.countdown {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 40px;
-}
-
-.countdown .circle {
-    width: 90px;
-    height: 90px;
-    /* Fondo con transparencia para que se vea el fondo */
-    background: rgba(255, 255, 255, 0.1); 
-    border: 1px solid var(--accent); /* Borde color arena */
-    border-radius: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(5px); /* Efecto difuminado elegante */
-}
-
-.circle span { 
-    font-size: 28px; 
-    font-weight: bold; 
-    color: var(--accent); /* Color arena */
-}
-
-.circle small { 
-    font-size: 11px; 
-    text-transform: uppercase; 
-    letter-spacing: 1px; 
-    color: var(--white); 
-}
-
-/* 4. CUENTA REGRESIVA */
+/* =========================================
+   4. CUENTA REGRESIVA
+   ========================================= */
 .countdown {
     display: flex;
     justify-content: center;
@@ -194,7 +169,9 @@ body {
 .circle span { font-size: 26px; font-weight: bold; color: var(--accent); }
 .circle small { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--white); }
 
-/* 5. ESTRUCTURA DE SECCIONES */
+/* =========================================
+   5. ESTRUCTURA DE SECCIONES
+   ========================================= */
 .section {
     padding: 80px 20px;
     opacity: 0;
@@ -209,7 +186,9 @@ body {
     margin-bottom: 50px;
 }
 
-/* 6. PADRES */
+/* =========================================
+   6. PADRES
+   ========================================= */
 .parents-container {
     display: flex;
     justify-content: center;
@@ -226,34 +205,65 @@ body {
     font-weight: 600;
     color: var(--white);
 }
-/* 7. EVENTO */
+
+/* =========================================
+   7. EVENTO (TARJETA Y BOTONES PERFECTOS)
+   ========================================= */
 .event-card {
     background: var(--card-bg); /* Azul claro */
-    padding: 50px;
+    padding: 50px 30px;
     border-radius: 25px;
     box-shadow: 0 15px 40px rgba(0,0,0,0.05);
     max-width: 500px;
     margin: 0 auto;
     border: 1px solid var(--border-color); /* Borde azul oscuro */
+    text-align: center !important;
 }
-.event-info { margin-bottom: 30px; }
-.event-info h3 { font-family: 'Playfair Display', serif; color: var(--primary); font-size: 1.8rem; margin-bottom: 5px; }
-.event-info p { color: var(--border-color); /* Texto oscuro */ }
-.btn-map {
-    display: inline-block;
-    padding: 15px 35px;
-    background: var(--primary); /* Azul principal */
+
+.event-info { 
+    margin-bottom: 0 !important; /* Manejamos el margen directamente en los botones */
+    text-align: center !important;
+}
+
+/* REGLA MAESTRA UNIFICADA PARA AMBOS BOTONES DEL EVENTO */
+.event-card .btn-map {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 145px !important;            /* Fuerza tamaño idéntico en ambos */
+    height: 38px !important;            /* Altura fija y estilizada */
+    padding: 0 !important;               /* Quitamos paddings para evitar diferencias */
+    background: var(--primary);          /* Azul principal */
     color: var(--white);
     text-decoration: none;
     border-radius: 50px;
     font-weight: 600;
-    margin-top: 20px;
-    transition: all 0.3s;
+    font-size: 0.82rem !important;       /* Letra compacta ideal */
     letter-spacing: 1px;
+    margin: 15px 5px 25px 5px !important; /* 15px arriba separa del texto, 5px lados, 25px abajo separa a 'Recepção' */
+    transition: all 0.3s;
+    vertical-align: middle;
 }
-.btn-map:hover { background: var(--border-color); transform: translateY(-2px); }
 
-/* 8. VESTIMENTA */
+.event-card .btn-map:hover { 
+    background: var(--border-color); 
+    transform: translateY(-2px); 
+}
+
+/* Ajuste específico para que mantengan la simetría en móviles */
+@media screen and (max-width: 600px) {
+    .event-card .btn-map {
+        display: inline-flex !important; /* Los mantiene juntos de lado en celular */
+        width: 130px !important;         /* Un pelín más delgados en móvil */
+        height: 35px !important;
+        font-size: 0.75rem !important; 
+        margin: 12px 3px 20px 3px !important;
+    }
+}
+
+/* =========================================
+   8. VESTIMENTA
+   ========================================= */
 .dress-card {
     background: var(--card-bg); /* Azul claro */
     padding: 40px;
@@ -270,7 +280,9 @@ body {
 .dress-card h3 { font-family: 'Playfair Display', serif; color: var(--primary); font-size: 1.8rem; margin-bottom: 10px; }
 .dress-card p { color: var(--border-color); /* Texto oscuro */ }
 
-/* Galería Overlay */
+/* =========================================
+   9. GALERÍA OVERLAY
+   ========================================= */
 .gallery-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(31, 47, 68, 0.95); /* Fondo oscuro */
@@ -319,41 +331,15 @@ body {
     padding: 8px 15px;
     border-radius: 50px;
 }
-/* FIJAR BOTÓN DE MÚSICA - Fuera de cualquier animación */
-.music-btn {
-    position: fixed !important;
-    top: 20px !important;
-    right: 20px !important;
-    width: 50px;
-    height: 50px;
-    background: rgba(216, 207, 196, 0.9); /* Fondo accent transparente */
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 99999 !important; /* Por encima de todo */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    cursor: pointer;
-}
 
- /* Forzamos que el botón de música sea más pequeño en móvil */
-    .music-btn {
-        width: 40px;
-        height: 40px;
-        top: 15px !important;
-        right: 15px !important;
-    }
-
- 
 /* =========================================
-   NUEVO ESTILO DE TARJETA Y ZIGZAG (MÓVIL)
+   10. ITINERARIO ZIGZAG
    ========================================= */
-
 .itinerary-card {
     background: var(--card-bg); /* Azul claro */
     max-width: 800px;
     margin: 0 auto;
-    padding: 30px 10px; /* Reducido padding en móvil */
+    padding: 30px 10px;
     border-radius: 25px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.08); 
     border: 1px solid var(--border-color); /* Borde azul oscuro */
@@ -379,7 +365,7 @@ body {
 }
 
 .timeline-item {
-    padding: 5px 20px; /* Reducido padding */
+    padding: 5px 20px;
     position: relative;
     width: 50%;
     box-sizing: border-box;
@@ -387,10 +373,9 @@ body {
     align-items: center;
 }
 
-/* El círculo del icono */
 .timeline-icon {
     position: absolute;
-    width: 50px; /* Tamaño reducido */
+    width: 50px;
     height: 50px;
     background-color: var(--card-bg); /* Azul claro */
     border: 3px solid var(--dark); /* Borde color arena */
@@ -405,78 +390,52 @@ body {
 }
 
 .timeline-icon img {
-    width: 25px; /* Tamaño reducido */
+    width: 25px;
     height: 25px;
     object-fit: contain;
-    filter: invert(37%) sepia(40%) saturate(413%) hue-rotate(168deg) brightness(100%) contrast(88%); /* Iconos blancos sobre fondo azul claro */
+    filter: invert(37%) sepia(40%) saturate(413%) hue-rotate(168deg) brightness(100%) contrast(88%);
 }
 
-/* Posición izquierda y derecha */
 .left { left: 0; text-align: right; justify-content: flex-end; }
 .right { left: 50%; text-align: left; justify-content: flex-start; }
 
-/* Posicionar los iconos en la línea central */
-.left .timeline-icon { right: -25px; } /* Ajustado */
-.right .timeline-icon { left: -25px; } /* Ajustado */
+.left .timeline-icon { right: -25px; }
+.right .timeline-icon { left: -25px; }
 
-/* Ajuste de espaciado para que el texto no toque la línea */
 .left .timeline-content { padding-right: 20px; }
 .right .timeline-content { padding-left: 20px; }
 
-/* Estilos de texto usando paleta - TAMANOS REDUCIDOS */
 .timeline-content .desc-final {
     font-family: 'Playfair Display', serif;
-    font-size: 1.1rem; /* Más pequeño */
-    color: var(--dark); /* Texto oscuro dentro de tarjetas claras */
+    font-size: 1.1rem;
+    color: var(--dark);
     margin: 0;
     font-weight: 600;
     line-height: 1.2;
 }
 
 .timeline-content .time-final {
-    font-size: 0.9rem; /* Más pequeño */
-    color: var(--primary); /* Azul principal */
+    font-size: 0.9rem;
+    color: var(--primary);
     font-weight: 400;
 }
 
-/* =========================================
-   AJUSTES RESPONSIVOS (MÓVIL) - MANTENER ZIGZAG
-   ========================================= */
+/* Ajustes responsivos del itinerario */
 @media screen and (max-width: 600px) {
-    
-    .itinerary-card {
-        padding: 15px 5px; /* Más compacto */
-    }
-    
-    /* Mantenemos el zigzag (50% de ancho) */
-    .timeline-item {
-        width: 50%;
-        padding: 5px 10px;
-    }
-    
-    /* Reducimos aún más el tamaño de iconos en móvil muy pequeño */
-    .timeline-icon { 
-        width: 40px; 
-        height: 40px;
-        background-color: var(--card-bg); /* Azul claro */
-    }
-    
+    .itinerary-card { padding: 15px 5px; }
+    .timeline-item { width: 50%; padding: 5px 10px; }
+    .timeline-icon { width: 40px; height: 40px; background-color: var(--card-bg); }
     .timeline-icon img { width: 20px; height: 20px; }
-    
-    /* Ajustamos la posición de iconos para zigzag */
     .left .timeline-icon { right: -20px; }
     .right .timeline-icon { left: -20px; }
-    
     .left .timeline-content { padding-right: 15px; }
     .right .timeline-content { padding-left: 15px; }
-    
-    /* Texto muy compacto */
     .timeline-content .desc-final { font-size: 0.85rem; color: var(--dark); }
     .timeline-content .time-final { font-size: 0.75rem; color: var(--primary); }
 }
 
 /* =========================================
-   10. PRESENTES Y RESTO DE SECCIONES
+   11. PRESENTES (TARJETAS REGALO)
    ========================================= */
 .gift-container {
     display: flex;
@@ -517,7 +476,7 @@ body {
     color: var(--white);
     transform: rotateY(180deg);
     text-align: center;
-    border: 1px solid var(--border-color); /* Borde sutil */
+    border: 1px solid var(--border-color);
 }
 .gift-icon { font-size: 4rem; margin-bottom: 20px; color: var(--accent); }
 .gift-front h3 { color: var(--dark); font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 10px; }
@@ -525,15 +484,17 @@ body {
 .gift-back p { margin-bottom: 15px; font-weight: 300; font-size: 1.1rem; }
 .close-msg { font-size: 0.9rem; margin-top: 30px; opacity: 0.7; }
 
-/* 11. RSVP */
-.rsvp-section { background-color: var(--dark); /* FONDO OSCURO ACTUALIZADO */ }
+/* =========================================
+   12. RSVP & FORMULARIO
+   ========================================= */
+.rsvp-section { background-color: var(--dark); }
 .rsvp-container { max-width: 500px; margin: 0 auto; }
 .rsvp-card-start {
     background: var(--card-bg); /* Azul claro */
     padding: 50px 30px;
     border-radius: 25px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    border: 1px solid var(--border-color); /* Borde */
+    border: 1px solid var(--border-color);
 }
 .rsvp-icon { font-size: 4rem; margin-bottom: 20px; display: block; color: var(--accent); }
 .btn-rsvp-open {
@@ -550,85 +511,54 @@ body {
 .btn-rsvp-open:hover { background: var(--accent); color: var(--dark); }
 
 .formulario {
-    background: var(--azul-medio); /* Azul claro */
+    background: var(--azul-medio); 
     padding: 40px;
     border-radius: 25px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     text-align: left;
-    border: 1px solid var(--border-color); /* Borde */
+    border: 1px solid var(--border-color);
 }
 
 .campo { margin-bottom: 25px; color: var(--white); }
+.campo label { color: var(--white) !important; }
+
+/* Forzar estilo de campos de texto (fondo blanco, letra negra) */
 .input-estilo, textarea {
-    width: 100%; padding: 15px; border: 2px solid var(--border-color); border-radius: 12px;
-    background: var(--azul-medio);
-    color: var(--white);
+    width: 100%; 
+    padding: 15px; 
+    border: 2px solid var(--border-color); 
+    border-radius: 12px;
+    background-color: var(--white) !important;
+    color: #333 !important;
 }
+
 .botonConfirmar {
     background: var(--primary); color: var(--white); border: none; padding: 18px; border-radius: 12px; width: 100%; font-size: 1.2rem; cursor: pointer;
 }
 .botonConfirmar:hover { background: var(--accent); color: var(--dark); }
 
-/* 12. ANIMACIONES */
-@keyframes zoom-hero { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
-@keyframes fade-scale { 0% { opacity: 0; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
-
-/* 13. RESPONSIVE FINAL (ANDROID & IOS) */
-@media(max-width: 600px) {
-    .hero h1 { font-size: 2.5rem; }
-    .section-title { font-size: 2rem; }
-    .countdown .circle { width: 65px; height: 65px; }
-    .parents-container { gap: 20px; }
-    .gift-card { width: 280px; height: 380px; }
-
-    /* Ajuste Itinerario Móvil */
-    .itinerary-wrapper { padding: 30px 15px; }
-    .itinerary-line { left: 40px; }
-    .itinerary-icon { width: 50px; height: 50px; margin-right: 15px; }
-    .itinerary-icon img { width: 24px; height: 24px; }
-    .itinerary-time { font-size: 1.2rem; }
-    .itinerary-desc { font-size: 1rem; }
-}
-/* --- ARREGLO FINAL: COLORES Y SWITCH --- */
-
-/* 1. Forzar color blanco en los títulos (labels) */
-.campo label {
-    color: var(--white) !important;
-}
-
-/* 2. Forzar estilo de campos de texto (fondo blanco, letra negra) */
-.input-estilo, textarea {
-    background-color: var(--white) !important;
-    color: #333 !important;
-    border: 2px solid var(--border-color) !important;
-}
-
-/* 3. Acomodar el switch y asegurar que sea blanco */
+/* --- SWITCH CONFIRMACIÓN --- */
 .switch-container {
     display: flex;
     align-items: center;
     gap: 10px;
     color: var(--white) !important; /* Texto "Sim/Não" blanco */
 }
-
 .switch {
     position: relative;
     display: inline-block;
     width: 50px;
     height: 25px;
 }
-
 .switch input { opacity: 0; width: 0; height: 0; }
-
 .slider {
     position: absolute;
     cursor: pointer;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #ccc; /* Color de fondo del switch apagado */
+    background-color: #ccc; 
     transition: .4s;
     border-radius: 34px;
 }
-
 .slider:before {
     position: absolute;
     content: "";
@@ -638,28 +568,118 @@ body {
     transition: .4s;
     border-radius: 50%;
 }
+input:checked + .slider { background-color: var(--accent); }
+input:checked + .slider:before { transform: translateX(24px); }
 
-input:checked + .slider {
-    background-color: var(--accent); /* Color cuando está activado */
-}
-
-input:checked + .slider:before {
-    transform: translateX(24px);
-}
-
-/* CORRECCIÓN FINAL: El nombre se ve como texto limpio y sin ningún marco o borde */
-
+/* --- TEXTO IMPRESO DEL NOMBRE (IGUAL A LAS ETIQUETAS) --- */
 .input-readonly, #nombre {
-    background: transparent !important; /* Quita el fondo */
-    color: var(--white) !important;      /* Letra blanca */
-    border: none !important;            /* Quita todos los bordes */
-    box-shadow: none !important;        /* Quita sombras */
-    outline: none !important;           /* Quita marcos de selección */
-    font-size: 1rem;                    /* Ajusta el tamaño idéntico a los labels */
-    font-family: 'Montserrat', sans-serif; /* Misma tipografía simple que 'nome' */
-    font-weight: normal;                /* Quita el grosor extra */
-    padding: 0 !important;              /* Sin espacios internos */
+    background: transparent !important;
+    color: var(--white) !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+    padding: 0 !important;
     margin-bottom: 12px;
-    pointer-events: none;               /* Bloquea clicks */
-    text-align: left;                   /* Alinea a la izquierda */
+    pointer-events: none;
+    text-align: left;
+}
+
+/* =========================================
+   13. ANIMACIONES Y RESPONSIVE GENERAL
+   ========================================= */
+@keyframes zoom-hero { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
+@keyframes fade-scale { 0% { opacity: 0; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
+
+@media(max-width: 600px) {
+    .hero h1 { font-size: 2.5rem; }
+    .section-title { font-size: 2rem; }
+    .countdown .circle { width: 65px; height: 65px; }
+    .parents-container { gap: 20px; }
+    .gift-card { width: 280px; height: 380px; }
+
+    /* Ajuste Itinerario Viejo */
+    .itinerary-wrapper { padding: 30px 15px; }
+    .itinerary-line { left: 40px; }
+    .itinerary-icon { width: 50px; height: 50px; margin-right: 15px; }
+    .itinerary-icon img { width: 24px; height: 24px; }
+    .itinerary-time { font-size: 1.2rem; }
+    .itinerary-desc { font-size: 1rem; }
+}
+
+/* =========================================
+   AGREGADO FINAL: BOTONES DE EVENTO Y GALERÍA
+   ========================================= */
+
+/* 1. Forzar que los dos botones del evento midan lo mismo y estén centrados */
+.event-card .btn-map {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 145px !important;            /* Mismo tamaño para ambos */
+    height: 38px !important;            /* Altura fija estilizada */
+    padding: 0 !important;              /* Quita diferencias de espacio */
+    font-size: 0.82rem !important;       /* Letra compacta ideal */
+    margin: 15px 5px 25px 5px !important; /* 15px separa del texto, 25px abajo separa de 'Recepção' */
+}
+
+/* 2. Estilo flotante para el nuevo botón de cerrar (X + Fechar) */
+.close-gallery-container {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    z-index: 100000;
+    display: flex;
+    flex-direction: column;   /* Pone la X arriba y el texto abajo */
+    align-items: center;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.6); /* Fondo oscuro para que resalte sobre las fotos */
+    padding: 8px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.2s ease;
+}
+
+.close-gallery-container:hover {
+    background: var(--accent); /* Color arena al pasar el mouse */
+}
+
+.close-gallery-container:hover .close-x,
+.close-gallery-container:hover .close-text {
+    color: var(--dark) !important; /* Letra oscura en hover */
+}
+
+.close-x {
+    color: var(--white);
+    font-size: 32px;
+    line-height: 0.8;
+    font-weight: bold;
+}
+
+.close-text {
+    color: var(--white);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 5px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Ajustes adaptables para celulares */
+@media screen and (max-width: 600px) {
+    .event-card .btn-map {
+        width: 130px !important;         /* Un pelín más delgados en móvil */
+        height: 35px !important;
+        font-size: 0.75rem !important; 
+        margin: 12px 3px 20px 3px !important;
+    }
+    .close-gallery-container {
+        top: 15px;
+        right: 15px;
+        padding: 6px 10px;
+    }
+    .close-x { font-size: 26px; }
+    .close-text { font-size: 0.65rem; }
 }

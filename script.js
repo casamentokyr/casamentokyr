@@ -23,6 +23,13 @@ function closeGallery() {
     document.getElementById("dress-gallery").style.display = "none";
 }
 
+// NUEVA FUNCIÓN INTEGRADA: Cierra la galería si hacen clic fuera de las imágenes
+function closeGalleryOutside(event) {
+    if (event.target.id === "dress-gallery" || event.target.classList.contains("gallery-content") || event.target.classList.contains("gallery-slide")) {
+        closeGallery();
+    }
+}
+
 // --- LÓGICA TARJETA REGALOS ---
 function toggleGiftCard() {
     const card = document.getElementById("gift-card");
@@ -108,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(data => {
             const form = document.getElementById("rsvpForm");
             
-            // ---  BLOQUEO SI YA EXISTE RESPUESTA (Arreglado color fondo y texto) ---
+            // ---  BLOQUEO SI YA EXISTE RESPUESTA ---
             if (data.confirmado === "SI" || data.confirmado === "CANCELADO") {
                 const esConfirmada = data.confirmado === "SI";
                 
@@ -117,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 const aviso = document.createElement("div");
                 aviso.style.padding = "40px 20px";
-                aviso.style.background = "#4f6d8a"; // Color igual al fondo del formulario
+                aviso.style.background = "#4f6d8a"; 
                 aviso.style.borderRadius = "25px";
                 aviso.style.boxShadow = "0 10px 30px rgba(0,0,0,0.15)";
                 aviso.style.margin = "20px auto";
