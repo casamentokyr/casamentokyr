@@ -14,71 +14,54 @@
     z-index: 1000000 !important; /* Más alto que el sobre (999999) */
     cursor: pointer;
 }
-/* =========================================
-   OVERLAY DEL SOBRE (CORREGIDO Y CENTRADO)
-   ========================================= */
+
 #envelope-overlay {
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100vw; 
-    height: 100vh;
-    background: #1f2f44; 
-    z-index: 999999; /* Asegura que tape absolutamente todo */
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center; 
-    align-items: center;
-    transition: opacity 1s ease; 
-    cursor: pointer;
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: #1f2f44; z-index: 9999999;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    transition: opacity 1.5s ease; /* Desvanecimiento suave */
 }
 
 .envelope {
-    width: 85%;       
-    max-width: 320px; 
-    height: 220px;
-    background: #2a3d54;
-    position: relative;
-    border-radius: 10px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 300px; height: 200px; background: #2a3d54;
+    position: relative; border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
 }
 
 .flap {
-    position: absolute;
-    top: 0;
-    width: 100%; 
-    height: 100%;
+    position: absolute; top: 0; width: 100%; height: 100%;
     background: #1f2f44;
     clip-path: polygon(0 0, 100% 0, 50% 50%);
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 2s cubic-bezier(0.25, 0.1, 0.25, 1); /* Animación lenta */
     transform-origin: top;
-    pointer-events: none;
 }
 
-#envelope-overlay.open .flap { transform: rotateX(-180deg); }
+/* Estado cuando se abre */
 #envelope-overlay.open { opacity: 0; pointer-events: none; }
+#envelope-overlay.open .flap { transform: rotateX(-180deg); }
+
 
 .seal {
-    width: 70px; height: 70px;
-    background: #c6a685;
+    width: 90px; height: 90px;
+    background: #a63f3f; /* Un color rojo/burdeos profundo tipo cera */
     border-radius: 50%;
+    position: absolute;
+    top: 25%; left: 35%;
     display: flex; justify-content: center; align-items: center;
-    font-size: 1.4rem; color: #fff;
-    border: 3px double rgba(255,255,255,0.2);
-    z-index: 2;
+    color: #e0d0c0; /* Un tono crema/oro viejo para el texto */
+    font-size: 1.6rem;
+    font-weight: bold;
     font-family: 'Playfair Display', serif;
-}
-
-.tap-text { 
-    color: #BFD4E6; 
-    margin-top: 30px; 
-    font-family: 'Montserrat', sans-serif; 
-    letter-spacing: 2px; 
-    font-size: 0.9rem;
-    opacity: 0.8;
+    
+    /* Efecto de relieve y cera */
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 
+        0 4px 8px rgba(0,0,0,0.4),  /* Sombra exterior */
+        inset 0 0 0 5px #8c3535,    /* Borde interior oscuro para dar volumen */
+        inset 0 0 0 7px #a63f3f;    /* Borde superior para brillo */
+    
+    /* Quitamos el borde doble anterior para que sea más natural */
+    z-index: 5;
 }
 
 :root {

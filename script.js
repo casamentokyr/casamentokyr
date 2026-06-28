@@ -2,17 +2,22 @@
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyjuQb6qBEXoQCYkWSL94r87hFRcO2RIdCRpad7PRPBHrJRGixBOinmcJJN0HfvmrgF7A/exec";
 const WEDDING_DATE = new Date("May 22, 2027 11:00:00").getTime();
 
-// --- LÓGICA DE APERTURA DE SOBRE ---
 function openWeb() {
     const overlay = document.getElementById('envelope-overlay');
+    const flap = document.querySelector('.flap');
+
+    // 1. Iniciamos la animación de la solapa
+    flap.style.transform = "rotateX(-180deg)";
     
-    // Solo activamos la animación visual
-    overlay.classList.add('open');
-    
-   
+    // 2. Esperamos a que la solapa esté abierta (1.5 segundos) antes de desvanecer todo
+    setTimeout(() => {
+        overlay.classList.add('open');
+    }, 1500); 
+
+    // 3. Eliminamos el elemento completamente del DOM al terminar todo (3.5 segundos en total)
     setTimeout(() => {
         overlay.style.display = 'none';
-    }, 1000); 
+    }, 3500);
 }
 
 // 2. ANIMACIÓN SCROLL (FADE-IN DINÁMICO SUBIR/BAJAR)
