@@ -1,25 +1,19 @@
-// 1. CONFIGURACION INICIO
+// 1. CONFIGURACIÓN GENERAL
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyjuQb6qBEXoQCYkWSL94r87hFRcO2RIdCRpad7PRPBHrJRGixBOinmcJJN0HfvmrgF7A/exec";
 const WEDDING_DATE = new Date("May 22, 2027 11:00:00").getTime();
 
-
+// --- LÓGICA DE APERTURA DE SOBRE ---
 function openWeb() {
     const overlay = document.getElementById('envelope-overlay');
     
-    // 1. Activa la clase que abre el sobre
+    // Solo activamos la animación visual
     overlay.classList.add('open');
     
-    // 2. Espera 1 segundo a que termine la animación del sobre antes de esconderlo
+   
     setTimeout(() => {
-        overlay.style.opacity = '0';
-        overlay.style.pointerEvents = 'none';
-        
-        // 3. Reproduce música
-        const music = document.getElementById('music');
-        if (music) music.play();
+        overlay.style.display = 'none';
     }, 1000); 
 }
-
 
 // 2. ANIMACIÓN SCROLL (FADE-IN DINÁMICO SUBIR/BAJAR)
 const observer = new IntersectionObserver((entries) => {

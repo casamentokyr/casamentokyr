@@ -7,6 +7,16 @@
     box-sizing: border-box;
 }
 
+.music-btn {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    z-index: 1000000 !important; /* Más alto que el sobre (999999) */
+    cursor: pointer;
+}
+/* =========================================
+   OVERLAY DEL SOBRE (CORREGIDO Y CENTRADO)
+   ========================================= */
 #envelope-overlay {
     position: fixed; 
     top: 0; 
@@ -14,47 +24,61 @@
     width: 100vw; 
     height: 100vh;
     background: #1f2f44; 
-    z-index: 9999;
+    z-index: 999999; /* Asegura que tape absolutamente todo */
     display: flex; 
+    flex-direction: column; 
     justify-content: center; 
     align-items: center;
     transition: opacity 1s ease; 
     cursor: pointer;
 }
 
-/* El sobre ahora es más grande para que se vea bien */
 .envelope {
-    width: 80%;       /* Ocupa el 80% del ancho del móvil */
-    max-width: 350px; /* Pero no se deforma en pantallas grandes */
-    height: 250px;
+    width: 85%;       
+    max-width: 320px; 
+    height: 220px;
     background: #2a3d54;
     position: relative;
-    border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border-radius: 10px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .flap {
-    width: 100%; height: 100%;
+    position: absolute;
+    top: 0;
+    width: 100%; 
+    height: 100%;
     background: #1f2f44;
     clip-path: polygon(0 0, 100% 0, 50% 50%);
-    transition: transform 1s ease;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     transform-origin: top;
+    pointer-events: none;
 }
 
-/* Cuando se abre, la solapa gira */
-#envelope-overlay.open .flap {
-    transform: rotateX(-180deg);
-}
+#envelope-overlay.open .flap { transform: rotateX(-180deg); }
+#envelope-overlay.open { opacity: 0; pointer-events: none; }
 
 .seal {
-    width: 80px; height: 80px; /* Sello más grande */
-    background: #b8977a;
+    width: 70px; height: 70px;
+    background: #c6a685;
     border-radius: 50%;
-    position: absolute;
-    top: 30%; left: 30%;
     display: flex; justify-content: center; align-items: center;
-    font-size: 1.5rem; color: #fff;
-    border: 3px double rgba(255,255,255,0.3);
+    font-size: 1.4rem; color: #fff;
+    border: 3px double rgba(255,255,255,0.2);
+    z-index: 2;
+    font-family: 'Playfair Display', serif;
+}
+
+.tap-text { 
+    color: #BFD4E6; 
+    margin-top: 30px; 
+    font-family: 'Montserrat', sans-serif; 
+    letter-spacing: 2px; 
+    font-size: 0.9rem;
+    opacity: 0.8;
 }
 
 :root {
