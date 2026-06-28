@@ -5,11 +5,19 @@ const WEDDING_DATE = new Date("May 22, 2027 11:00:00").getTime();
 
 function openWeb() {
     const overlay = document.getElementById('envelope-overlay');
+    
+    // 1. Activa la clase que abre el sobre
     overlay.classList.add('open');
     
-    // Reproducir música al abrir
-    const music = document.getElementById('music');
-    if (music) music.play().catch(e => console.log("Autoplay bloqueado"));
+    // 2. Espera 1 segundo a que termine la animación del sobre antes de esconderlo
+    setTimeout(() => {
+        overlay.style.opacity = '0';
+        overlay.style.pointerEvents = 'none';
+        
+        // 3. Reproduce música
+        const music = document.getElementById('music');
+        if (music) music.play();
+    }, 1000); 
 }
 
 

@@ -8,37 +8,54 @@
 }
 
 #envelope-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: #1f2f44; z-index: 9999;
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    transition: opacity 1s ease; cursor: pointer;
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100vw; 
+    height: 100vh;
+    background: #1f2f44; 
+    z-index: 9999;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    transition: opacity 1s ease; 
+    cursor: pointer;
 }
 
+/* El sobre ahora es más grande para que se vea bien */
 .envelope {
-    width: 220px; height: 160px; background: #2a3d54;
-    position: relative; border-radius: 4px; box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    width: 80%;       /* Ocupa el 80% del ancho del móvil */
+    max-width: 350px; /* Pero no se deforma en pantallas grandes */
+    height: 250px;
+    background: #2a3d54;
+    position: relative;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
-/* La solapa triangular */
 .flap {
     width: 100%; height: 100%;
-    background: #1f2f44; clip-path: polygon(0 0, 100% 0, 50% 50%);
+    background: #1f2f44;
+    clip-path: polygon(0 0, 100% 0, 50% 50%);
+    transition: transform 1s ease;
+    transform-origin: top;
 }
 
-/* El sello de cera */
+/* Cuando se abre, la solapa gira */
+#envelope-overlay.open .flap {
+    transform: rotateX(-180deg);
+}
+
 .seal {
-    width: 60px; height: 60px; background: #b8977a; /* Color "cera" */
-    border-radius: 50%; position: absolute; top: 40%; left: 35%;
+    width: 80px; height: 80px; /* Sello más grande */
+    background: #b8977a;
+    border-radius: 50%;
+    position: absolute;
+    top: 30%; left: 30%;
     display: flex; justify-content: center; align-items: center;
-    color: #fff; font-family: 'Playfair Display', serif; font-size: 1.2rem;
-    border: 3px double rgba(255,255,255,0.3); box-shadow: 0 0 0 4px #b8977a;
+    font-size: 1.5rem; color: #fff;
+    border: 3px double rgba(255,255,255,0.3);
 }
-
-.tap-text { color: #BFD4E6; margin-top: 30px; font-family: sans-serif; opacity: 0.7; }
-
-/* Animación de apertura */
-#envelope-overlay.open { opacity: 0; pointer-events: none; }
-
 
 :root {
     --primary: #1f2f44;
