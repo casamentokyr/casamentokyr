@@ -3,6 +3,16 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyjuQb6qBEXoQCYkWSL9
 const WEDDING_DATE = new Date("May 22, 2027 11:00:00").getTime();
 
 
+function openWeb() {
+    const overlay = document.getElementById('envelope-overlay');
+    overlay.classList.add('open');
+    
+    // Reproducir música al abrir
+    const music = document.getElementById('music');
+    if (music) music.play().catch(e => console.log("Autoplay bloqueado"));
+}
+
+
 // 2. ANIMACIÓN SCROLL (FADE-IN DINÁMICO SUBIR/BAJAR)
 const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
