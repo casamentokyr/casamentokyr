@@ -16,52 +16,108 @@
 }
 
 #envelope-overlay {
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background: #1f2f44; z-index: 9999999;
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    transition: opacity 1.5s ease; /* Desvanecimiento suave */
+    position: fixed;
+    inset: 0;
+    background: #1F2F44;
+    z-index: 9999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: opacity 1.3s ease;
+    perspective: 1200px;
 }
 
 .envelope {
-    width: 300px; height: 200px; background: #2a3d54;
-    position: relative; border-radius: 10px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    width: clamp(330px, 82vw, 820px);
+    height: clamp(220px, 54vw, 540px);
+    background: #BFD4E6;
+    position: relative;
+    border-radius: 14px;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.45);
+    overflow: visible;
 }
 
 .flap {
-    position: absolute; top: 0; width: 100%; height: 100%;
-    background: #1f2f44;
-    clip-path: polygon(0 0, 100% 0, 50% 50%);
-    transition: transform 2s cubic-bezier(0.25, 0.1, 0.25, 1); /* Animación lenta */
-    transform-origin: top;
+    position: absolute;
+    inset: 0;
+    background: #9EBBD2; /* color de apertura */
+    clip-path: polygon(0 0, 100% 0, 50% 58%);
+    transform-origin: top center;
+    transition: transform 1.4s ease-in-out;
+    z-index: 3;
 }
 
-/* Estado cuando se abre */
-#envelope-overlay.open { opacity: 0; pointer-events: none; }
-#envelope-overlay.open .flap { transform: rotateX(-180deg); }
-
-
 .seal {
-    width: 90px; height: 90px;
-    background: #a63f3f; /* Un color rojo/burdeos profundo tipo cera */
-    border-radius: 50%;
     position: absolute;
-    top: 25%; left: 35%;
-    display: flex; justify-content: center; align-items: center;
-    color: #e0d0c0; /* Un tono crema/oro viejo para el texto */
-    font-size: 1.6rem;
-    font-weight: bold;
+    width: clamp(85px, 15vw, 165px);
+    height: auto;
+    left: 50%;
+    top: 44%;
+    transform: translate(-50%, -50%);
+    z-index: 6;
+    object-fit: contain;
+    transition: none;
+}
+
+.tap-text {
+    margin-top: clamp(25px, 5vw, 45px);
+    color: #BFD4E6;
     font-family: 'Playfair Display', serif;
-    
-    /* Efecto de relieve y cera */
-    border: 2px solid rgba(255,255,255,0.1);
-    box-shadow: 
-        0 4px 8px rgba(0,0,0,0.4),  /* Sombra exterior */
-        inset 0 0 0 5px #8c3535,    /* Borde interior oscuro para dar volumen */
-        inset 0 0 0 7px #a63f3f;    /* Borde superior para brillo */
-    
-    /* Quitamos el borde doble anterior para que sea más natural */
-    z-index: 5;
+    font-size: clamp(1.1rem, 3vw, 1.8rem);
+    letter-spacing: 2px;
+}
+
+#envelope-overlay.open .seal {
+    animation: sealFall 1s ease-in forwards;
+}
+
+#envelope-overlay.open .flap {
+    animation: openFlap 1.4s ease-in-out forwards;
+    animation-delay: .75s;
+}
+
+#envelope-overlay.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+
+@keyframes sealFall {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg) scale(1);
+        opacity: 1;
+    }
+
+    55% {
+        transform: translate(-50%, 120%) rotate(10deg) scale(.9);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(-50%, 260%) rotate(25deg) scale(.65);
+        opacity: 0;
+    }
+}
+
+@keyframes openFlap {
+    0% {
+        transform: rotateX(0deg);
+    }
+
+    100% {
+        transform: rotateX(-180deg);
+    }
+}
+
+@media (max-width: 480px) {
+    .envelope {
+        width: 88vw;
+        height: 58vw;
+    }
+
+    .seal {
+        width: 24vw;
+    }
 }
 
 :root {
