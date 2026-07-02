@@ -6,7 +6,6 @@
     padding: 0;
     box-sizing: border-box;
 }
-
 .music-btn {
     position: fixed !important;
     top: 20px !important;
@@ -26,7 +25,6 @@
     perspective: 1400px;
     overflow: hidden;
 }
-
 .envelope {
     position: relative;
     width: min(92vw, 520px);

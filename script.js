@@ -15,7 +15,6 @@ function openWeb() {
         overlay.style.display = 'none';
     }, 3800);
 }
-
 // 2. ANIMACIÓN SCROLL (FADE-IN DINÁMICO SUBIR/BAJAR)
 const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
