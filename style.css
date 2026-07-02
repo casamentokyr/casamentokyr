@@ -26,65 +26,46 @@
     flex-direction: column;
     transition: opacity 1.3s ease;
     perspective: 1200px;
+    overflow: hidden;
 }
+
 .envelope {
     position: relative;
-
-    width: min(92vw, 900px);
-    height: min(60vw, 580px);
-
-    aspect-ratio: 1.55 / 1;
-
+    width: min(96vw, 1200px);
+    height: min(78vh, 780px);
     background: #BFD4E6;
-
-    border-radius: 14px;
-
-    box-shadow: 0 25px 80px rgba(0,0,0,.45);
-
+    border-radius: 18px;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.45);
     overflow: visible;
 }
 
-.flap{
-
-    position:absolute;
-
-    inset:0;
-
-    width:100%;
-    height:100%;
-
-    background:#9EBBD2;
-
-    clip-path:polygon(0 0,100% 0,50% 60%);
-
-    transform-origin:top center;
-
+.flap {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: #9EBBD2;
+    clip-path: polygon(0 0, 100% 0, 50% 58%);
+    transform-origin: top center;
+    z-index: 3;
 }
 
-.seal{
-
-    position:absolute;
-
-    width:18%;
-
-    min-width:80px;
-
-    max-width:180px;
-
-    left:50%;
-    top:46%;
-
-    transform:translate(-50%,-50%);
-
-    z-index:10;
-
+.seal {
+    position: absolute;
+    width: clamp(110px, 18vw, 230px);
+    height: auto;
+    left: 50%;
+    top: 44%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    object-fit: contain;
 }
 
 .tap-text {
-    margin-top: clamp(25px, 5vw, 45px);
+    margin-top: 25px;
     color: #BFD4E6;
     font-family: 'Playfair Display', serif;
-    font-size: clamp(1.1rem, 3vw, 1.8rem);
+    font-size: clamp(1rem, 3vw, 1.8rem);
     letter-spacing: 2px;
 }
 
@@ -108,13 +89,13 @@
         opacity: 1;
     }
 
-    55% {
-        transform: translate(-50%, 120%) rotate(10deg) scale(.9);
+    60% {
+        transform: translate(-50%, 170%) rotate(12deg) scale(.9);
         opacity: 1;
     }
 
     100% {
-        transform: translate(-50%, 260%) rotate(25deg) scale(.65);
+        transform: translate(-50%, 330%) rotate(25deg) scale(.6);
         opacity: 0;
     }
 }
@@ -129,47 +110,15 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
     .envelope {
-        width: 88vw;
-        height: 58vw;
+        width: 98vw;
+        height: 72vh;
     }
 
     .seal {
-        width: 24vw;
+        width: clamp(95px, 28vw, 150px);
     }
-}
-
-@media (max-width:768px){
-
-.envelope{
-
-width:95vw;
-
-}
-
-.seal{
-
-width:22%;
-
-}
-
-}
-
-@media (min-width:1400px){
-
-.envelope{
-
-width:900px;
-
-}
-
-.seal{
-
-width:150px;
-
-}
-
 }
 
 :root {
