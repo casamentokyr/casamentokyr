@@ -27,37 +27,57 @@
     transition: opacity 1.3s ease;
     perspective: 1200px;
 }
-
 .envelope {
-    width: clamp(330px, 82vw, 820px);
-    height: clamp(220px, 54vw, 540px);
-    background: #BFD4E6;
     position: relative;
+
+    width: min(92vw, 900px);
+    height: min(60vw, 580px);
+
+    aspect-ratio: 1.55 / 1;
+
+    background: #BFD4E6;
+
     border-radius: 14px;
-    box-shadow: 0 25px 80px rgba(0,0,0,0.45);
+
+    box-shadow: 0 25px 80px rgba(0,0,0,.45);
+
     overflow: visible;
 }
 
-.flap {
-    position: absolute;
-    inset: 0;
-    background: #9EBBD2; /* color de apertura */
-    clip-path: polygon(0 0, 100% 0, 50% 58%);
-    transform-origin: top center;
-    transition: transform 1.4s ease-in-out;
-    z-index: 3;
+.flap{
+
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    background:#9EBBD2;
+
+    clip-path:polygon(0 0,100% 0,50% 60%);
+
+    transform-origin:top center;
+
 }
 
-.seal {
-    position: absolute;
-    width: clamp(85px, 15vw, 165px);
-    height: auto;
-    left: 50%;
-    top: 44%;
-    transform: translate(-50%, -50%);
-    z-index: 6;
-    object-fit: contain;
-    transition: none;
+.seal{
+
+    position:absolute;
+
+    width:18%;
+
+    min-width:80px;
+
+    max-width:180px;
+
+    left:50%;
+    top:46%;
+
+    transform:translate(-50%,-50%);
+
+    z-index:10;
+
 }
 
 .tap-text {
@@ -118,6 +138,38 @@
     .seal {
         width: 24vw;
     }
+}
+
+@media (max-width:768px){
+
+.envelope{
+
+width:95vw;
+
+}
+
+.seal{
+
+width:22%;
+
+}
+
+}
+
+@media (min-width:1400px){
+
+.envelope{
+
+width:900px;
+
+}
+
+.seal{
+
+width:150px;
+
+}
+
 }
 
 :root {
