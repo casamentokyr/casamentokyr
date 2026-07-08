@@ -3,17 +3,17 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyjuQb6qBEXoQCYkWSL9
 const WEDDING_DATE = new Date("May 22, 2027 11:00:00").getTime();
 
 function openWeb() {
-    const overlay = document.getElementById('envelope-overlay');
+    const overlay = document.getElementById("envelope-overlay");
 
-    overlay.classList.add('open');
-
-    setTimeout(() => {
-        overlay.classList.add('hide');
-    }, 2400);
+    overlay.classList.add("open");
 
     setTimeout(() => {
-        overlay.style.display = 'none';
-    }, 3800);
+        overlay.classList.add("hide");
+    }, 1600);
+
+    setTimeout(() => {
+        overlay.style.display = "none";
+    }, 2800);
 }
 // 2. ANIMACIÓN SCROLL (FADE-IN DINÁMICO SUBIR/BAJAR)
 const observer = new IntersectionObserver((entries) => {
