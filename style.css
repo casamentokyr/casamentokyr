@@ -14,11 +14,12 @@
     cursor: pointer;
 }
 
-/* ===========================
+/* ==========================================
    OVERLAY
-=========================== */
+========================================== */
 
 #envelope-overlay{
+
     position:fixed;
     inset:0;
 
@@ -26,53 +27,28 @@
     justify-content:center;
     align-items:center;
 
-    background:#1F2F44;
+    background:rgba(31,47,68,.82);
 
-    overflow:hidden;
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
 
     z-index:999999;
 
-    perspective:1400px;
+    overflow:hidden;
 
-    transition:opacity 1.2s ease;
-}
+    perspective:1800px;
 
-/* ===========================
-   FONDO
-=========================== */
-
-.web-blur-bg{
-
-    position:absolute;
-    inset:0;
-
-    background:
-    linear-gradient(
-        rgba(31,47,68,.88),
-        rgba(31,47,68,.88)
-    ),
-    url("images/fondo.webp");
-
-    background-size:cover;
-    background-position:center;
-
-    filter:blur(4px);
-
-    transform:scale(1.08);
+    transition:opacity .8s ease;
 
 }
 
-/* ===========================
-   SOBRE
-=========================== */
+/* ==========================================
+   CONTENEDOR
+========================================== */
 
 .envelope-box{
 
     position:relative;
-
-    width:min(92vw,520px);
-
-    height:min(88vh,760px);
 
     margin:auto;
 
@@ -82,64 +58,66 @@
 
 }
 
-/* ===========================
-   IMAGENES
-=========================== */
+/* ==========================================
+   IMAGEN INFERIOR
+========================================== */
 
 .envelope-bottom{
 
     position:absolute;
 
-    left:0;
-    bottom:0;
+    inset:0;
 
     width:100%;
     height:100%;
 
-    object-fit:fill;
+    display:block;
+
+    object-fit:contain;
 
     z-index:1;
 
-    display:block;
-
 }
+
+/* ==========================================
+   IMAGEN SUPERIOR
+========================================== */
 
 .envelope-top{
 
     position:absolute;
 
-    left:0;
-    top:0;
+    inset:0;
 
     width:100%;
     height:100%;
 
-    object-fit:fill;
-
     display:block;
 
-    z-index:2;
+    object-fit:contain;
 
     transform-origin:top center;
 
     transition:
-    transform 1.5s cubic-bezier(.22,.61,.36,1);
+    transform 1.4s cubic-bezier(.22,.61,.36,1);
 
     backface-visibility:hidden;
 
+    z-index:2;
+
 }
 
-/* ===========================
+/* ==========================================
    TEXTO
-=========================== */
+========================================== */
 
 .tap-text{
 
     position:absolute;
 
-    bottom:45px;
-
     left:50%;
+
+    bottom:45px;
 
     transform:translateX(-50%);
 
@@ -147,21 +125,35 @@
 
     font-family:'Playfair Display',serif;
 
-    font-size:clamp(1.2rem,3vw,2rem);
+    font-size:1.6rem;
 
-    letter-spacing:3px;
+    letter-spacing:2px;
 
-    z-index:30;
+    z-index:50;
+
+    animation:pulse 2s infinite;
 
 }
 
-/* ===========================
-   ANIMACION
-=========================== */
+@keyframes pulse{
+
+0%{opacity:.45;}
+
+50%{opacity:1;}
+
+100%{opacity:.45;}
+
+}
+
+/* ==========================================
+   ANIMACIÓN
+========================================== */
 
 #envelope-overlay.open .envelope-top{
 
-    transform:rotateX(-180deg);
+    transform:
+    translateY(-8px)
+    rotateX(-180deg);
 
 }
 
@@ -173,83 +165,80 @@
 
 }
 
-/* ===========================
-   MOVIL
-=========================== */
+/* ==========================================
+   MÓVILES
+========================================== */
 
-@media(max-width:768px){
+@media (max-width:768px){
 
 .envelope-box{
 
-width:94vw;
-
-height:88vh;
+    width:95vw;
+    height:88vh;
 
 }
 
 .tap-text{
 
-bottom:35px;
-
-font-size:1.7rem;
-
-}
+    bottom:35px;
+    font-size:1.5rem;
 
 }
 
-/* ===========================
-   TABLET
-=========================== */
+}
 
-@media(min-width:769px) and (max-width:1199px){
+/* ==========================================
+   TABLETS
+========================================== */
+
+@media (min-width:769px) and (max-width:1199px){
 
 .envelope-box{
 
-width:470px;
-
-height:700px;
-
-}
+    width:430px;
+    height:700px;
 
 }
 
-/* ===========================
-   PC
-=========================== */
+}
 
-@media(min-width:1200px){
+/* ==========================================
+   ORDENADOR
+========================================== */
+
+@media (min-width:1200px){
 
 .envelope-box{
 
-width:430px;
-
-height:650px;
+    width:360px;
+    height:620px;
 
 }
 
 .tap-text{
 
-font-size:1.5rem;
+    bottom:45px;
+    font-size:1.3rem;
 
 }
 
 }
 
-/* ===========================
+/* ==========================================
    MONITORES GRANDES
-=========================== */
+========================================== */
 
-@media(min-width:1800px){
+@media (min-width:1800px){
 
 .envelope-box{
 
-width:470px;
+    width:420px;
+    height:720px;
 
-height:710px;
+}
 
 }
 
-}
 :root {
     --primary: #1f2f44;
     --dark: #1f2f44; /* Usaremos este color para el fondo de la página */
