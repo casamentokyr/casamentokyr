@@ -15,7 +15,7 @@ function openWeb() {
         overlay.style.display = "none";
     }, 2800);
 }
-// 2. ANIMACIÓN SCROLL (FADE-IN DINÁMICO SUBIR/BAJAR
+// 2. ANIMACIÓN SCROLL (FADE-IN DINÁMICO SUBIR/BAJA
 const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
