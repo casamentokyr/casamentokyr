@@ -2,20 +2,26 @@
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyjuQb6qBEXoQCYkWSL94r87hFRcO2RIdCRpad7PRPBHrJRGixBOinmcJJN0HfvmrgF7A/exec";
 const WEDDING_DATE = new Date("May 22, 2027 11:00:00").getTime();
 
-const overlay=document.getElementById("envelope-overlay");
+document.addEventListener("DOMContentLoaded", () => {
+    const overlay = document.getElementById("envelope-overlay");
+    const openButton = document.getElementById("openEnvelope");
 
-const top=document.getElementById("openEnvelope");
+    if (!overlay || !openButton) {
+        console.error("No se encontró el sobre o la tapa superior.");
+        return;
+    }
 
-top.addEventListener("click",()=>{
+    openButton.addEventListener("click", () => {
+        overlay.classList.add("open");
 
-overlay.classList.add("open");
+        setTimeout(() => {
+            overlay.classList.add("hide");
+        }, 1400);
 
-setTimeout(()=>{
-
-overlay.classList.add("hide");
-
-},1300);
-
+        setTimeout(() => {
+            overlay.style.display = "none";
+        }, 2500);
+    });
 });
 
 // 2. ANIMACIÓN SCROLL (FADE-IN DINÁMICO SUBIR/BAJA
