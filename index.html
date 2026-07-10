@@ -8,16 +8,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="envelope-overlay" onclick="openWeb()">
-    <div class="web-blur-bg"></div>
 
-    <div class="envelope-box">
-        <img src="envelope-bottom.png" class="envelope-bottom" alt="Sobre base">
-        <img src="envelope-top.png" class="envelope-top" alt="Tapa del sobre">
-    </div>
-
-    <p class="tap-text">Toque para abrir</p>
-</div>
 <div id="music-icon" class="music-btn">
         <img src="play.png" alt="Reproduzir" id="music-img">
     </div>
@@ -243,5 +234,34 @@
     </section>
 
     <script src="script.js"></script>
+
+    <!-- SOBRE -->
+
+<div id="envelope-overlay">
+
+    <div class="web-blur-bg"></div>
+
+    <div class="envelope-box">
+
+        <img
+            src="images/flap-bottom.svg"
+            class="flap flap-bottom">
+
+        <img
+            src="images/flap-left.svg"
+            class="flap flap-left">
+
+        <img
+            src="images/flap-right.svg"
+            class="flap flap-right">
+
+        <img
+            src="images/flap-top-with-seal.svg"
+            class="flap flap-top"
+            id="openEnvelope">
+
+    </div>
+
+</div>
 </body>
 </html>

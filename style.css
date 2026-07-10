@@ -14,208 +14,155 @@
     cursor: pointer;
 }
 
-/* ==========================================
-   OVERLAY
-========================================== */
+/* ============================= */
 
 #envelope-overlay{
 
-    position:fixed;
-    inset:0;
+position:fixed;
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
+inset:0;
 
-    background:rgba(31,47,68,.82);
+background:#1F2F44;
 
-    backdrop-filter:blur(8px);
-    -webkit-backdrop-filter:blur(8px);
+display:flex;
 
-    z-index:999999;
+justify-content:center;
 
-    overflow:hidden;
+align-items:center;
 
-    perspective:1800px;
+overflow:hidden;
 
-    transition:opacity .8s ease;
+z-index:999999;
+
+perspective:1800px;
+
+transition:opacity 1s;
 
 }
 
-/* ==========================================
-   CONTENEDOR
-========================================== */
+/* ============================= */
+
+.web-blur-bg{
+
+position:absolute;
+
+inset:0;
+
+background:
+
+linear-gradient(
+
+rgba(31,47,68,.82),
+
+rgba(31,47,68,.82)
+
+),
+
+url(images/fondo.webp);
+
+background-size:cover;
+
+background-position:center;
+
+filter:blur(5px);
+
+transform:scale(1.08);
+
+}
+
+/* ============================= */
 
 .envelope-box{
 
-    position:relative;
+position:relative;
 
-    margin:auto;
+width:min(94vw,420px);
 
-    overflow:visible;
+aspect-ratio:402/874;
 
-    z-index:10;
-
-}
-
-/* ==========================================
-   IMAGEN INFERIOR
-========================================== */
-.envelope-top{
-    position:absolute;
-
-    top:-8%;
-    left:-5%;
-
-    width:110%;
-    height:110%;
-
-    object-fit:cover;
-
-    z-index:2;
-}
-
-.envelope-bottom{
-    position:absolute;
-
-    bottom:-8%;
-    left:-5%;
-
-    width:110%;
-    height:110%;
-
-    object-fit:cover;
-
-    z-index:1;
-}
-
-/* ==========================================
-   TEXTO
-========================================== */
-
-.tap-text{
-
-    position:absolute;
-
-    left:50%;
-
-    bottom:45px;
-
-    transform:translateX(-50%);
-
-    color:#BFD4E6;
-
-    font-family:'Playfair Display',serif;
-
-    font-size:1.6rem;
-
-    letter-spacing:2px;
-
-    z-index:50;
-
-    animation:pulse 2s infinite;
+z-index:20;
 
 }
 
-@keyframes pulse{
+/* ============================= */
 
-0%{opacity:.45;}
+.flap{
 
-50%{opacity:1;}
+position:absolute;
 
-100%{opacity:.45;}
+inset:0;
+
+width:100%;
+
+height:100%;
+
+object-fit:contain;
+
+user-select:none;
+
+pointer-events:none;
+
+}
+
+.flap-bottom{
+
+z-index:1;
 
 }
 
-/* ==========================================
-   ANIMACIÓN
-========================================== */
+.flap-left{
 
-#envelope-overlay.open .envelope-top{
-
-    transform:
-    translateY(-8px)
-    rotateX(-180deg);
+z-index:2;
 
 }
+
+.flap-right{
+
+z-index:3;
+
+}
+
+.flap-top{
+
+z-index:4;
+
+cursor:pointer;
+
+pointer-events:auto;
+
+transform-origin:top center;
+
+transition:
+
+transform 1.45s cubic-bezier(.22,.61,.36,1);
+
+}
+
+/* ============================= */
+
+#envelope-overlay.open .flap-top{
+
+transform:rotateX(-180deg);
+
+}
+
+/* ============================= */
 
 #envelope-overlay.hide{
 
-    opacity:0;
+opacity:0;
 
-    pointer-events:none;
+pointer-events:none;
 
 }
 
-/* ==========================================
-   MÓVILES
-========================================== */
+/* ============================= */
 
-@media (max-width:768px){
+@media(min-width:900px){
 
 .envelope-box{
 
-    width:95vw;
-    height:88vh;
-
-}
-
-.tap-text{
-
-    bottom:35px;
-    font-size:1.5rem;
-
-}
-
-}
-
-/* ==========================================
-   TABLETS
-========================================== */
-
-@media (min-width:769px) and (max-width:1199px){
-
-.envelope-box{
-
-    width:430px;
-    height:700px;
-
-}
-
-}
-
-/* ==========================================
-   ORDENADOR
-========================================== */
-
-@media (min-width:1200px){
-
-.envelope-box{
-
-    width:360px;
-    height:620px;
-
-}
-
-.tap-text{
-
-    bottom:45px;
-    font-size:1.3rem;
-
-}
-
-}
-
-/* ==========================================
-   MONITORES GRANDES
-========================================== */
-
-@media (min-width:1800px){
-
-.envelope-box{
-
-    width:420px;
-    height:720px;
+width:340px;
 
 }
 
