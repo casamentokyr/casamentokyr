@@ -13,90 +13,208 @@
     z-index: 1000000 !important; /* Más alto que el sobre (999999) */
     cursor: pointer;
 }
+/* BLOQUEA EL MOVIMIENTO DE LA WEB MIENTRAS EL SOBRE ESTÁ VISIBLE */
+html.envelope-locked,
+body.envelope-locked {
+    width: 100%;
+    height: 100%;
+    overflow: hidden !important;
+    overscroll-behavior: none;
+}
 
+/* PANTALLA DEL SOBRE */
 #envelope-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(31, 47, 68, 0.88);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+
+    width: 100vw;
+    width: 100dvw;
+
+    height: 100vh;
+    height: 100dvh;
+
+    margin: 0;
+    padding: 0;
+
+    background: rgba(31, 47, 68, 0.94);
 
     display: flex;
     justify-content: center;
     align-items: center;
 
     overflow: hidden;
+    overscroll-behavior: none;
+    touch-action: none;
+
     z-index: 9999999;
 
     perspective: 1800px;
-    transition: opacity 1s ease;
+
+    transition:
+        opacity 0.9s ease,
+        visibility 0.9s ease;
 }
 
-.web-blur-bg {
-    position: absolute;
-    inset: 0;
-    background: rgba(31, 47, 68, 0.35);
-    z-index: 1;
-}
-
-.envelope-box {
-    position: relative;
-    width: min(92vw, 402px);
-    height: min(88vh, 874px);
-    aspect-ratio: 402 / 874;
-    z-index: 20;
-}
-
-.envelope-flap {
+/* CONTENEDOR QUE OCUPA TODA LA PANTALLA */
+.envelope-stage {
     position: absolute;
     inset: 0;
 
     width: 100%;
     height: 100%;
 
+    margin: 0;
+    padding: 0;
+
+    cursor: pointer;
+
+    transform-style: preserve-3d;
+}
+
+/* CADA CAPA OCUPA LA PANTALLA ENTERA */
+.flap-layer {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+}
+
+/* LAS IMÁGENES LLEGAN A TODOS LOS BORDES */
+.flap-layer img {
+    position: absolute;
+    inset: 0;
+
     display: block;
-    object-fit: contain;
+
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    object-fit: fill;
 
     user-select: none;
+    -webkit-user-select: none;
     -webkit-user-drag: none;
-}
 
-.envelope-bottom {
-    z-index: 1;
-}
-
-.envelope-left {
-    z-index: 2;
-}
-
-.envelope-right {
-    z-index: 3;
-}
-
-.envelope-top {
-    z-index: 4;
-    cursor: pointer;
-    pointer-events: auto;
-
-    transform-origin: top center;
-
-    transition:
-        transform 1.45s cubic-bezier(.22, .61, .36, 1);
-}
-
-#envelope-overlay.open .envelope-top {
-    transform: rotateX(-175deg);
-}
-
-#envelope-overlay.hide {
-    opacity: 0;
     pointer-events: none;
 }
 
+/* ORDEN DE LAS SOLAPAS */
+.flap-layer-bottom {
+    z-index: 1;
+    transform-origin: bottom center;
+}
+
+.flap-layer-left {
+    z-index: 2;
+    transform-origin: left center;
+}
+
+.flap-layer-right {
+    z-index: 3;
+    transform-origin: right center;
+}
+
+.flap-layer-top {
+    z-index: 4;
+    transform-origin: top center;
+}
+
+/* TRANSICIONES */
+.flap-layer-top,
+.flap-layer-bottom,
+.flap-layer-left,
+.flap-layer-right {
+    transition:
+        transform 1.15s cubic-bezier(.22, .61, .36, 1),
+        opacity 0.6s ease;
+}
+
+/* 1. ABRE LA SOLAPA SUPERIOR */
+#envelope-overlay.open .flap-layer-top {
+    transform: rotateX(-105deg);
+}
+
+/* 2. ABRE LOS LATERALES */
+#envelope-overlay.open-sides .flap-layer-left {
+    transform: rotateY(105deg);
+}
+
+#envelope-overlay.open-sides .flap-layer-right {
+    transform: rotateY(-105deg);
+}
+
+/* 3. ABRE LA SOLAPA INFERIOR */
+#envelope-overlay.open-bottom .flap-layer-bottom {
+    transform: rotateX(105deg);
+}
+
+/* DESAPARECE TODA LA INTRODUCCIÓN */
+#envelope-overlay.hide {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* TEXTO */
+.tap-text {
+    position: absolute;
+
+    left: 50%;
+    bottom: max(28px, env(safe-area-inset-bottom));
+
+    transform: translateX(-50%);
+
+    width: max-content;
+
+    color: #BFD4E6;
+
+    font-family: "Playfair Display", serif;
+    font-size: clamp(1.25rem, 5vw, 1.8rem);
+
+    letter-spacing: 3px;
+
+    z-index: 30;
+
+    pointer-events: none;
+
+    animation: tapPulse 1.8s ease-in-out infinite;
+}
+
+#envelope-overlay.open .tap-text {
+    opacity: 0;
+    transition: opacity 0.35s ease;
+}
+
+@keyframes tapPulse {
+    0%,
+    100% {
+        opacity: 0.45;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* EN ORDENADOR PUEDES OCULTAR EL SOBRE */
 @media (min-width: 900px) {
-    .envelope-box {
-        width: 320px;
-        height: 696px;
+    #envelope-overlay {
+        display: none;
+    }
+
+    html.envelope-locked,
+    body.envelope-locked {
+        overflow: auto !important;
     }
 }
 

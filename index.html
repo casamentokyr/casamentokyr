@@ -8,6 +8,29 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="envelope-overlay">
+    <div class="envelope-stage" id="openEnvelope">
+
+        <div class="flap-layer flap-layer-bottom">
+            <img src="flap-bottom.svg" alt="">
+        </div>
+
+        <div class="flap-layer flap-layer-left">
+            <img src="flap-left.svg" alt="">
+        </div>
+
+        <div class="flap-layer flap-layer-right">
+            <img src="flap-right.svg" alt="">
+        </div>
+
+        <div class="flap-layer flap-layer-top">
+            <img src="flap-top-with-seal.svg" alt="Abrir convite">
+        </div>
+
+    </div>
+
+    <p class="tap-text">Toque para abrir</p>
+</div>
 
 <div id="music-icon" class="music-btn">
         <img src="play.png" alt="Reproduzir" id="music-img">
@@ -234,35 +257,5 @@
     </section>
 
     <script src="script.js"></script>
-<div id="envelope-overlay">
-
-    <div class="web-blur-bg"></div>
-
-    <div class="envelope-box">
-
-        <img
-            src="./flap-bottom.svg"
-            class="envelope-flap envelope-bottom"
-            alt="Solapa inferior">
-
-        <img
-            src="./flap-left.svg"
-            class="envelope-flap envelope-left"
-            alt="Solapa izquierda">
-
-        <img
-            src="./flap-right.svg"
-            class="envelope-flap envelope-right"
-            alt="Solapa derecha">
-
-        <img
-            src="./flap-top-with-seal.svg"
-            class="envelope-flap envelope-top"
-            id="openEnvelope"
-            alt="Abrir convite">
-
-    </div>
-
-</div>
 </body>
 </html>

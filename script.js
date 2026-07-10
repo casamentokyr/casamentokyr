@@ -4,23 +4,53 @@ const WEDDING_DATE = new Date("May 22, 2027 11:00:00").getTime();
 
 document.addEventListener("DOMContentLoaded", () => {
     const overlay = document.getElementById("envelope-overlay");
-    const openButton = document.getElementById("openEnvelope");
+    const envelope = document.getElementById("openEnvelope");
 
-    if (!overlay || !openButton) {
-        console.error("No se encontró el sobre o la tapa superior.");
+    if (!overlay || !envelope) {
+        console.error("No se encontró la animación del sobre.");
         return;
     }
 
-    openButton.addEventListener("click", () => {
+    // Solo bloquear el scroll cuando el sobre realmente se muestra
+    const isMobileEnvelope = window.matchMedia("(max-width: 899px)").matches;
+
+    if (isMobileEnvelope) {
+        document.documentElement.classList.add("envelope-locked");
+        document.body.classList.add("envelope-locked");
+    }
+
+    let opening = false;
+
+    envelope.addEventListener("click", () => {
+        if (opening) return;
+
+        opening = true;
+
+        // 1. Abre la tapa superior
         overlay.classList.add("open");
 
+        // 2. Abre izquierda y derecha
+        setTimeout(() => {
+            overlay.classList.add("open-sides");
+        }, 450);
+
+        // 3. Abre la parte inferior
+        setTimeout(() => {
+            overlay.classList.add("open-bottom");
+        }, 850);
+
+        // 4. Desvanece toda la animación
         setTimeout(() => {
             overlay.classList.add("hide");
-        }, 1400);
+        }, 1550);
 
+        // 5. Desbloquea la web y elimina el overlay
         setTimeout(() => {
+            document.documentElement.classList.remove("envelope-locked");
+            document.body.classList.remove("envelope-locked");
+
             overlay.style.display = "none";
-        }, 2500);
+        }, 2450);
     });
 });
 
