@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (isMobileEnvelope) {
         document.documentElement.classList.add("envelope-locked");
-        document.body.classList.add("envelope-locked");
+      
     }
 
     let opening = false;

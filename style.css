@@ -6,23 +6,6 @@
     padding: 0;
     box-sizing: border-box;
 }
-.music-btn {
-    position: fixed !important;
-    top: 20px !important;
-    right: 20px !important;
-    z-index: 1000000 !important; /* Más alto que el sobre (999999) */
-    cursor: pointer;
-}
-/* BLOQUEA EL MOVIMIENTO DE LA WEB MIENTRAS EL SOBRE ESTÁ VISIBLE */
-html.envelope-locked,
-body.envelope-locked {
-    width: 100%;
-    height: 100%;
-    overflow: hidden !important;
-    overscroll-behavior: none;
-}
-
-/* PANTALLA DEL SOBRE */
 #envelope-overlay {
     position: fixed;
     inset: 0;
@@ -43,8 +26,6 @@ body.envelope-locked {
     align-items: center;
 
     overflow: hidden;
-    overscroll-behavior: none;
-    touch-action: none;
 
     z-index: 9999999;
 
@@ -55,7 +36,6 @@ body.envelope-locked {
         visibility 0.9s ease;
 }
 
-/* CONTENEDOR QUE OCUPA TODA LA PANTALLA */
 .envelope-stage {
     position: absolute;
     inset: 0;
@@ -76,7 +56,6 @@ body.envelope-locked {
     transform-style: preserve-3d;
 }
 
-/* CADA CAPA OCUPA LA PANTALLA ENTERA */
 .flap-layer {
     position: absolute;
     inset: 0;
@@ -88,10 +67,8 @@ body.envelope-locked {
     padding: 0;
 
     transform-style: preserve-3d;
-    will-change: transform, opacity;
 }
 
-/* LAS IMÁGENES LLEGAN A TODOS LOS BORDES */
 .flap-layer img {
     position: absolute;
 
@@ -102,16 +79,24 @@ body.envelope-locked {
     height: 104%;
 
     display: block;
-    object-fit: fill;
 
-    margin: 0;
-    padding: 0;
+    object-fit: fill;
 
     user-select: none;
     -webkit-user-select: none;
     -webkit-user-drag: none;
 
     pointer-events: none;
+}
+
+body.envelope-locked .music-btn {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+.music-btn {
+    z-index: 99999 !important;
 }
 
 /* ORDEN DE LAS SOLAPAS */
