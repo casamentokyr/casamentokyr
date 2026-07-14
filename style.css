@@ -6,6 +6,38 @@
     padding: 0;
     box-sizing: border-box;
 }
+/* =========================================
+   INTRODUCCIÓN DEL SOBRE
+   Solo visible en móviles
+========================================= */
+
+html,
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Bloquea el movimiento de la web mientras el sobre está visible */
+html.envelope-locked,
+body.envelope-locked {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden !important;
+    overscroll-behavior: none;
+}
+
+/* Oculta el botón de música durante la introducción */
+body.envelope-locked #music-icon {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* Pantalla completa del sobre */
 #envelope-overlay {
     position: fixed;
     inset: 0;
@@ -19,13 +51,15 @@
     margin: 0;
     padding: 0;
 
-    background: rgba(31, 47, 68, 0.94);
+    background: #1F2F44;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
     overflow: hidden;
+    overscroll-behavior: none;
+    touch-action: none;
 
     z-index: 9999999;
 
@@ -36,26 +70,24 @@
         visibility 0.9s ease;
 }
 
+/* Contenedor de todas las piezas */
 .envelope-stage {
     position: absolute;
     inset: 0;
 
-    width: 100vw;
-    width: 100dvw;
-
-    height: 100vh;
-    height: 100dvh;
+    width: 100%;
+    height: 100%;
 
     margin: 0;
     padding: 0;
 
     overflow: hidden;
-
     cursor: pointer;
 
     transform-style: preserve-3d;
 }
 
+/* Cada solapa ocupa toda la pantalla */
 .flap-layer {
     position: absolute;
     inset: 0;
@@ -67,20 +99,24 @@
     padding: 0;
 
     transform-style: preserve-3d;
+    will-change: transform;
 }
 
+/* Agranda los SVG para eliminar los márgenes laterales */
 .flap-layer img {
     position: absolute;
 
-    top: -2%;
-    left: -4%;
+    top: -5%;
+    left: -18%;
 
-    width: 108%;
-    height: 104%;
+    width: 136%;
+    height: 110%;
 
     display: block;
-
     object-fit: fill;
+
+    margin: 0;
+    padding: 0;
 
     user-select: none;
     -webkit-user-select: none;
@@ -89,17 +125,7 @@
     pointer-events: none;
 }
 
-body.envelope-locked .music-btn {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-}
-
-.music-btn {
-    z-index: 99999 !important;
-}
-
-/* ORDEN DE LAS SOLAPAS */
+/* Orden de las piezas */
 .flap-layer-bottom {
     z-index: 1;
     transform-origin: bottom center;
@@ -120,7 +146,7 @@ body.envelope-locked .music-btn {
     transform-origin: top center;
 }
 
-/* TRANSICIONES */
+/* Animación común */
 .flap-layer-top,
 .flap-layer-bottom,
 .flap-layer-left,
@@ -130,12 +156,12 @@ body.envelope-locked .music-btn {
         opacity 0.6s ease;
 }
 
-/* 1. ABRE LA SOLAPA SUPERIOR */
+/* 1. Abre la solapa superior */
 #envelope-overlay.open .flap-layer-top {
     transform: rotateX(-105deg);
 }
 
-/* 2. ABRE LOS LATERALES */
+/* 2. Abre las solapas laterales */
 #envelope-overlay.open-sides .flap-layer-left {
     transform: rotateY(105deg);
 }
@@ -144,19 +170,19 @@ body.envelope-locked .music-btn {
     transform: rotateY(-105deg);
 }
 
-/* 3. ABRE LA SOLAPA INFERIOR */
+/* 3. Abre la solapa inferior */
 #envelope-overlay.open-bottom .flap-layer-bottom {
     transform: rotateX(105deg);
 }
 
-/* DESAPARECE TODA LA INTRODUCCIÓN */
+/* Oculta toda la introducción */
 #envelope-overlay.hide {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
 }
 
-/* TEXTO */
+/* Texto */
 .tap-text {
     position: absolute;
 
@@ -197,20 +223,26 @@ body.envelope-locked .music-btn {
     }
 }
 
-/* EN ORDENADOR PUEDES OCULTAR EL SOBRE */
-@media (min-width: 900px) {
+/* Desde 769 px no se muestra el sobre */
+@media (min-width: 769px) {
     #envelope-overlay {
-        display: none;
+        display: none !important;
     }
 
     html.envelope-locked,
     body.envelope-locked {
+        position: static;
+        width: auto;
+        height: auto;
         overflow: auto !important;
     }
+
+    #music-icon {
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+    }
 }
-
-
-
 :root {
     --primary: #1f2f44;
     --dark: #1f2f44; /* Usaremos este color para el fondo de la página */
